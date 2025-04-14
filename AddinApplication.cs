@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.UI;
@@ -12,6 +14,12 @@ namespace ProjetaARQ
 
         public Result OnStartup(UIControlledApplication application)
         {
+            // 1 - Carrega os pacotes externos na pasta addins/ProjetaARQ/
+            ConfigureAssemblyResolve(application);
+
+            // 2 - Inicializa o plugin na UI
+
+
             return Result.Succeeded;
         }
 
@@ -20,5 +28,31 @@ namespace ProjetaARQ
         public Result OnShutdown(UIControlledApplication application)
             => Result.Succeeded;
 
+
+        private void ConfigureAssemblyResolve(UIControlledApplication app)
+        {
+            // 1. Pega a versão do Revit dinamicamente (ex: "2024")
+            string revitVersion = app.ControlledApplication.VersionNumber;
+
+            // 2. Pega o caminho da pasta do add-in 
+            string addinPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Autodesk",
+                "Revit",
+                "Addins",
+                revitVersion,
+                "ProjetaARQ"
+            );
+
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                string assemblyName = new AssemblyName(args.Name).Name;
+                string assemblyPath = Path.Combine(addinPath, $"{assemblyName}.dll");
+
+                return File.Exists(assemblyPath)
+                    ? Assembly.LoadFrom(assemblyPath)
+                    : null;
+            };
+        }
     }
 }
