@@ -4,15 +4,15 @@ namespace ProjetaARQ.Revit.UI.Interfaces
 {
     public interface IRibbonManager
     {
-        RibbonPanel CreatePanel(UIControlledApplication application, string nomePainel);
+        RibbonPanel CreatePanel(UIControlledApplication application, string tabName, string panelName);
 
         PushButton AddPushButton(
-            string nomeInterno, 
-            string nomeExibido,
-            string nomeClasse, 
-            RibbonPanel painel,
-            string dica, 
-            string nomeImagem,
+            string internName,
+            string exhibitionName,
+            string fullClassName,
+            RibbonPanel panel,
+            string buttonTip,
+            string iconName,
             bool enableOption = false);
     }
 }

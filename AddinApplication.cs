@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.UI;
+using ProjetaARQ.Revit.UI;
+using ProjetaARQ.Revit.UI.Interfaces;
 
 namespace ProjetaARQ
 {
@@ -18,17 +20,23 @@ namespace ProjetaARQ
             ConfigureAssemblyResolve(application);
 
             // 2 - Inicializa o plugin na UI
+            IRibbonManager ribbonManager = new RibbonManager();
+            UIBuilder uiBuilder = new UIBuilder(application, ribbonManager);
+            uiBuilder.Build();
 
 
             return Result.Succeeded;
         }
 
 
-
         public Result OnShutdown(UIControlledApplication application)
             => Result.Succeeded;
 
 
+        /// <summary>
+        /// Define onde estarão as dependencias e pacotes externos
+        /// </summary>
+        /// <param name="app"></param>
         private void ConfigureAssemblyResolve(UIControlledApplication app)
         {
             // 1. Pega a versão do Revit dinamicamente (ex: "2024")
