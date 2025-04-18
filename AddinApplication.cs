@@ -21,7 +21,9 @@ namespace ProjetaARQ
 
             // 2 - Inicializa o plugin na UI
             IRibbonManager ribbonManager = new RibbonManager();
-            UIBuilder uiBuilder = new UIBuilder(application, ribbonManager);
+            IDockablePaneManager dockablePaneManager = new DockablePaneManager(application);
+
+            UIBuilder uiBuilder = new UIBuilder(application, ribbonManager, dockablePaneManager);
             uiBuilder.Build();
 
 
