@@ -17,7 +17,7 @@ namespace ProjetaARQ.Core.Services
         /// <summary>
         /// Obtém o namespace base onde os recursos estão armazenados
         /// </summary>
-        public static string GetNamespace() => typeof(AssemblyServices).Namespace + ".";
+        public static string GetNamespace() => typeof(AddinApplication).Namespace + ".";
     }
 }
 
