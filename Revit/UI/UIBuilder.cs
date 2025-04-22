@@ -51,6 +51,15 @@ namespace ProjetaARQ.Revit.UI
                 "showroom.png",
                 true);
 
+            var testButton = _ribbonManager.AddPushButton(
+                "DevButton",
+                "Dev",
+                "ProjetaARQ.Features.Test.Commands.DevButton",
+                mainPanel,
+                "Developer",
+                "showroom.png",
+                true);
+
 
             #endregion
 

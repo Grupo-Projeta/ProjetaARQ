@@ -71,6 +71,11 @@
     <Compile Include="AddinApplication.cs" />
     <Compile Include="Core\Services\AssemblyServices.cs" />
     <Compile Include="Core\Services\BitmapConverter.cs" />
+    <Compile Include="Features\Test\Commands\DevButton.cs" />
+    <Compile Include="Features\Test\MVVM\DevView.xaml.cs">
+      <DependentUpon>DevView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
     <Compile Include="Revit\UI\DockablePaneManager.cs" />
     <Compile Include="Features\FamiliesPanel\Commands\FamiliesPaneButton.cs" />
     <Compile Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml.cs">
@@ -95,6 +100,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Test\MVVM\DevView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
