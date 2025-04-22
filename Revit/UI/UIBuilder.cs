@@ -11,7 +11,7 @@ namespace ProjetaARQ.Revit.UI
 {
     internal class UIBuilder
     {
-        private readonly string _tabName = "Projeta ARQ";
+        private readonly string _tabName = "ProjetaARQ";
 
         private readonly UIControlledApplication _app;
         private readonly IRibbonManager _ribbonManager;

@@ -1,4 +1,5 @@
-﻿using ProjetaARQ.Revit.Base;
+﻿using ProjetaARQ.Core.UI;
+using ProjetaARQ.Revit.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 {
-    internal class FamiliesViewModel
+    internal class FamiliesViewModel : ObservableObject
     {
         public FamiliesViewModel()
         {
