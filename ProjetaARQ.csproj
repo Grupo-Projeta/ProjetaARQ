@@ -71,6 +71,8 @@
     <Compile Include="AddinApplication.cs" />
     <Compile Include="Core\Services\AssemblyServices.cs" />
     <Compile Include="Core\Services\BitmapConverter.cs" />
+    <Compile Include="Core\UI\ObservableObject.cs" />
+    <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Features\Test\Commands\DevButton.cs" />
     <Compile Include="Features\Test\MVVM\DevView.xaml.cs">
       <DependentUpon>DevView.xaml</DependentUpon>
