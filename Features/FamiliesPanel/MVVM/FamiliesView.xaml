@@ -36,13 +36,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0"
-                        Grid.ColumnSpan="2">
-                
-                <!--ToggleSwitch Tema Claro e Escuro-->
+            <!--ToggleSwitch Tema Claro e Escuro-->
                 <mah:ToggleSwitch Toggled="ThemeToggled"
-                                  MaxHeight="50">
+                                  Grid.ColumnSpan="2"
+                                  HorizontalAlignment="Right"
+                                  MinWidth="75">
 
                     <mah:ToggleSwitch.LayoutTransform>
                         <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
@@ -50,21 +48,37 @@
 
                     <mah:ToggleSwitch.OffContent>
                         <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
-                                        ConverterParameter='sun-theme.png'}"
-                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                ConverterParameter='sun-theme.png'}"
+                                RenderOptions.BitmapScalingMode="HighQuality"/>
                     </mah:ToggleSwitch.OffContent>
 
                     <mah:ToggleSwitch.OnContent>
                         <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
-                                        ConverterParameter='moon-theme.png'}"
-                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                ConverterParameter='moon-theme.png'}"
+                                RenderOptions.BitmapScalingMode="HighQuality"/>
                     </mah:ToggleSwitch.OnContent>
 
                 </mah:ToggleSwitch>
-                <!--Fim ToggleSwitch Tema Claro e Escuro-->
+            <!--Fim ToggleSwitch Tema Claro e Escuro-->
 
-
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2">
             </StackPanel>
+
+            <ScrollViewer Grid.Row="1"
+                          Grid.Column="0"
+                          VerticalScrollBarVisibility="Disabled">
+                
+                <ItemsControl>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+            </ScrollViewer>
         </Grid>
     </Border>
 </Page>
