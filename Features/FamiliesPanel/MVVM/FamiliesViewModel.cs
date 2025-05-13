@@ -10,8 +10,42 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 {
     internal class FamiliesViewModel : ObservableObject
     {
+
+        private FamiliesView _familiesWindow;
+        public FamiliesView FamiliesWindow
+        {
+            get => _familiesWindow;
+            set
+            {
+                if (_familiesWindow != value)
+                {
+                    _familiesWindow = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isDarkTheme;
+        public bool IsDarkTheme
+        {
+            get => _isDarkTheme;
+            set
+            {
+                if (_isDarkTheme != value)
+                {
+                    _isDarkTheme = value;
+                    OnPropertyChanged();
+
+                    var theme = value ? "Dark.Crimson" : "Light.Crimson";
+
+                }
+            }
+        }
+
         public FamiliesViewModel()
         {
+        
+
             
         }
     }

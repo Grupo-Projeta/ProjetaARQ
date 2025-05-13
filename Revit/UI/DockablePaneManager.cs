@@ -27,6 +27,7 @@ namespace ProjetaARQ.Revit.UI
             var viewModel = new FamiliesViewModel();
             var view = new FamiliesView(viewModel);
             _app.RegisterDockablePane(FamiliesPaneId, "ShowRoom", view as IDockablePaneProvider);
+            viewModel.FamiliesWindow = view;
 
             #endregion
         }
