@@ -63,6 +63,7 @@
                 </mah:ToggleSwitch>
             <!--Fim ToggleSwitch Tema Claro e Escuro-->
 
+            <!--Logo-->
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0"
                         Grid.ColumnSpan="2">
@@ -73,7 +74,9 @@
                        RenderOptions.BitmapScalingMode="HighQuality"/>
                 
             </StackPanel>
+            <!--Logo-->
 
+            <!--Scroll Pastas/Folders-->
             <ScrollViewer Grid.Row="1"
                           Grid.Column="0"
                           VerticalScrollBarVisibility="Disabled">
@@ -87,7 +90,9 @@
                 </ItemsControl>
                 
             </ScrollViewer>
+            <!--Scroll Pastas/Folders-->
 
+            <!--Scroll Familias-->
             <ScrollViewer Grid.Row="1" Grid.Column="1"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalAlignment="Center">
@@ -105,9 +110,10 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
-                
+
             </ScrollViewer>
+            <!--Scroll Familias-->
+            
         </Grid>
     </Border>
 </Page>
