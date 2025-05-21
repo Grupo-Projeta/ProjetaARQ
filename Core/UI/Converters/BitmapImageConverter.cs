@@ -16,6 +16,10 @@ namespace ProjetaARQ.Core.UI.Converters
                 {
                     return BitmapConverter.GetResource(imageName);
                 }
+                else if (value is string imageBindName)
+                {
+                    return BitmapConverter.GetResource(imageBindName);
+                }
                 else
                 {
                     return null;

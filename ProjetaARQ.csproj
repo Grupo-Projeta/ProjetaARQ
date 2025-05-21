@@ -117,6 +117,15 @@
     <EmbeddedResource Include="Common\Images\moon-theme.png" />
     <EmbeddedResource Include="Common\Images\sun-theme.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\eggprojeta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\eggprojeta-small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\eggprojeta-darktheme.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>REM Define os caminhos corretamente

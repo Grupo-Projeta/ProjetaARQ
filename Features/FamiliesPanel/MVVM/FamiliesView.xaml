@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:viewModel="clr-namespace:ProjetaARQ.Features.FamiliesPanel.MVVM"
+             d:DataContext="{d:DesignInstance viewModel:FamiliesViewModel}"
              xmlns:converters="clr-namespace:ProjetaARQ.Core.UI.Converters"
              xmlns:local="clr-namespace:ProjetaARQ.Features.FamiliesPanel.MVVM"
              mc:Ignorable="d" 
@@ -37,7 +39,7 @@
             </Grid.ColumnDefinitions>
 
             <!--ToggleSwitch Tema Claro e Escuro-->
-                <mah:ToggleSwitch Toggled="ThemeToggled"
+                <mah:ToggleSwitch IsOn="{Binding IsDarkTheme}"
                                   Grid.ColumnSpan="2"
                                   HorizontalAlignment="Right"
                                   MinWidth="75">
@@ -64,6 +66,12 @@
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0"
                         Grid.ColumnSpan="2">
+                
+                <Image Source="{Binding EggIcon, Converter={StaticResource BitmapImageConverter},
+                                UpdateSourceTrigger=PropertyChanged}"
+                       Height="32" Width="32"
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                
             </StackPanel>
 
             <ScrollViewer Grid.Row="1"

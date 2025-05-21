@@ -27,21 +27,5 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                 MinimumWidth = 300
             };
         }
-
-        private void ThemeToggled(object sender, RoutedEventArgs e)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-
-            if (toggleSwitch == null)
-                return;
-            
-            if (toggleSwitch.IsOn)
-            {
-                ThemeManager.Current.ChangeTheme(this, "Dark.Crimson");
-                return;
-            }
-
-            ThemeManager.Current.ChangeTheme(this, "Light.Crimson");
-        }
     }
 }

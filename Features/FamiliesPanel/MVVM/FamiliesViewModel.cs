@@ -1,4 +1,5 @@
-﻿using ProjetaARQ.Core.UI;
+﻿using ControlzEx.Theming;
+using ProjetaARQ.Core.UI;
 using ProjetaARQ.Revit.Base;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,29 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                     _isDarkTheme = value;
                     OnPropertyChanged();
 
-                    var theme = value ? "Dark.Crimson" : "Light.Crimson";
+                    string theme = value ? "Dark.Crimson" : "Light.Crimson";
+                    ThemeManager.Current.ChangeTheme(_familiesWindow, theme);
 
+                    _eggIcon =  IsDarkTheme ? "eggprojeta-darktheme.png" : "eggprojeta.png";
+                    OnPropertyChanged(nameof(EggIcon));
                 }
             }
         }
+
+        private string _eggIcon = "eggprojeta.png";
+        public string EggIcon
+        {
+            get => _eggIcon;
+            set
+            {
+                if (_eggIcon != value)
+                {
+                    _eggIcon = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+             
 
         public FamiliesViewModel()
         {
