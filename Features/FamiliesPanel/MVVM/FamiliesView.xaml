@@ -34,15 +34,36 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+
+            <!--Logo-->
+            <StackPanel Orientation="Horizontal"
+             Grid.Row="0"
+             Grid.ColumnSpan="2">
+
+                <Image Source="{Binding EggIcon, Converter={StaticResource BitmapImageConverter},
+                                        UpdateSourceTrigger=PropertyChanged}"
+                       Height="32" Width="32"
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+
+            </StackPanel>
+            <!--Logo-->
+            
+            
+            <!--Stack Panel Menu Superior-->
+            <StackPanel Grid.Column="1"
+            Grid.Row="0"
+            Orientation="Horizontal"
+            FlowDirection="RightToLeft">
+                
             <!--ToggleSwitch Tema Claro e Escuro-->
                 <mah:ToggleSwitch IsOn="{Binding IsDarkTheme}"
                                   Grid.ColumnSpan="2"
                                   HorizontalAlignment="Right"
-                                  MinWidth="75">
+                                  MinWidth="75" FlowDirection="LeftToRight">
 
                     <mah:ToggleSwitch.LayoutTransform>
                         <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
@@ -63,28 +84,38 @@
                 </mah:ToggleSwitch>
             <!--Fim ToggleSwitch Tema Claro e Escuro-->
 
-            <!--Logo-->
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0"
-                        Grid.ColumnSpan="2">
-                
-                <Image Source="{Binding EggIcon, Converter={StaticResource BitmapImageConverter},
-                                UpdateSourceTrigger=PropertyChanged}"
-                       Height="32" Width="32"
-                       RenderOptions.BitmapScalingMode="HighQuality"/>
-                
+                <!--Config-->
+                <Button Command="{Binding ChangePathCommand}"
+                        Margin="15 0"
+                        Background="Transparent" BorderBrush="Transparent"
+                        Style="{DynamicResource MahApps.Styles.Button.Square}"
+                        Cursor="Hand">
+
+                    <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
+                                            ConverterParameter='config-steam.png'}"
+                           Height="24" Width="24"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           VerticalAlignment="Center"/>
+                </Button>
+                <!--Config-->
+
             </StackPanel>
-            <!--Logo-->
+            <!--Stack Panel Menu Superior-->
+            
 
             <!--Scroll Pastas/Folders-->
             <ScrollViewer Grid.Row="1"
                           Grid.Column="0"
                           VerticalScrollBarVisibility="Disabled">
                 
-                <ItemsControl>
+                <ItemsControl ItemsSource="{Binding SubFolders}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="Portas"/>
+                            <Button Margin="0 5"
+                                    Style="{DynamicResource MahApps.Styles.Button.Flat}">
+                                <TextBlock Text="{Binding Name}"
+                                           TextWrapping="Wrap"/>
+                            </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
