@@ -6,46 +6,42 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border CornerRadius="5"
-                            Background="#FFDADEE5"
-                            Width="200" Height="30">
-                        <Grid>
-                            <TextBox Margin="1"
-                                     Text="{Binding Path=Text,
-                                            RelativeSource={RelativeSource TemplatedParent},
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged}"
-                                     BorderThickness="0"
-                                     Background="Transparent"
-                                     VerticalContentAlignment="Center"
-                                     Padding="5"
-                                     Foreground="Black"
-                                     CaretBrush="Black"
-                                     x:Name="InputBox"/>
+                    <Grid>
+                        <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent},
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 VerticalContentAlignment="Center"
+                                 Padding="5"
+                                 Foreground="Black"
+                                 CaretBrush="Black"
+                                 x:Name="SearchBox"/>
 
-                            <TextBlock IsHitTestVisible="False"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Left"
-                                       Margin="10 0 0 0"
-                                       FontFamily="11"
-                                       Foreground="#222222">
+                        <TextBlock IsHitTestVisible="False"
+                                   Text="Buscar"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Stretch"
+                                   Margin="7.5 0 0 0"
+                                   FontFamily="11"
+                                   Foreground="DarkGray">
 
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
 
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=InputBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
 
-                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
 
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </Border>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
 

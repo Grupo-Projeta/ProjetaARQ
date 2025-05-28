@@ -178,15 +178,13 @@
             <Border Grid.Row="1" Grid.Column="1"
                     Margin="10 10 0 10" CornerRadius="5" Background="#FFDADEE5"
                     BorderBrush="#FFA1A7B3" BorderThickness="1">
+                
                 <TextBox Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                          HorizontalAlignment="Stretch"
-                         VerticalContentAlignment="Center"
-                         MinWidth="100"
-                         Width="Auto"
-                         Background="Transparent" BorderBrush="Transparent"
-                         Foreground="Black"/>
+                         Style="{StaticResource SearchBox}"/>
             </Border>
-            
+
             <Border Grid.Row="2" Grid.Column="1"
                     Margin="15 15 0 0"
                     Background="#FFDADEE5"
