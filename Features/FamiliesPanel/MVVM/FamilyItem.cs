@@ -19,7 +19,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             Name = Path.GetFileNameWithoutExtension(filePath);
 
             string thumbPath = Path.Combine(thumbsDirectory, Name + ".png");
-            ThumbnailPath = File.Exists(thumbPath) ? thumbPath : Path.Combine(thumbsDirectory, "projeta.png");
+            ThumbnailPath = File.Exists(thumbPath) ? thumbPath : Path.Combine(thumbsDirectory, "default.png");
         }
     }
 }

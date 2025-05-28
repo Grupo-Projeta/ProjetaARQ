@@ -24,7 +24,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             data.InitialState = new DockablePaneState
             {
                 DockPosition = DockPosition.Right, // Define a posição do painel
-                MinimumWidth = 300
+                MinimumWidth = 400
             };
         }
     }

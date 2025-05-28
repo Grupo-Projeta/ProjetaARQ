@@ -80,8 +80,10 @@
     <Compile Include="Core\UI\Converters\BitmapImageConverter.cs" />
     <Compile Include="Core\UI\ObservableObject.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />
+    <Compile Include="Features\FamiliesPanel\Events\DownloadFamilyEvent.cs" />
     <Compile Include="Features\FamiliesPanel\MVVM\FamilyItem.cs" />
     <Compile Include="Features\FamiliesPanel\MVVM\FolderItem.cs" />
+    <Compile Include="Features\FamiliesPanel\Services\OverLoadOption.cs" />
     <Compile Include="Features\Test\Commands\DevButton.cs" />
     <Compile Include="Features\Test\MVVM\DevView.xaml.cs">
       <DependentUpon>DevView.xaml</DependentUpon>
@@ -106,10 +108,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Themes\" />
-    <Folder Include="Features\FamiliesPanel\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\FamiliesPanel\Styles\SearchBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -136,6 +141,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\Images\config-steam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\back-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\home-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\update-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\download-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

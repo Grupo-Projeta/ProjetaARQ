@@ -10,5 +10,6 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
     {
         public string Name { get; set; }
         public string Path { get; set; }
+        public string FullPath { get; set; }
     }
 }

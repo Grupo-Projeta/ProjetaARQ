@@ -1,8 +1,12 @@
-﻿using ControlzEx.Theming;
+﻿using Autodesk.Revit.UI;
+using ControlzEx.Theming;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using ProjetaARQ.Core.UI;
+using ProjetaARQ.Features.FamiliesPanel.Events;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -11,6 +15,12 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
     internal class FamiliesViewModel : ObservableObject
     {
         public ObservableCollection<FolderItem> SubFolders { get; set; } = new ObservableCollection<FolderItem>();
+        public ObservableCollection<FamilyItem> FolderFamilies { get; set; } = new ObservableCollection<FamilyItem>();
+
+        private readonly DownloadFamilyEvent _downloadHandler;
+
+        private readonly ExternalEvent _downloadEvent;
+
 
         private FamiliesView _familiesWindow;
         public FamiliesView FamiliesWindow
@@ -27,18 +37,6 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
         }
 
         private string _rootPath = "B:\\005. Implementação\\Arquitetura e Urbanismo\\Fernanda Farah\\01. Criação de Famílias\\02. Famílias para Clickup\\01. Portas";
-        public string RootPath
-        {
-            get => _rootPath;
-            set
-            {
-                if (_rootPath != value)
-                {
-                    _rootPath = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         private string _currentPath;
         public string CurrentPath
@@ -50,6 +48,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                 {
                     _currentPath = value;
                     OnPropertyChanged();
+                    GetDirectories();
                 }
             }
         }
@@ -88,16 +87,48 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             }
         }
 
-        public RelayCommand ChangePathCommand { get; }
+        private string _search;
+        public string Search
+        {
+            get => _search;
+            set
+            {
+                if (_search != value)
+                {
+                    _search = value;
+                    OnPropertyChanged();
+                    LoadFamilies(_search);
+                }
+            }
+        }
+
+        public RelayCommand ChangeRootPathCommand { get; }
+        public RelayCommand ChangeCurrentPathCommand { get; }
+        public RelayCommand BackToPreviousPathCommand { get; }
+        public RelayCommand GoToHomeCommand { get; }
+        public RelayCommand UpdateCommand { get; }
+        public RelayCommand DownloadCommand { get; }
+
+
 
 
         public FamiliesViewModel()
         {
-            ChangePathCommand = new RelayCommand(_ => ChangePath(RootPath));
-            GetDirectories();
+            _downloadHandler = new DownloadFamilyEvent();
+            _downloadEvent = ExternalEvent.Create(_downloadHandler);
+
+            CurrentPath = _rootPath;
+            ChangeRootPathCommand = new RelayCommand(_ => ChangeRootPath(_rootPath));
+            ChangeCurrentPathCommand = new RelayCommand(parameter => ChangeCurrentPath(CurrentPath, parameter));
+            BackToPreviousPathCommand = new RelayCommand(x => BackToPreviousPath());
+            GoToHomeCommand = new RelayCommand(x => GoToHome());
+            UpdateCommand = new RelayCommand(x => Update());
+            DownloadCommand = new RelayCommand(x => DownloadFamily(x));
+
+            Update();
         }
 
-        public string ChangePath(string rootPath)
+        private string ChangeRootPath(string rootPath)
         {
             var dialog = new CommonOpenFileDialog
             {
@@ -115,15 +146,46 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
+                _rootPath = dialog.FileName;
                 CurrentPath = dialog.FileName;
-                GetDirectories();
+                Update();
                 return dialog.FileName;
             }
 
             return null;
         }
 
-        public void GetDirectories()
+        private void ChangeCurrentPath(string currentPath, object parameter)
+        {
+            CurrentPath = currentPath + "\\" + (parameter as string);
+            Update();
+        }
+        private void Update()
+        {
+            GetDirectories();
+            LoadFamilies();
+        }
+
+        private void GoToHome()
+        {
+            CurrentPath = _rootPath;
+            Update();
+        }
+
+        private void BackToPreviousPath()
+        {
+            if (string.IsNullOrWhiteSpace(CurrentPath))
+                return;
+            if (CurrentPath == _rootPath)
+                return;
+
+            var previousDirectory = System.IO.Directory.GetParent(CurrentPath);
+            CurrentPath = previousDirectory.FullName;
+
+            Update();
+        }
+
+        private void GetDirectories()
         {
             if (Directory.Exists(CurrentPath))
             {
@@ -135,7 +197,8 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                     FolderItem folder = new FolderItem
                     {
                         Name = Regex.Replace(Path.GetFileName(dir), @"^\d+\.\s*", ""),
-                        Path = dir
+                        Path = Path.GetFileName(dir),
+                        FullPath = dir
                     };
 
                     SubFolders.Add(folder);
@@ -143,6 +206,50 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                     
             }
             OnPropertyChanged(nameof(SubFolders));
+        }
+
+        private void LoadFamilies()
+        {
+            FolderFamilies.Clear();
+
+            if (!Directory.Exists(CurrentPath))
+                return;
+
+            var files = Directory.GetFiles(CurrentPath, "*.rfa");
+
+            foreach (var file in files)
+            {
+                FolderFamilies.Add(new FamilyItem(file, Path.Combine(CurrentPath, "Icons")));
+            }
+
+            OnPropertyChanged(nameof(FolderFamilies));
+        }
+
+        private void LoadFamilies(string search)
+        {
+            FolderFamilies.Clear();
+
+            if (!Directory.Exists(CurrentPath))
+                return;
+
+            var files = Directory.GetFiles(CurrentPath, "*.rfa");
+
+            // Filtra só os arquivos cujo caminho (ou nome) contenha o 'search'
+            var filteredFiles = files.Where(file => file.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+
+            foreach (var file in filteredFiles)
+            {
+                FolderFamilies.Add(new FamilyItem(file, Path.Combine(CurrentPath, "Icons")));
+            }
+        }
+
+        private void DownloadFamily(object parameter)
+        {
+            FamilyItem selectedFamily = parameter as FamilyItem;
+            string familyPath = selectedFamily.FilePath;
+
+            _downloadHandler.SetFamilyPath(selectedFamily.Name, familyPath);
+            _downloadEvent.Raise();
         }
     }
 }

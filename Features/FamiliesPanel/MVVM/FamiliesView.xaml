@@ -20,16 +20,19 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Crimson.xaml" />
+
+                <ResourceDictionary Source="../Styles/SearchBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BitmapImageConverter x:Key="BitmapImageConverter"/>
         </ResourceDictionary>
     </Page.Resources>
     
-    <Border Padding="15"
+    <Border Padding="10"
             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -38,11 +41,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-
             <!--Logo-->
             <StackPanel Orientation="Horizontal"
-             Grid.Row="0"
-             Grid.ColumnSpan="2">
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2">
 
                 <Image Source="{Binding EggIcon, Converter={StaticResource BitmapImageConverter},
                                         UpdateSourceTrigger=PropertyChanged}"
@@ -57,7 +59,7 @@
             <StackPanel Grid.Column="1"
             Grid.Row="0"
             Orientation="Horizontal"
-            FlowDirection="RightToLeft">
+            FlowDirection="RightToLeft" Margin="10 0">
                 
             <!--ToggleSwitch Tema Claro e Escuro-->
                 <mah:ToggleSwitch IsOn="{Binding IsDarkTheme}"
@@ -85,8 +87,8 @@
             <!--Fim ToggleSwitch Tema Claro e Escuro-->
 
                 <!--Config-->
-                <Button Command="{Binding ChangePathCommand}"
-                        Margin="15 0"
+                <Button Command="{Binding ChangeRootPathCommand}"
+                        Margin="10 0"
                         Background="Transparent" BorderBrush="Transparent"
                         Style="{DynamicResource MahApps.Styles.Button.Square}"
                         Cursor="Hand">
@@ -98,37 +100,108 @@
                            VerticalAlignment="Center"/>
                 </Button>
                 <!--Config-->
+                <Button Command="{Binding GoToHomeCommand}"
+                        Background="Transparent" BorderBrush="Transparent"
+                        Margin="0 0 10 0"
+                        Style="{DynamicResource MahApps.Styles.Button.Square}"
+                        Cursor="Hand">
 
+                    <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
+                            ConverterParameter='home-button.png'}"
+                           Height="24" Width="24"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           VerticalAlignment="Center"/>
+                </Button>
+
+                <Button Command="{Binding UpdateCommand}"
+                        Background="Transparent" BorderBrush="Transparent"
+                        Style="{DynamicResource MahApps.Styles.Button.Square}"
+                        Cursor="Hand">
+
+                    <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
+                                            ConverterParameter='update-button.png'}"
+                           Height="24" Width="24"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           VerticalAlignment="Center"/>
+                </Button>
             </StackPanel>
             <!--Stack Panel Menu Superior-->
-            
 
+            <Button Command="{Binding BackToPreviousPathCommand}"
+                    Grid.Row="1"
+                    Style="{DynamicResource MahApps.Styles.Button.Square}"
+                    HorizontalAlignment="Left" 
+                    Background="Transparent" BorderBrush="Transparent"
+                    Height="36" Width="36"
+                    Cursor="Hand">
+
+                <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
+                                        ConverterParameter='back-button.png'}"
+                       RenderOptions.BitmapScalingMode="HighQuality"
+                       VerticalAlignment="Center"/>
+            </Button>
+            
             <!--Scroll Pastas/Folders-->
-            <ScrollViewer Grid.Row="1"
+            <ScrollViewer Grid.Row="2"
                           Grid.Column="0"
                           VerticalScrollBarVisibility="Disabled">
-                
-                <ItemsControl ItemsSource="{Binding SubFolders}">
+
+                <ItemsControl Grid.Row="1"
+                              ItemsSource="{Binding SubFolders}"
+                              Padding="0 10 0 0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Margin="0 5"
-                                    Style="{DynamicResource MahApps.Styles.Button.Flat}">
-                                <TextBlock Text="{Binding Name}"
-                                           TextWrapping="Wrap"/>
-                            </Button>
+                            <Border Margin="0 5"
+                                    Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                    CornerRadius="5">
+                                
+                                <Button Command="{Binding DataContext.ChangeCurrentPathCommand, 
+                                                          RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding Path}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Flat}"
+                                        Background="Transparent">
+                                    
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}"
+                                               TextWrapping="Wrap"/>
+                                </Button>
+                                
+                            </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+
             </ScrollViewer>
             <!--Scroll Pastas/Folders-->
 
-            <!--Scroll Familias-->
-            <ScrollViewer Grid.Row="1" Grid.Column="1"
-                          VerticalScrollBarVisibility="Auto"
-                          HorizontalAlignment="Center">
 
-                <ItemsControl>
+            <Border Grid.Row="1" Grid.Column="1"
+                    Margin="10 10 0 10" CornerRadius="5" Background="#FFDADEE5"
+                    BorderBrush="#FFA1A7B3" BorderThickness="1">
+                <TextBox Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalAlignment="Stretch"
+                         VerticalContentAlignment="Center"
+                         MinWidth="100"
+                         Width="Auto"
+                         Background="Transparent" BorderBrush="Transparent"
+                         Foreground="Black"/>
+            </Border>
+            
+            <Border Grid.Row="2" Grid.Column="1"
+                    Margin="15 15 0 0"
+                    Background="#FFDADEE5"
+                    BorderBrush="#FFA1A7B3" BorderThickness="1"
+                    CornerRadius="5">
+                
+            <!--Scroll Familias-->
+            <ScrollViewer Grid.Row="2" Grid.Column="1"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="5 15 0 0"
+                          HorizontalAlignment="Stretch">
+
+                <ItemsControl ItemsSource="{Binding FolderFamilies}"
+                              HorizontalAlignment="Center"
+                              AlternationCount="1000">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>
@@ -137,13 +210,49 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="150"/>
+                            <Border MinHeight="175" Height="Auto" Width="150"
+                                    Margin="10 0 10 20"
+                                    Padding="10"
+                                    CornerRadius="5"
+                                    BorderThickness="0"
+                                    BorderBrush="Black"
+                                    Background="White">
+
+                                    <StackPanel>
+                                        <Image Source="{Binding ThumbnailPath}" 
+                                               Width="128" 
+                                               Height="128" 
+                                               Stretch="Uniform"/>
+
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="Black"
+                                                   TextWrapping="Wrap"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                                   TextAlignment="Center"/>
+                                        
+                                        <Button Command="{Binding DataContext.DownloadCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}"
+                                                HorizontalAlignment="Stretch" Height="10"
+                                                Margin="0 5 0 0"
+                                                Background="{DynamicResource MahApps.Brushes.AccentBase}">
+                                            
+                                            <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
+                                                                    ConverterParameter='download-button.png'}"
+                                                   Height="12" Width="12"
+                                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                                   VerticalAlignment="Center"/>
+                                            
+                                        </Button>
+                                    </StackPanel>
+                                
+                            </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
             </ScrollViewer>
             <!--Scroll Familias-->
+            </Border>
             
         </Grid>
     </Border>
