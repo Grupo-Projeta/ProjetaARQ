@@ -114,7 +114,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\FamiliesPanel\Styles\AccentBorderStyle.xaml">
+    <Page Include="Features\FamiliesPanel\Styles\FlatButtonMod.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

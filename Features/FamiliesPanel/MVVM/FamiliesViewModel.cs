@@ -95,7 +95,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             {
                 if (_search != value)
                 {
-                    _search = value;
+                    _search = value.ToUpper();
                     OnPropertyChanged();
                     LoadFamilies(_search);
                 }
@@ -196,7 +196,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                 {
                     FolderItem folder = new FolderItem
                     {
-                        Name = Regex.Replace(Path.GetFileName(dir), @"^\d+\.\s*", ""),
+                        Name = Regex.Replace(Path.GetFileName(dir), @"^\d+\.\s*", "").ToUpper(),
                         Path = Path.GetFileName(dir),
                         FullPath = dir
                     };

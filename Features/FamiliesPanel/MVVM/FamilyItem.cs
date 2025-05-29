@@ -16,7 +16,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
         public FamilyItem(string filePath, string thumbsDirectory)
         {
             FilePath = filePath;
-            Name = Path.GetFileNameWithoutExtension(filePath);
+            Name = Path.GetFileNameWithoutExtension(filePath).ToUpper();
 
             string thumbPath = Path.Combine(thumbsDirectory, Name + ".png");
             ThumbnailPath = File.Exists(thumbPath) ? thumbPath : Path.Combine(thumbsDirectory, "default.png");
