@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -31,18 +31,174 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <HintPath>packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
+      <HintPath>packages\MahApps.Metro.2.4.10\lib\net47\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RevitAPI">
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddinApplication.cs" />
+    <Compile Include="Core\Services\AssemblyServices.cs" />
+    <Compile Include="Core\Services\BitmapConverter.cs" />
+    <Compile Include="Core\UI\Converters\BitmapImageConverter.cs" />
+    <Compile Include="Core\UI\ObservableObject.cs" />
+    <Compile Include="Core\UI\RelayCommand.cs" />
+    <Compile Include="Features\FamiliesPanel\Events\DownloadFamilyEvent.cs" />
+    <Compile Include="Features\FamiliesPanel\MVVM\FamilyItem.cs" />
+    <Compile Include="Features\FamiliesPanel\MVVM\FolderItem.cs" />
+    <Compile Include="Features\FamiliesPanel\Services\OverLoadOption.cs" />
+    <Compile Include="Features\Test\Commands\DevButton.cs" />
+    <Compile Include="Features\Test\MVVM\DevView.xaml.cs">
+      <DependentUpon>DevView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
+    <Compile Include="Revit\UI\DockablePaneManager.cs" />
+    <Compile Include="Features\FamiliesPanel\Commands\FamiliesPaneButton.cs" />
+    <Compile Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml.cs">
+      <DependentUpon>FamiliesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\FamiliesPanel\MVVM\FamiliesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Revit\Base\RevitContext.cs" />
+    <Compile Include="Revit\UI\Interfaces\IDockablePaneManager.cs" />
+    <Compile Include="Revit\UI\Interfaces\IRibbonManager.cs" />
+    <Compile Include="Revit\UI\RibbonManager.cs" />
+    <Compile Include="Revit\UI\UIBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="ProjetaARQ.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\FamiliesPanel\Styles\FlatButtonMod.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Features\FamiliesPanel\Styles\SearchBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Test\MVVM\DevView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Icons\showroom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\moon-theme.png" />
+    <EmbeddedResource Include="Common\Images\sun-theme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\eggprojeta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\eggprojeta-small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\eggprojeta-darktheme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\config-steam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\back-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\home-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\update-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\download-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>REM Define os caminhos corretamente
+
+SET LOCAL_TARGET=$(ProjectDir)$(ProjectName)
+
+SET REVIT_ADDINS=%25AppData%25\Autodesk\Revit\Addins\2024
+
+
+
+REM Garante que a pasta de destino exista antes da cópia
+
+if not exist "%25LOCAL_TARGET%25" mkdir "%25LOCAL_TARGET%25"
+
+
+
+REM Garante que a pasta do Revit Addins exista antes da cópia
+if not exist "%25REVIT_ADDINS%25" mkdir "%25REVIT_ADDINS%25"
+
+
+
+REM Copia todas as DLLs geradas para a pasta dentro do projeto, sem subpastas
+
+xcopy /Y "$(TargetDir)*.dll" "%25LOCAL_TARGET%25"
+
+
+
+REM Copia a pasta BaseOffice para o diretório de Addins do Revit
+
+xcopy /Y /E /I "%25LOCAL_TARGET%25" "%25REVIT_ADDINS%25\$(ProjectName)"
+
+
+
+REM Copia o arquivo .addin para o diretório de Addins do Revit
+
+copy /Y "$(ProjectDir)$(ProjectName).addin" "%25REVIT_ADDINS%25"
+
+
+
+REM Copia o arquivo .addin para a pasta do projeto
+
+copy /Y "$(ProjectDir)$(ProjectName).addin" "%25LOCAL_TARGET%25"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
