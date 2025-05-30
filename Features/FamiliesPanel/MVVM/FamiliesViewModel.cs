@@ -8,13 +8,13 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 {
     internal class FamiliesViewModel : ObservableObject
     {
         public ObservableCollection<FolderItem> SubFolders { get; set; } = new ObservableCollection<FolderItem>();
+        public ObservableCollection<FolderItem> SelectedSubFolders { get; set; } = new ObservableCollection<FolderItem>();
         public ObservableCollection<FamilyItem> FolderFamilies { get; set; } = new ObservableCollection<FamilyItem>();
 
         private readonly DownloadFamilyEvent _downloadHandler;
@@ -157,12 +157,13 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
         private void ChangeCurrentPath(string currentPath, object parameter)
         {
-            CurrentPath = currentPath + "\\" + (parameter as string);
+            CurrentPath = Path.Combine(currentPath, parameter as string);
             Update();
         }
         private void Update()
         {
             GetDirectories();
+            GetSelectedDirectories();
             LoadFamilies();
         }
 
@@ -206,6 +207,27 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                     
             }
             OnPropertyChanged(nameof(SubFolders));
+        }
+
+        private void GetSelectedDirectories()
+        {
+            SelectedSubFolders.Clear();
+            if (string.IsNullOrWhiteSpace(CurrentPath) || CurrentPath == _rootPath)
+                return;
+                
+            string relativePath = CurrentPath;
+            while (relativePath != _rootPath)
+            {
+                FolderItem folder = new FolderItem
+                {
+                    Name = Regex.Replace(Path.GetFileName(relativePath), @"^\d+\.\s*", "").ToUpper(),
+                    Path = Path.GetFileName(relativePath),
+                    FullPath = relativePath
+                };
+                SelectedSubFolders.Insert(0, folder);
+
+                relativePath = Directory.GetParent(relativePath).FullName;
+            }
         }
 
         private void LoadFamilies()

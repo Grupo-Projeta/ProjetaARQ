@@ -39,7 +39,7 @@
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="0.5*" MaxWidth="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -146,29 +146,48 @@
             <!--Scroll Pastas/Folders-->
             <ScrollViewer Grid.Row="2"
                           Grid.Column="0"
-                          VerticalScrollBarVisibility="Disabled">
+                          VerticalScrollBarVisibility="Hidden"
+                          Padding="0 15 0 0">
+                
+                <StackPanel Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding SelectedSubFolders}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button IsEnabled="False"
+                                        Margin="0 0 0 5"
+                                        Style="{StaticResource FlatButtonMod}"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Border}"
+                                        BorderBrush="Black" BorderThickness="1">
 
-                <ItemsControl Grid.Row="1"
-                              ItemsSource="{Binding SubFolders}"
-                              Padding="0 10 0 0">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               TextWrapping="WrapWithOverflow"
+                                               TextAlignment="Center"/>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                    <ItemsControl ItemsSource="{Binding SubFolders}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.ChangeCurrentPathCommand, 
+                                                  RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        Margin="0 0 0 10"
+                                        CommandParameter="{Binding Path}"
+                                        Style="{StaticResource FlatButtonMod}"
+                                        BorderBrush="Black" BorderThickness="1">
 
-                            <Button Command="{Binding DataContext.ChangeCurrentPathCommand, 
-                                              RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    Margin="0 5"
-                                    CommandParameter="{Binding Path}"
-                                    Style="{StaticResource FlatButtonMod}"
-                                    BorderBrush="Black" BorderThickness="1">
-
-                                <TextBlock Text="{Binding Name}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}"
-                                           TextWrapping="Wrap"/>
-                            </Button>
-                            
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}"
+                                               TextWrapping="WrapWithOverflow"
+                                               TextAlignment="Center"/>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                </StackPanel>
 
             </ScrollViewer>
             <!--Scroll Pastas/Folders-->
@@ -223,24 +242,25 @@
                                                 Stretch="Uniform"/>
 
                                         <TextBlock Text="{Binding Name}"
-                                                    Foreground="Black"
-                                                    TextWrapping="Wrap"
-                                                    HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                                                    TextAlignment="Center"/>
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   TextWrapping="Wrap"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                                   TextAlignment="Center"/>
 
                                         <Button Grid.Row="1"
-                                                    Command="{Binding DataContext.DownloadCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                    CommandParameter="{Binding}"
-                                                    HorizontalAlignment="Stretch" Height="10"
-                                                    Margin="0 5 0 0"
-                                                    Background="{DynamicResource MahApps.Brushes.AccentBase}"
-                                                    BorderBrush="Black" BorderThickness="1">
+                                                Command="{Binding DataContext.DownloadCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}"
+                                                HorizontalAlignment="Stretch" Height="10"
+                                                Margin="0 5 0 0"
+                                                Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                                BorderBrush="Black" BorderThickness="1">
 
                                             <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
-                                                       ConverterParameter='download-button.png'}"
-                                                       Height="12" Width="12"
-                                                       RenderOptions.BitmapScalingMode="HighQuality"
-                                                       VerticalAlignment="Center"/>
+                                                   ConverterParameter='download-button.png'}"
+                                                   Height="12" Width="12"
+                                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                                   VerticalAlignment="Center"/>
 
                                         </Button>
                                     </StackPanel>
