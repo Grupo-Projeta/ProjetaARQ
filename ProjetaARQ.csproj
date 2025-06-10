@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
     <Compile Include="Features\WordExport\Services\FileHandler.cs" />
+    <Compile Include="Features\WordExport\Services\WordEditor.cs" />
     <Compile Include="Revit\UI\DockablePaneManager.cs" />
     <Compile Include="Features\FamiliesPanel\Commands\FamiliesPaneButton.cs" />
     <Compile Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml.cs">
