@@ -36,7 +36,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             }
         }
 
-        private string _rootPath = "B:\\005. Implementação\\Arquitetura e Urbanismo\\Fernanda Farah\\01. Criação de Famílias\\02. Famílias para Clickup\\01. Portas";
+        private string _rootPath;
 
         private string _currentPath;
         public string CurrentPath
@@ -114,6 +114,9 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
         public FamiliesViewModel()
         {
+            _rootPath = GetRootPath();
+            Console.WriteLine(_rootPath);
+
             _downloadHandler = new DownloadFamilyEvent();
             _downloadEvent = ExternalEvent.Create(_downloadHandler);
 
@@ -128,6 +131,15 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             Update();
         }
 
+        private string GetRootPath()
+        {
+            string projetaPath = @"\\192.168.0.250\GrupoProjeta$\Engenharia\QUALIDADE";
+
+            if (Directory.Exists(projetaPath))
+                return projetaPath;
+
+            return null;
+        }
         private string ChangeRootPath(string rootPath)
         {
             var dialog = new CommonOpenFileDialog
