@@ -134,7 +134,10 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
         private string GetRootPath()
         {
             string projetaPath = @"\\192.168.0.250\GrupoProjeta$\Engenharia\QUALIDADE";
+            if (Directory.Exists(projetaPath))
+                return projetaPath;
 
+            projetaPath = @"\\10.0.0.251\GrupoProjeta$\Engenharia\QUALIDADE";
             if (Directory.Exists(projetaPath))
                 return projetaPath;
 
