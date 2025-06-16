@@ -15,14 +15,15 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
         public string FilePath { get; set; }
         public string ThumbnailPath { get; set; }
 
-        public FamilyItem(string filePath, string thumbsDirectory)
+        public FamilyItem(string filePath)
         {
             FilePath = filePath;
             Name = Path.GetFileNameWithoutExtension(filePath);
             UpperName = Name.ToUpper();
 
-            string thumbPath = Path.Combine(thumbsDirectory, Name + ".png");
-            ThumbnailPath = File.Exists(thumbPath) ? thumbPath : Path.Combine(thumbsDirectory, "default.png");
+            // MODO ANTIGO
+            //string thumbPath = Path.Combine(thumbsDirectory, Name + ".png");
+            //ThumbnailPath = File.Exists(thumbPath) ? thumbPath : Path.Combine(thumbsDirectory, "default.png");
         }
     }
 }

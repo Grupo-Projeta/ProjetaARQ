@@ -133,11 +133,11 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
         private string GetRootPath()
         {
-            string projetaPath = @"\\192.168.0.250\GrupoProjeta$\Engenharia\QUALIDADE";
+            string projetaPath = @"\\192.168.0.250\GrupoProjeta$\Engenharia\QUALIDADE\11 - ARQUIVOS BASE DAS DISCIPLINAS\SETOR DE BIM\FAMÍLIAS BIM";
             if (Directory.Exists(projetaPath))
                 return projetaPath;
 
-            projetaPath = @"\\10.0.0.251\GrupoProjeta$\Engenharia\QUALIDADE";
+            projetaPath = @"\\10.0.0.251\GrupoProjeta$\Engenharia\QUALIDADE\11 - ARQUIVOS BASE DAS DISCIPLINAS\SETOR DE BIM\FAMÍLIAS BIM";
             if (Directory.Exists(projetaPath))
                 return projetaPath;
 
@@ -210,6 +210,9 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
                 foreach (string dir in dirs)
                 {
+                    if (Path.GetFileName(dir).ToUpper() == "ICONS")
+                        continue;
+
                     FolderItem folder = new FolderItem
                     {
                         Name = Regex.Replace(Path.GetFileName(dir), @"^\d+\.\s*", "").ToUpper(),
@@ -256,7 +259,9 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
             foreach (var file in files)
             {
-                FolderFamilies.Add(new FamilyItem(file, Path.Combine(CurrentPath, "Icons")));
+                FamilyItem family = new FamilyItem(file);
+                family.ThumbnailPath = BackPropagateIcons(family);
+                FolderFamilies.Add(family);
             }
 
             OnPropertyChanged(nameof(FolderFamilies));
@@ -276,7 +281,9 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
             foreach (var file in filteredFiles)
             {
-                FolderFamilies.Add(new FamilyItem(file, Path.Combine(CurrentPath, "Icons")));
+                FamilyItem family = new FamilyItem(file);
+                family.ThumbnailPath = BackPropagateIcons(family);
+                FolderFamilies.Add(family);
             }
         }
 
@@ -287,6 +294,31 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
             _downloadHandler.SetFamilyPath(selectedFamily.Name, familyPath);
             _downloadEvent.Raise();
+        }
+
+        private string BackPropagateIcons(FamilyItem family )
+        {
+            string relativePath = CurrentPath;
+            string iconPath;
+            string defaultIconPath;
+
+            while (relativePath != _rootPath)
+            {
+                string iconsDirectory = Path.Combine(relativePath, "Icons");
+
+                if (Directory.Exists(iconsDirectory))
+                {
+                    iconPath = Path.Combine(iconsDirectory, family.Name + ".png");
+                    if (File.Exists(iconPath))
+                        return iconPath;
+
+                    defaultIconPath = Path.Combine(iconsDirectory, "default.png");
+                    if (File.Exists(defaultIconPath))
+                        return defaultIconPath;
+                }
+                relativePath = Directory.GetParent(relativePath).FullName;
+            }
+            return string.Empty;
         }
     }
 }

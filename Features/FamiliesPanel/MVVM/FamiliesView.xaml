@@ -91,9 +91,20 @@
                 <!--Config-->
                 <Button Command="{Binding ChangeRootPathCommand}"
                         Margin="10 0"
-                        Background="Transparent" BorderBrush="Transparent"
-                        Style="{DynamicResource MahApps.Styles.Button.Square}"
-                        Cursor="Hand">
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Cursor="Hand"
+                        IsHitTestVisible="False">
+                    
+                    <Button.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Square}">
+                            <Style.Triggers>
+                                <Trigger Property="IsHitTestVisible" Value="False">
+                                    <Setter Property="Opacity" Value="0.3"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
 
                     <Image Source="{Binding Converter={StaticResource BitmapImageConverter}, 
                                             ConverterParameter='config-steam.png'}"
