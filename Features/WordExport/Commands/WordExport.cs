@@ -29,6 +29,7 @@ namespace ProjetaARQ.Features.WordExport.Commands
                 editor.ReplaceTextInContentControl("teste", "funfando");
                 editor.ReplaceTextInContentControl("projeteDeAguaFria", "Novo Texto");
                 editor.ReplaceTextInContentControl("projetoArquitetonico", "projeto de urbanismo");
+                editor.ReplaceImage("consorcio", "ProjetaARQ.Common.Images.sun-theme.png");
             }
 
 
