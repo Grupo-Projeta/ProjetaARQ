@@ -50,32 +50,6 @@ namespace ProjetaARQ.Features.WordExport.Services
             }
         }
 
-        //public void ReplaceTextInContentControl(string tag, string newText)
-        //{
-        //    // Procura tanto por blocos quanto por runs
-        //    var sdt = _mainPart.Document.Descendants<SdtElement>()
-        //                .FirstOrDefault(e => e.SdtProperties?.GetFirstChild<Tag>()?.Val?.Value == tag);
-
-        //    if (sdt is SdtBlock block)
-        //    {
-        //        block.SdtContentBlock.RemoveAllChildren();
-        //        block.SdtContentBlock.AppendChild(new Paragraph(
-        //            new Run(
-        //                new RunProperties(new Highlight { Val = HighlightColorValues.Green }),
-        //                new Text(newText)
-        //            )));
-        //    }
-        //    else if (sdt is SdtRun run)
-        //    {
-        //        run.SdtContentRun.RemoveAllChildren();
-        //        run.SdtContentRun.AppendChild(
-        //            new Run(
-        //                new RunProperties(new Highlight { Val = HighlightColorValues.Green }),
-        //                new Text(newText)
-        //            ));
-        //    }
-        //}
-
         public void ReplaceTextInsideRun(string tag, string oldWord, string newWord)
         {
             var sdt = _mainPart.Document.Descendants<SdtRun>()
