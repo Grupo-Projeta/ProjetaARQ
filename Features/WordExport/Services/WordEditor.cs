@@ -1,4 +1,8 @@
-﻿using System;
+﻿using DFOW = DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Drawing.Wordprocessing;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,8 +10,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace ProjetaARQ.Features.WordExport.Services
 {
@@ -79,48 +81,46 @@ namespace ProjetaARQ.Features.WordExport.Services
             }
         }
 
-        public void ReplaceImage(string tag, string nomeCompletoDoRecurso)
+        public void ReplaceImage(string altText, string imageResourceName)
         {
-            // Pega a assembly atual para acessar os recursos embutidos
-            var assembly = Assembly.GetExecutingAssembly();
-
-            // Tenta obter o fluxo (stream) do recurso. Se não encontrar, interrompe a execução.
-            using (Stream stream = assembly.GetManifestResourceStream(nomeCompletoDoRecurso))
+            // 1. Encontra o elemento de Desenho (Drawing) que corresponde à imagem
+            Drawing drawing = _mainPart.Document.Body.Descendants<Drawing>().FirstOrDefault(d =>
             {
-                if (stream == null)
-                {
-                    // O recurso não foi encontrado. Verifique se o nome está correto e se a Build Action é "Embedded Resource".
-                    return;
-                }
+                // O Texto Alternativo fica na propriedade "Description" do DocProperties
+                DocProperties docProperties = d.Descendants<DocProperties>().FirstOrDefault();
 
-                var sdt = _mainPart.Document.Body.Descendants<SdtElement>()
-                    .FirstOrDefault(e => (e.SdtProperties.GetFirstChild<Tag>()?.Val?.Value ?? "") == tag);
+                // VERSÃO CORRIGIDA:
+                // Verifica de forma segura se Description e seu valor existem antes de comparar.
+                return docProperties?.Description?.Value == altText;
+            });
 
-                if (sdt == null) return;
+            if (drawing == null) return; // Imagem com o Alt Text não encontrada
 
-                var blip = sdt.Descendants<DocumentFormat.OpenXml.Drawing.Blip>().FirstOrDefault();
-                if (blip == null) return;
+            // 2. Encontra o Blip dentro do Desenho
+            var blip = drawing.Descendants<DFOW.Blip>().FirstOrDefault();
+            if (blip == null) return;
 
-                // 1. Guarda o ID da imagem antiga
-                string oldImagePartId = blip.Embed;
+            // 3. O resto do processo é o mesmo que já fizemos:
+            // Pega o ID antigo, adiciona a nova imagem, pega o novo ID e atualiza o Blip.
 
-                // 2. Adiciona a nova imagem a partir do STREAM do recurso
-                ImagePart novaImagePart = _mainPart.AddImagePart(ImagePartType.Png);
+            string oldImagePartId = blip.Embed;
+
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(imageResourceName))
+            {
+                if (stream == null) return;
+
+                ImagePart novaImagePart = _mainPart.AddImagePart(ImagePartType.Png); // Adapte o tipo
                 novaImagePart.FeedData(stream);
                 string novoIdRelacionamento = _mainPart.GetIdOfPart(novaImagePart);
 
-                // 3. Substitui a referência no Blip
                 blip.Embed = novoIdRelacionamento;
 
-                //// 4. Verifica se a imagem antiga ainda está sendo usada
-                //int usosRestantes = _mainPart.Document.Body.Descendants<DocumentFormat.OpenXml.Drawing.Blip>()
-                //                           .Count(b => b.Embed == oldImagePartId);
-
-                //if (usosRestantes == 0)
-                //{
-                //    // 5. Apaga a parte da imagem antiga do pacote
-                //    _mainPart.DeletePart(_mainPart.GetPartById(oldImagePartId));
-                //}
+                // Apaga a parte da imagem antiga se ela não for mais usada
+                if (_mainPart.Document.Body.Descendants<DFOW.Blip>().Count(b => b.Embed == oldImagePartId) == 0)
+                {
+                    _mainPart.DeletePart(_mainPart.GetPartById(oldImagePartId));
+                }
             }
         }
 
