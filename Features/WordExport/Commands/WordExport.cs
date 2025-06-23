@@ -25,11 +25,13 @@ namespace ProjetaARQ.Features.WordExport.Commands
 
             using (WordEditor editor = new WordEditor(savePath))
             {
-
-                editor.ReplaceTextInContentControl("teste", "funfando");
-                editor.ReplaceTextInContentControl("projeteDeAguaFria", "Novo Texto");
-                editor.ReplaceTextInContentControl("projetoArquitetonico", "projeto de urbanismo");
-                editor.ReplaceImage("consorcio", "ProjetaARQ.Common.Images.sun-theme.png");
+                editor.ReplaceTextInContentControl("Nome Do Projeto", "ESCOLA CEMPA");
+                editor.ReplaceTextInContentControl("Projetista", "Ricardo Braga");
+                editor.ReplaceTextInContentControl("Lista De Desenhos", "TITULO TESTE");
+                editor.ReplaceTextInContentControl("Titulo Desenho", "PLANTA BAIXA TESTE");
+                editor.ReplaceTextInContentControl("MES ANO", "JUNHO/2025");
+                editor.ReplaceImage("Elab", "ProjetaARQ.Features.WordExport.Resources.diamante.png");
+                editor.ReplaceImage("consorcio", "ProjetaARQ.Features.WordExport.Resources.diamante.png");
             }
 
 

@@ -38,21 +38,79 @@ namespace ProjetaARQ.Features.WordExport.Services
 
             if (sdt != null)
             {
-                // Limpa o conteúdo anterior
+                ParagraphProperties paragraphProperties = sdt.Descendants<ParagraphProperties>().FirstOrDefault()?.CloneNode(true) as ParagraphProperties;
+                RunProperties runProperties = sdt.Descendants<RunProperties>().FirstOrDefault()?.CloneNode(true) as RunProperties;
+
                 sdt.SdtContentBlock.RemoveAllChildren();
 
-                // Cria novo parágrafo com texto destacado
-                var run = new Run(
-                    new RunProperties(
-                        new Highlight { Val = HighlightColorValues.Green }
-                    ),
-                    new Text(newText)
-                );
+                var newRun = new Run();
 
-                var paragraph = new Paragraph(run);
-                sdt.SdtContentBlock.AppendChild(paragraph);
+                if (runProperties != null)
+                {
+                    newRun.Append(runProperties);
+                }
+                else
+                {
+                    newRun.Append(new RunProperties());
+                }
+
+                newRun.RunProperties.Append(new DocumentFormat.OpenXml.Wordprocessing.Highlight { Val = HighlightColorValues.Green });
+                newRun.Append(new Text(newText));
+
+                var newParagraph = new Paragraph();
+
+                if (paragraphProperties != null)
+                {
+                    newParagraph.Append(paragraphProperties);
+                }
+
+                newParagraph.Append(newRun);
+
+                sdt.SdtContentBlock.AppendChild(newParagraph);
             }
         }
+
+        //public void ReplaceTextInContentControl(string tag, string newText)
+        //{
+        //    // A busca genérica está correta, ela encontra qualquer tipo de controle com a tag
+        //    var sdt = _mainPart.Document.Body.Descendants<SdtElement>()
+        //        .FirstOrDefault(e => (e.SdtProperties.GetFirstChild<Tag>()?.Val?.Value ?? "") == tag);
+
+        //    if (sdt == null) return;
+
+        //    // Agora, verificamos qual é o tipo do controle que encontramos
+        //    if (sdt is SdtBlock block)
+        //    {
+        //        // Se for um SdtBlock (nível de parágrafo), usamos a lógica que já tínhamos
+        //        ParagraphProperties pPr = block.Descendants<ParagraphProperties>().FirstOrDefault()?.CloneNode(true) as ParagraphProperties;
+        //        RunProperties rPr = block.Descendants<RunProperties>().FirstOrDefault()?.CloneNode(true) as RunProperties;
+
+        //        block.SdtContentBlock.RemoveAllChildren();
+
+        //        var newRun = new Run();
+        //        if (rPr != null) newRun.Append(rPr);
+        //        newRun.Append(new Text(newText));
+
+        //        var newParagraph = new Paragraph();
+        //        if (pPr != null) newParagraph.Append(pPr);
+        //        newParagraph.Append(newRun);
+
+        //        block.SdtContentBlock.Append(newParagraph);
+        //    }
+        //    else if (sdt is SdtRun run)
+        //    {
+        //        // Se for um SdtRun (nível de texto "inline"), a lógica é mais simples
+        //        RunProperties rPr = run.Descendants<RunProperties>().FirstOrDefault()?.CloneNode(true) as RunProperties;
+
+        //        run.SdtContentRun.RemoveAllChildren();
+
+        //        var newRun = new Run();
+        //        if (rPr != null) newRun.Append(rPr);
+        //        newRun.Append(new Text(newText));
+
+        //        run.SdtContentRun.Append(newRun);
+        //    }
+        //}
 
         public void ReplaceTextInsideRun(string tag, string oldWord, string newWord)
         {
@@ -116,11 +174,11 @@ namespace ProjetaARQ.Features.WordExport.Services
 
                 blip.Embed = novoIdRelacionamento;
 
-                // Apaga a parte da imagem antiga se ela não for mais usada
-                if (_mainPart.Document.Body.Descendants<DFOW.Blip>().Count(b => b.Embed == oldImagePartId) == 0)
-                {
-                    _mainPart.DeletePart(_mainPart.GetPartById(oldImagePartId));
-                }
+                //// Apaga a parte da imagem antiga se ela não for mais usada
+                //if (_mainPart.Document.Body.Descendants<DFOW.Blip>().Count(b => b.Embed == oldImagePartId) == 0)
+                //{
+                //    _mainPart.DeletePart(_mainPart.GetPartById(oldImagePartId));
+                //}
             }
         }
 

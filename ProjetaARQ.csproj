@@ -175,6 +175,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Common\Images\download-button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Features\WordExport\Resources\diamante.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\metaverso.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\minas.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\objetiva.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\pitagoras.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\projeta.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\vitoria.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>REM Define os caminhos corretamente
