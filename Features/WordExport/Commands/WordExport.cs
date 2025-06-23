@@ -28,8 +28,12 @@ namespace ProjetaARQ.Features.WordExport.Commands
                 editor.ReplaceTextInContentControl("Nome Do Projeto", "ESCOLA CEMPA");
                 editor.ReplaceTextInContentControl("Projetista", "Ricardo Braga");
                 editor.ReplaceTextInContentControl("Lista De Desenhos", "TITULO TESTE");
-                editor.ReplaceTextInContentControl("Titulo Desenho", "PLANTA BAIXA TESTE");
+                editor.ReplaceTextInContentControl("TITULO DESENHO", "PLANTA BAIXA TESTE");
                 editor.ReplaceTextInContentControl("MES ANO", "JUNHO/2025");
+                editor.ReplaceTextInContentControl("Nome Obra", "NOME DA OBRA MODIFICADO");
+                editor.DeleteParagraphByContentControlTag("AdotadasDois");
+                editor.DeleteSectionByTag("AdotadasUm");
+
                 editor.ReplaceImage("Elab", "ProjetaARQ.Features.WordExport.Resources.diamante.png");
                 editor.ReplaceImage("consorcio", "ProjetaARQ.Features.WordExport.Resources.diamante.png");
             }

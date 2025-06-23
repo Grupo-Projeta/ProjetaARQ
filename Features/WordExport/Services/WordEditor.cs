@@ -33,15 +33,18 @@ namespace ProjetaARQ.Features.WordExport.Services
 
         public void ReplaceTextInContentControl(string tag, string newText)
         {
-            var sdt = _mainPart.Document.Descendants<SdtBlock>()
+            var sdt = _mainPart.Document.Descendants<SdtElement>()
                 .FirstOrDefault(e => (e.SdtProperties.GetFirstChild<Tag>()?.Val?.Value ?? "") == tag);
 
-            if (sdt != null)
+            if (sdt == null) return;
+
+            // Agora, verificamos qual é o tipo do controle que encontramos
+            if (sdt is SdtBlock block)
             {
                 ParagraphProperties paragraphProperties = sdt.Descendants<ParagraphProperties>().FirstOrDefault()?.CloneNode(true) as ParagraphProperties;
                 RunProperties runProperties = sdt.Descendants<RunProperties>().FirstOrDefault()?.CloneNode(true) as RunProperties;
 
-                sdt.SdtContentBlock.RemoveAllChildren();
+                block.SdtContentBlock.RemoveAllChildren();
 
                 var newRun = new Run();
 
@@ -66,52 +69,37 @@ namespace ProjetaARQ.Features.WordExport.Services
 
                 newParagraph.Append(newRun);
 
-                sdt.SdtContentBlock.AppendChild(newParagraph);
+                block.SdtContentBlock.AppendChild(newParagraph);
+            }
+
+            else if (sdt is SdtRun run)
+            {
+                // Se for um SdtRun (nível de texto "inline"), a lógica é mais simples
+                RunProperties runProperties = run.Descendants<RunProperties>().FirstOrDefault()?.CloneNode(true) as RunProperties;
+
+                run.SdtContentRun.RemoveAllChildren();
+
+                var newRun = new Run();
+
+                if (runProperties != null)
+                {
+                    newRun.Append(runProperties);
+                }
+                else
+                {
+                    newRun.Append(new RunProperties());
+                }
+
+                newRun.RunProperties.Append(new DocumentFormat.OpenXml.Wordprocessing.Highlight { Val = HighlightColorValues.Green });
+                newRun.Append(new Text(newText));
+
+                run.SdtContentRun.Append(newRun);
             }
         }
 
-        //public void ReplaceTextInContentControl(string tag, string newText)
-        //{
-        //    // A busca genérica está correta, ela encontra qualquer tipo de controle com a tag
-        //    var sdt = _mainPart.Document.Body.Descendants<SdtElement>()
-        //        .FirstOrDefault(e => (e.SdtProperties.GetFirstChild<Tag>()?.Val?.Value ?? "") == tag);
-
-        //    if (sdt == null) return;
-
-        //    // Agora, verificamos qual é o tipo do controle que encontramos
-        //    if (sdt is SdtBlock block)
-        //    {
-        //        // Se for um SdtBlock (nível de parágrafo), usamos a lógica que já tínhamos
-        //        ParagraphProperties pPr = block.Descendants<ParagraphProperties>().FirstOrDefault()?.CloneNode(true) as ParagraphProperties;
-        //        RunProperties rPr = block.Descendants<RunProperties>().FirstOrDefault()?.CloneNode(true) as RunProperties;
-
-        //        block.SdtContentBlock.RemoveAllChildren();
-
-        //        var newRun = new Run();
-        //        if (rPr != null) newRun.Append(rPr);
-        //        newRun.Append(new Text(newText));
-
-        //        var newParagraph = new Paragraph();
-        //        if (pPr != null) newParagraph.Append(pPr);
-        //        newParagraph.Append(newRun);
-
-        //        block.SdtContentBlock.Append(newParagraph);
-        //    }
-        //    else if (sdt is SdtRun run)
-        //    {
-        //        // Se for um SdtRun (nível de texto "inline"), a lógica é mais simples
-        //        RunProperties rPr = run.Descendants<RunProperties>().FirstOrDefault()?.CloneNode(true) as RunProperties;
-
-        //        run.SdtContentRun.RemoveAllChildren();
-
-        //        var newRun = new Run();
-        //        if (rPr != null) newRun.Append(rPr);
-        //        newRun.Append(new Text(newText));
-
-        //        run.SdtContentRun.Append(newRun);
-        //    }
-        //}
-
+        //DEPRECATED
+        //DEPRECATED
+        //DEPRECATED
         public void ReplaceTextInsideRun(string tag, string oldWord, string newWord)
         {
             var sdt = _mainPart.Document.Descendants<SdtRun>()
@@ -137,6 +125,64 @@ namespace ProjetaARQ.Features.WordExport.Services
                     }
                 }
             }
+        }
+
+        public void DeleteSectionByTag(string tag)
+        {
+            // Usa nosso método de busca universal para encontrar o controle
+            SdtElement sdt = FindSdtElementByTag(tag);
+
+            // Se encontrou, simplesmente remove o elemento inteiro.
+            // Isso apaga o controle e tudo o que estiver dentro dele.
+            sdt?.Remove();
+        }
+
+        public void DeleteParagraphByContentControlTag(string tag)
+        {
+            // 1. Encontra o Controle de Conteúdo (SdtElement) em qualquer parte do documento.
+            // Estamos usando o mesmo método auxiliar de busca universal que criamos antes.
+            SdtElement sdt = FindSdtElementByTag(tag);
+
+            if (sdt != null)
+            {
+                // 2. Encontra o Parágrafo 'pai' que contém este controle.
+                // O método Ancestors<> sobe na hierarquia do XML para achar o primeiro ancestral do tipo especificado.
+                Paragraph paragraphToDelete = sdt.Ancestors<Paragraph>().FirstOrDefault();
+
+                if (paragraphToDelete != null)
+                {
+                    // 3. Remove o parágrafo inteiro do documento.
+                    paragraphToDelete.Remove();
+                }
+            }
+        }
+
+        private SdtElement FindSdtElementByTag(string tag)
+        {
+            // 1. Procura no corpo principal do documento
+            SdtElement sdt = _mainPart.Document.Body.Descendants<SdtElement>()
+                .FirstOrDefault(e => (e.SdtProperties.GetFirstChild<Tag>()?.Val?.Value ?? "") == tag);
+
+            if (sdt != null) return sdt;
+
+            // 2. Se não encontrou, procura em todos os cabeçalhos (headers)
+            foreach (var headerPart in _mainPart.HeaderParts)
+            {
+                sdt = headerPart.Header.Descendants<SdtElement>()
+                    .FirstOrDefault(e => (e.SdtProperties.GetFirstChild<Tag>()?.Val?.Value ?? "") == tag);
+                if (sdt != null) return sdt;
+            }
+
+            // 3. Se ainda não encontrou, procura em todos os rodapés (footers)
+            foreach (var footerPart in _mainPart.FooterParts)
+            {
+                sdt = footerPart.Footer.Descendants<SdtElement>()
+                    .FirstOrDefault(e => (e.SdtProperties.GetFirstChild<Tag>()?.Val?.Value ?? "") == tag);
+                if (sdt != null) return sdt;
+            }
+
+            // Retorna nulo se não encontrar em lugar nenhum
+            return null;
         }
 
         public void ReplaceImage(string altText, string imageResourceName)
