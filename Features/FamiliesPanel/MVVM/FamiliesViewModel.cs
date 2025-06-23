@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.UI;
 using ControlzEx.Theming;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Shell;
+using ProjetaARQ.Core.Services;
 using ProjetaARQ.Core.UI;
 using ProjetaARQ.Features.FamiliesPanel.Events;
 using System;
@@ -8,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
 
 namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 {
@@ -36,7 +39,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             }
         }
 
-        private string _rootPath = "B:\\005. Implementação\\Arquitetura e Urbanismo\\Fernanda Farah\\01. Criação de Famílias\\02. Famílias para Clickup\\01. Portas";
+        private string _rootPath;
 
         private string _currentPath;
         public string CurrentPath
@@ -114,6 +117,9 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
         public FamiliesViewModel()
         {
+            _rootPath = GetRootPath();
+            Console.WriteLine(_rootPath);
+
             _downloadHandler = new DownloadFamilyEvent();
             _downloadEvent = ExternalEvent.Create(_downloadHandler);
 
@@ -128,6 +134,18 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             Update();
         }
 
+        private string GetRootPath()
+        {
+            string projetaPath = @"\\192.168.0.250\GrupoProjeta$\Engenharia\QUALIDADE\11 - ARQUIVOS BASE DAS DISCIPLINAS\SETOR DE BIM\FAMÍLIAS BIM";
+            if (Directory.Exists(projetaPath))
+                return projetaPath;
+
+            projetaPath = @"\\10.0.0.251\GrupoProjeta$\Engenharia\QUALIDADE\11 - ARQUIVOS BASE DAS DISCIPLINAS\SETOR DE BIM\FAMÍLIAS BIM";
+            if (Directory.Exists(projetaPath))
+                return projetaPath;
+
+            return null;
+        }
         private string ChangeRootPath(string rootPath)
         {
             var dialog = new CommonOpenFileDialog
@@ -195,6 +213,9 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
                 foreach (string dir in dirs)
                 {
+                    if (Path.GetFileName(dir).ToUpper() == "ICONS")
+                        continue;
+
                     FolderItem folder = new FolderItem
                     {
                         Name = Regex.Replace(Path.GetFileName(dir), @"^\d+\.\s*", "").ToUpper(),
@@ -241,7 +262,10 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
             foreach (var file in files)
             {
-                FolderFamilies.Add(new FamilyItem(file, Path.Combine(CurrentPath, "Icons")));
+                FamilyItem family = new FamilyItem(file);
+                family.ThumbnailPath = WindowsThumbServices.GetRevitFileThumbnail(family.FilePath);
+                if (family.ThumbnailPath == null) family.ThumbnailPath = BackPropagateIcons(family);
+                FolderFamilies.Add(family);
             }
 
             OnPropertyChanged(nameof(FolderFamilies));
@@ -261,7 +285,10 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
             foreach (var file in filteredFiles)
             {
-                FolderFamilies.Add(new FamilyItem(file, Path.Combine(CurrentPath, "Icons")));
+                FamilyItem family = new FamilyItem(file);
+                family.ThumbnailPath = WindowsThumbServices.GetRevitFileThumbnail(family.FilePath);
+                if (family.ThumbnailPath == null) family.ThumbnailPath = BackPropagateIcons(family);
+                FolderFamilies.Add(family);
             }
         }
 
@@ -272,6 +299,31 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 
             _downloadHandler.SetFamilyPath(selectedFamily.Name, familyPath);
             _downloadEvent.Raise();
+        }
+
+        private BitmapSource BackPropagateIcons(FamilyItem family )
+        {
+            string relativePath = CurrentPath;
+            string iconPath;
+            string defaultIconPath;
+
+            while (relativePath != _rootPath)
+            {
+                string iconsDirectory = Path.Combine(relativePath, "Icons");
+
+                if (Directory.Exists(iconsDirectory))
+                {
+                    iconPath = Path.Combine(iconsDirectory, family.Name + ".png");
+                    if (File.Exists(iconPath))
+                        return WindowsThumbServices.LoadBitmapSourceFromFile(iconPath);
+
+                    defaultIconPath = Path.Combine(iconsDirectory, "default.png");
+                    if (File.Exists(defaultIconPath))
+                        return WindowsThumbServices.LoadBitmapSourceFromFile(defaultIconPath);
+                }
+                relativePath = Directory.GetParent(relativePath).FullName;
+            }
+            return null;
         }
     }
 }

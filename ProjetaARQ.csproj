@@ -34,6 +34,12 @@
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.3.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>packages\DocumentFormat.OpenXml.3.3.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.3.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>packages\DocumentFormat.OpenXml.Framework.3.3.0\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>packages\MahApps.Metro.2.4.10\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -77,6 +83,7 @@
     <Compile Include="AddinApplication.cs" />
     <Compile Include="Core\Services\AssemblyServices.cs" />
     <Compile Include="Core\Services\BitmapConverter.cs" />
+    <Compile Include="Core\Services\WindowsThumbServices.cs" />
     <Compile Include="Core\UI\Converters\BitmapImageConverter.cs" />
     <Compile Include="Core\UI\ObservableObject.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />
@@ -84,11 +91,18 @@
     <Compile Include="Features\FamiliesPanel\MVVM\FamilyItem.cs" />
     <Compile Include="Features\FamiliesPanel\MVVM\FolderItem.cs" />
     <Compile Include="Features\FamiliesPanel\Services\OverLoadOption.cs" />
+    <Compile Include="Features\WordExport\Commands\WordExport.cs" />
+    <Compile Include="Features\WordExport\MVVM\WordView.xaml.cs">
+      <DependentUpon>WordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\WordExport\MVVM\WordViewModel.cs" />
     <Compile Include="Features\Test\Commands\DevButton.cs" />
     <Compile Include="Features\Test\MVVM\DevView.xaml.cs">
       <DependentUpon>DevView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
+    <Compile Include="Features\WordExport\Services\FileHandler.cs" />
+    <Compile Include="Features\WordExport\Services\WordEditor.cs" />
     <Compile Include="Revit\UI\DockablePaneManager.cs" />
     <Compile Include="Features\FamiliesPanel\Commands\FamiliesPaneButton.cs" />
     <Compile Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml.cs">
@@ -121,6 +135,10 @@
     <Page Include="Features\FamiliesPanel\Styles\SearchBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\WordExport\MVVM\WordView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Features\Test\MVVM\DevView.xaml">
       <SubType>Designer</SubType>
@@ -157,6 +175,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\Images\download-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Features\WordExport\Resources\diamante.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\metaverso.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\minas.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\objetiva.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\pitagoras.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\projeta.png" />
+    <EmbeddedResource Include="Features\WordExport\Resources\vitoria.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

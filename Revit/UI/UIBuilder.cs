@@ -53,8 +53,8 @@ namespace ProjetaARQ.Revit.UI
 
             var testButton = _ribbonManager.AddPushButton(
                 "DevButton",
-                "Dev",
-                "ProjetaARQ.Features.Test.Commands.DevButton",
+                "Memorial\nDescritivo",
+                "ProjetaARQ.Features.WordExport.Commands.WordExport",
                 mainPanel,
                 "Developer",
                 "showroom.png",
