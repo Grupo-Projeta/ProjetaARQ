@@ -83,6 +83,7 @@
     <Compile Include="AddinApplication.cs" />
     <Compile Include="Core\Services\AssemblyServices.cs" />
     <Compile Include="Core\Services\BitmapConverter.cs" />
+    <Compile Include="Core\Services\WindowsThumbServices.cs" />
     <Compile Include="Core\UI\Converters\BitmapImageConverter.cs" />
     <Compile Include="Core\UI\ObservableObject.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />

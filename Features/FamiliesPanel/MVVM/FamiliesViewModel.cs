@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.UI;
 using ControlzEx.Theming;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Shell;
+using ProjetaARQ.Core.Services;
 using ProjetaARQ.Core.UI;
 using ProjetaARQ.Features.FamiliesPanel.Events;
 using System;
@@ -8,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
 
 namespace ProjetaARQ.Features.FamiliesPanel.MVVM
 {
@@ -260,7 +263,8 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             foreach (var file in files)
             {
                 FamilyItem family = new FamilyItem(file);
-                family.ThumbnailPath = BackPropagateIcons(family);
+                family.ThumbnailPath = WindowsThumbServices.GetRevitFileThumbnail(family.FilePath);
+                if (family.ThumbnailPath == null) family.ThumbnailPath = BackPropagateIcons(family);
                 FolderFamilies.Add(family);
             }
 
@@ -282,7 +286,8 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             foreach (var file in filteredFiles)
             {
                 FamilyItem family = new FamilyItem(file);
-                family.ThumbnailPath = BackPropagateIcons(family);
+                family.ThumbnailPath = WindowsThumbServices.GetRevitFileThumbnail(family.FilePath);
+                if (family.ThumbnailPath == null) family.ThumbnailPath = BackPropagateIcons(family);
                 FolderFamilies.Add(family);
             }
         }
@@ -296,7 +301,7 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
             _downloadEvent.Raise();
         }
 
-        private string BackPropagateIcons(FamilyItem family )
+        private BitmapSource BackPropagateIcons(FamilyItem family )
         {
             string relativePath = CurrentPath;
             string iconPath;
@@ -310,15 +315,15 @@ namespace ProjetaARQ.Features.FamiliesPanel.MVVM
                 {
                     iconPath = Path.Combine(iconsDirectory, family.Name + ".png");
                     if (File.Exists(iconPath))
-                        return iconPath;
+                        return WindowsThumbServices.LoadBitmapSourceFromFile(iconPath);
 
                     defaultIconPath = Path.Combine(iconsDirectory, "default.png");
                     if (File.Exists(defaultIconPath))
-                        return defaultIconPath;
+                        return WindowsThumbServices.LoadBitmapSourceFromFile(defaultIconPath);
                 }
                 relativePath = Directory.GetParent(relativePath).FullName;
             }
-            return string.Empty;
+            return null;
         }
     }
 }
