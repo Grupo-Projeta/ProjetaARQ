@@ -44,11 +44,11 @@ namespace ProjetaARQ.Revit.UI
             #region Buttons
             var familiesPaneButton = _ribbonManager.AddPushButton(
                 "FamiliesPaneButton",
-                "ShowRoom\nFamilias",
+                "Showroom\nBIM",
                 "ProjetaARQ.Features.FamiliesPane.Commands.FamiliesPaneButton",
                 mainPanel,
                 "ShowRoom",
-                "showroom.png",
+                "catalogo.png",
                 true);
 
             var testButton = _ribbonManager.AddPushButton(
@@ -56,9 +56,9 @@ namespace ProjetaARQ.Revit.UI
                 "Memorial\nDescritivo",
                 "ProjetaARQ.Features.WordExport.Commands.WordExport",
                 mainPanel,
-                "Developer",
-                "showroom.png",
-                true);
+                "Em Desenvolvimento",
+                "word.png",
+                false);
 
 
             #endregion
