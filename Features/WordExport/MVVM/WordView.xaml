@@ -5,9 +5,60 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:ProjetaARQ.Features.WordExport.MVVM"
+             xmlns:converters="clr-namespace:ProjetaARQ.Core.UI.Converters"
+             xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM"
+             d:DataContext="{d:DesignInstance viewModel:WordViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800">
+             
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Crimson.xaml" />
+
+                <ResourceDictionary Source="../Styles/AnimatedOverlayMenuStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BitmapImageConverter x:Key="BitmapImageConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
-            
+
+        <Grid>
+            <TextBlock Text="Área de configuração das regras..." 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" />
+        </Grid>
+
+        <Border x:Name="MenuOverlay"
+                Style="{StaticResource AnimatedOverlayMenuStyle}"
+                Width="220"
+                HorizontalAlignment="Left"
+                Background="{DynamicResource MahApps.Brushes.Gray9}"
+                BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
+                BorderThickness="0,0,1,0">
+
+            <Border.RenderTransform>
+                <TranslateTransform X="-160" />
+            </Border.RenderTransform>
+
+            <StackPanel Margin="0,50,0,0">
+                <TextBlock Text="Menu" Foreground="White" FontSize="18" Margin="10"/>
+            </StackPanel>
+        </Border>
+
+        <Button Command="{Binding ToggleMenuCommand}"
+                Content="☰"
+                Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                Width="50" Height="40" Margin="5" 
+                Foreground="Black" FontSize="20"/>
+
     </Grid>
 </mah:MetroWindow>
+   
