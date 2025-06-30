@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using ProjetaARQ.Features.FamiliesPanel.MVVM;
 
 namespace ProjetaARQ.Features.WordExport.MVVM
 {
-    internal class WordViewModel : ObservableObject
+    internal class RuleEditorViewModel : ObservableObject
     {
         private bool _isMenuExpanded = false;
         public bool IsMenuExpanded
@@ -24,11 +25,17 @@ namespace ProjetaARQ.Features.WordExport.MVVM
             }
         }
 
+        public ObservableCollection<RuleCardModel> RulesList { get; set; } = new ObservableCollection<RuleCardModel>();
+
         public RelayCommand ToggleMenuCommand { get; }
 
-        public WordViewModel()
+        public RuleEditorViewModel()
         {
             ToggleMenuCommand = new RelayCommand(x => ToggleMenu());
+            RulesList.Add(new RuleCardModel { });
+            RulesList.Add(new RuleCardModel { });
+            RulesList.Add(new RuleCardModel { });
+            
         }
 
         private void ToggleMenu()

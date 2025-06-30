@@ -58,7 +58,7 @@ namespace ProjetaARQ.Revit.UI
                 mainPanel,
                 "Em Desenvolvimento",
                 "word.png",
-                false);
+                true);
 
 
             #endregion

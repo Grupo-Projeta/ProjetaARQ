@@ -17,8 +17,8 @@ namespace ProjetaARQ.Features.WordExport.Commands
     [Transaction(TransactionMode.Manual)]
     internal class WordExport : IExternalCommand
     {
-        internal WordViewModel ViewModel { get; private set; }
-        internal WordView Window { get; private set; }
+        internal WordConfigViewModel ViewModel { get; private set; }
+        internal WordConfigView Window { get; private set; }
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -26,11 +26,11 @@ namespace ProjetaARQ.Features.WordExport.Commands
             RevitContext context = new RevitContext(commandData.Application);
 
             if (ViewModel == null)
-                ViewModel = new WordViewModel();
+                ViewModel = new WordConfigViewModel();
 
             if (Window == null || Window.IsVisible == false)
             {
-                Window = new WordView(ViewModel);
+                Window = new WordConfigView(ViewModel);
                 Window.Show();
             }
             else

@@ -42,6 +42,9 @@
     <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.3.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>packages\DocumentFormat.OpenXml.Framework.3.3.0\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=4.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>packages\gong-wpf-dragdrop.4.0.0\lib\net462\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>packages\MahApps.Metro.2.4.10\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -94,10 +97,18 @@
     <Compile Include="Features\FamiliesPanel\MVVM\FolderItem.cs" />
     <Compile Include="Features\FamiliesPanel\Services\OverLoadOption.cs" />
     <Compile Include="Features\WordExport\Commands\WordExport.cs" />
-    <Compile Include="Features\WordExport\MVVM\WordView.xaml.cs">
-      <DependentUpon>WordView.xaml</DependentUpon>
+    <Compile Include="Features\WordExport\MVVM\RuleCard.xaml.cs">
+      <DependentUpon>RuleCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\WordExport\MVVM\WordViewModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\RuleEditorView.xaml.cs">
+      <DependentUpon>RuleEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\WordExport\MVVM\RuleCardModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\WordConfigView.xaml.cs">
+      <DependentUpon>WordConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\WordExport\MVVM\RuleEditorViewModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\WordConfigViewModel.cs" />
     <Compile Include="Features\Test\Commands\DevButton.cs" />
     <Compile Include="Features\Test\MVVM\DevView.xaml.cs">
       <DependentUpon>DevView.xaml</DependentUpon>
@@ -122,10 +133,12 @@
     <None Include="packages.config" />
     <None Include="ProjetaARQ.addin" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Common\Themes\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="Core\UI\Styles\CommonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\FamiliesPanel\MVVM\FamiliesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,11 +151,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\WordExport\MVVM\WordView.xaml">
+    <Page Include="Features\WordExport\MVVM\RuleCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\WordExport\MVVM\RuleEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\WordExport\MVVM\WordConfigView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Features\Test\MVVM\DevView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\WordExport\Resources\DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

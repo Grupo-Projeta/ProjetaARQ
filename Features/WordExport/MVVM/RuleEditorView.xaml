@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="ProjetaARQ.Features.WordExport.MVVM.RuleEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjetaARQ.Features.WordExport.MVVM"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             d:DataContext="{d:DesignInstance viewModel:RuleEditorViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="780" d:DesignWidth="740"
+             Background="Transparent">
+    <Grid>
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding RulesList}"
+                          dd:DragDrop.IsDragSource="True"
+                          dd:DragDrop.IsDropTarget="True">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:RuleCard Margin="20"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
