@@ -28,36 +28,52 @@
 
     <Grid>
 
-        <Grid>
-            <TextBlock Text="Área de configuração das regras..." 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center" />
-        </Grid>
-
-        <Border x:Name="MenuOverlay"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--MENU DESLIZANTE-->
+        <Border Grid.Column="1"
+                x:Name="MenuOverlay"
                 Style="{StaticResource AnimatedOverlayMenuStyle}"
                 Width="220"
                 HorizontalAlignment="Left"
-                Background="{DynamicResource MahApps.Brushes.Gray9}"
+                Background="{DynamicResource MahApps.Brushes.Gray8}"
                 BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
                 BorderThickness="0,0,1,0">
 
             <Border.RenderTransform>
-                <TranslateTransform X="-160" />
+                <TranslateTransform X="-220" />
             </Border.RenderTransform>
 
-            <StackPanel Margin="0,50,0,0">
-                <TextBlock Text="Menu" Foreground="White" FontSize="18" Margin="10"/>
+            <StackPanel>
+                <TextBlock Text="Menu de Presets" Foreground="White" FontSize="18" Margin="10"/>
             </StackPanel>
         </Border>
+        <!-- FIM MENU DESLIZANTE-->
 
-        <Button Command="{Binding ToggleMenuCommand}"
-                Content="☰"
-                Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top"
-                Width="50" Height="40" Margin="5" 
-                Foreground="Black" FontSize="20"/>
+        <Border Grid.Column="0"
+                Background="{DynamicResource MahApps.Brushes.Gray8}">
+           <StackPanel>
+               <Button Command="{Binding ToggleMenuCommand}"
+                       Content="☰"
+                       Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                       Cursor="Hand"
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Top"
+                       Width="50" Height="40" Margin="5" 
+                       Foreground="Black" FontSize="20"/>
+        </StackPanel> 
+        </Border>
+        
+        
+
+        <Grid Grid.Column="1">
+            <TextBlock Text="Área de configuração das regras..." 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center" />
+        </Grid>
 
     </Grid>
 </mah:MetroWindow>

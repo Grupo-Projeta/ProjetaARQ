@@ -37,7 +37,7 @@ namespace ProjetaARQ.Revit.UI
 
             #region Panels
 
-            RibbonPanel mainPanel = _ribbonManager.CreatePanel(_app, _tabName, "Main");
+            RibbonPanel mainPanel = _ribbonManager.CreatePanel(_app, _tabName, "Arquitetura");
 
             #endregion
 
@@ -47,7 +47,7 @@ namespace ProjetaARQ.Revit.UI
                 "Showroom\nBIM",
                 "ProjetaARQ.Features.FamiliesPane.Commands.FamiliesPaneButton",
                 mainPanel,
-                "ShowRoom",
+                "ShowRoom de Famílias de Arquitetura",
                 "catalogo.png",
                 true);
 
@@ -58,7 +58,7 @@ namespace ProjetaARQ.Revit.UI
                 mainPanel,
                 "Em Desenvolvimento",
                 "word.png",
-                true);
+                false);
 
 
             #endregion
