@@ -14,11 +14,10 @@
     <Grid>
         <ScrollViewer>
             <ItemsControl ItemsSource="{Binding RulesList}"
-                          dd:DragDrop.IsDragSource="True"
                           dd:DragDrop.IsDropTarget="True">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:RuleCard Margin="20"/>
+                        <local:RuleCard Margin="10"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
