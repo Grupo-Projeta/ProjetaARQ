@@ -6,7 +6,7 @@
              xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              d:DesignHeight="120" d:DesignWidth="450"
-             MinHeight="60" MaxHeight="500">
+             Height="Auto">
 
     <Expander IsExpanded="True" Style="{DynamicResource MahApps.Styles.Expander}">
         <Expander.Header>
@@ -16,7 +16,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" 
+                <!--<Button Grid.Column="0" 
                         dd:DragDrop.IsDragSource="True"
                         Cursor="SizeAll"
                         ToolTip="Arrastar para reordenar">
@@ -35,7 +35,7 @@
                 <TextBlock Grid.Column="1" Text="Nome da Regra (Ex: Substituir Cliente)" 
                            VerticalAlignment="Center" 
                            FontWeight="SemiBold" 
-                           Margin="10,0"/>
+                           Margin="10,0"/>-->
             </Grid>
         </Expander.Header>
 
@@ -50,16 +50,13 @@
                     <TextBlock Text="Controles para configurar a regra..." HorizontalAlignment="Left"/>
                 </Grid>
 
-                <Thumb Grid.Row="1" Height="10" Cursor="SizeNS"
-                       DragStarted="Thumb_DragStarted"
+                <Thumb Grid.Row="1" 
+                       Height="10" 
+                       Cursor="SizeNS"
+                       Background="LightGray"
+                       Opacity="0.7"
                        DragDelta="Thumb_DragDelta"
-                       DragCompleted="Thumb_DragCompleted">
-                    <Thumb.Style>
-                        <Style TargetType="Thumb">
-                            <Setter Property="Background" Value="LightGray"/>
-                        </Style>
-                    </Thumb.Style>
-                </Thumb>
+                       dd:DragDrop.DragSourceIgnore="True"/>
             </Grid>
         </Border>
     </Expander>

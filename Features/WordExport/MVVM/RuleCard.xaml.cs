@@ -8,17 +8,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM
     {
         public RuleCard()
         {
-            InitializeComponent();
-            // Altura inicial do cartão
-            this.Height = 150; 
-        }
-
-        // --- Lógica de Redimensionamento ---
-
-        private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
-        {
-            // Captura o mouse para garantir que o redimensionamento seja fluido
-            (sender as Thumb)?.CaptureMouse();
+            InitializeComponent(); 
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -29,12 +19,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM
             {
                 this.Height = newHeight;
             }
-        }
-
-        private void Thumb_DragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            // Libera o mouse ao final da operação
-            (sender as Thumb)?.ReleaseMouseCapture();
         }
     }
 }
