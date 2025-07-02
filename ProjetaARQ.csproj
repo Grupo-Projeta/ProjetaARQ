@@ -203,6 +203,7 @@
     <Compile Include="Core\Services\AssemblyServices.cs" />
     <Compile Include="Core\Services\BitmapConverter.cs" />
     <Compile Include="Core\Services\WindowsThumbServices.cs" />
+    <Compile Include="Core\UI\Converters\BoolToVisibleConverter.cs" />
     <Compile Include="Core\UI\Converters\BitmapImageConverter.cs" />
     <Compile Include="Core\UI\ObservableObject.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />
@@ -229,6 +230,7 @@
       <DependentUpon>DevView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
+    <Compile Include="Features\WordExport\Services\DeleteDropHandler.cs" />
     <Compile Include="Features\WordExport\Services\FileHandler.cs" />
     <Compile Include="Features\WordExport\Services\UndoableCommands\AddRuleCommand .cs" />
     <Compile Include="Features\WordExport\Services\UndoableCommands\ChangePropertyCommand.cs" />

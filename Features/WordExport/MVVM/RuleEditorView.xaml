@@ -5,33 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjetaARQ.Features.WordExport.MVVM"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM"
              xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:converters="clr-namespace:ProjetaARQ.Core.UI.Converters"
              d:DataContext="{d:DesignInstance viewModel:RuleEditorViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="780" d:DesignWidth="740"
              Background="Transparent">
 
+
     <UserControl.Resources>
-        <ResourceDictionary Source="/ProjetaARQ;component/Core/UI/Styles/CommonStyles.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ProjetaARQ;component/Core/UI/Styles/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibleConverter x:Key="BoolToVisible"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0"
-                    Orientation="Horizontal">
-            <Button Content="DESFAZER"
-                    Command="{Binding UndoCommand}"/>
-            
-            <Button Content="REFAZER"
-                    Command="{Binding RedoCommand}"/>
-        </StackPanel>
-        <ScrollViewer Grid.Row="1">
+        
+        <ScrollViewer Grid.Row="0">
             <ItemsControl ItemsSource="{Binding RulesList}"
                           dd:DragDrop.IsDropTarget="True"
                           dd:DragDrop.IsDragSource="True"
@@ -52,18 +52,43 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    Background="Aquamarine">
+        <Border Grid.Row="1"
+                Padding="10"
+                Background="Transparent"
+                AllowDrop="True"
+                dd:DragDrop.IsDropTarget="True"
+                dd:DragDrop.DropHandler="{Binding DeleteDropHandler}"
+                dd:DragDrop.DragHandler="{Binding DeleteDropHandler}"
+                Visibility="{Binding DeleteDropHandler.AddBorder,
+                             Converter={StaticResource BoolToVisible}}">
 
+            <StackPanel Orientation="Horizontal">
+            
             <Button Command="{Binding AddRuleCommand}"
-                    Content="+"
                     Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                    VerticalAlignment="Stretch"
-                    Width="60"
-                    />
-            <TextBlock Text="Adicionar Regra" VerticalAlignment="Stretch"/>
+                    Margin="0 0 10 0">
+
+                <iconPacks:PackIconMaterialDesign Kind="Add"/>
+            </Button>
+            
+            <TextBlock Text="ADICIONAR REGRA" VerticalAlignment="Center"/>
         </StackPanel>
-        
+        </Border>
+
+        <Border Grid.Row="1"
+                Background="{DynamicResource MahApps.Brushes.Accent}"
+                AllowDrop="True"
+                dd:DragDrop.IsDropTarget="True"
+                dd:DragDrop.DropHandler="{Binding DeleteDropHandler}"
+                Visibility="{Binding DeleteDropHandler.DeleteBorder, UpdateSourceTrigger=PropertyChanged,
+                             Converter={StaticResource BoolToVisible}}">
+            
+            <StackPanel Orientation="Horizontal" Opacity="0.5">
+                <iconPacks:PackIconMaterial Kind="TrashCanOutline" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBlock Text="ARRASTE AQUI PARA APAGAR A REGRA" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+
     </Grid>
 </UserControl>

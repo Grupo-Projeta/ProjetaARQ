@@ -13,10 +13,20 @@
              d:DesignHeight="800" d:DesignWidth="800">
 
     <mah:MetroWindow.LeftWindowCommands>
-        <mah:WindowCommands>
-            <Button ToolTip="Salvar Configuração">
-                <iconPacks:PackIconMaterialDesign Kind="UndoRound" />
+        <mah:WindowCommands Margin="0 0 0 0">
+
+            <Button Command="{Binding CurrentView.UndoCommand}">
+                <iconPacks:PackIconMaterialDesign Kind="Save"/>
             </Button>
+            
+            <Button Command="{Binding CurrentView.UndoCommand}">
+                <iconPacks:PackIconMaterialDesign Kind="UndoRound"/>
+            </Button>
+            
+            <Button Command="{Binding CurrentView.RedoCommand}">
+                <iconPacks:PackIconMaterialDesign Kind="Redo" />
+            </Button>
+            
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
     
