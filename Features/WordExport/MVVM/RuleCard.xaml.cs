@@ -14,10 +14,10 @@ namespace ProjetaARQ.Features.WordExport.MVVM
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
             // 'this' se refere à instância do RuleCard que está sendo arrastada
-            double newHeight = this.ActualHeight + e.VerticalChange;
-            if (newHeight >= this.MinHeight && newHeight <= this.MaxHeight)
+            double newHeight = this.ContentBorder.ActualHeight + e.VerticalChange;
+            if (newHeight >= this.ContentBorder.MinHeight && newHeight <= this.ContentBorder.MaxHeight)
             {
-                this.Height = newHeight;
+                this.ContentBorder.Height = newHeight;
             }
         }
     }

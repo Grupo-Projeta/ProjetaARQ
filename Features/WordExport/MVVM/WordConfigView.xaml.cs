@@ -12,5 +12,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM
             InitializeComponent();
             DataContext = viewModel;
         }
+
     }
 }

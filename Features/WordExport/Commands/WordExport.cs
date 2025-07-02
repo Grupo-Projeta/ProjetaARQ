@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using ProjetaARQ.Features.Test.MVVM;
@@ -11,6 +6,12 @@ using ProjetaARQ.Features.WordExport.MVVM;
 using ProjetaARQ.Features.WordExport.Services;
 using ProjetaARQ.Revit.Base;
 using ProjetaARQ.Revit.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Interop;
 
 namespace ProjetaARQ.Features.WordExport.Commands
 {
@@ -25,12 +26,15 @@ namespace ProjetaARQ.Features.WordExport.Commands
             
             RevitContext context = new RevitContext(commandData.Application);
 
+            IntPtr revitHandle = context.UiApp.MainWindowHandle;
+
             if (ViewModel == null)
                 ViewModel = new WordConfigViewModel();
 
             if (Window == null || Window.IsVisible == false)
             {
                 Window = new WordConfigView(ViewModel);
+                WindowInteropHelper helper = new WindowInteropHelper(Window) { Owner = revitHandle };
                 Window.Show();
             }
             else

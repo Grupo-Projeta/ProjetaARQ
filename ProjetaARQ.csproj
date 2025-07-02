@@ -97,6 +97,7 @@
     <Compile Include="Features\FamiliesPanel\MVVM\FolderItem.cs" />
     <Compile Include="Features\FamiliesPanel\Services\OverLoadOption.cs" />
     <Compile Include="Features\WordExport\Commands\WordExport.cs" />
+    <Compile Include="Features\WordExport\Interfaces\IUndoableCommand.cs" />
     <Compile Include="Features\WordExport\MVVM\RuleCard.xaml.cs">
       <DependentUpon>RuleCard.xaml</DependentUpon>
     </Compile>
@@ -115,6 +116,9 @@
     </Compile>
     <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
     <Compile Include="Features\WordExport\Services\FileHandler.cs" />
+    <Compile Include="Features\WordExport\Services\UndoableCommands\AddRuleCommand .cs" />
+    <Compile Include="Features\WordExport\Services\UndoableCommands\ChangePropertyCommand.cs" />
+    <Compile Include="Features\WordExport\Services\UndoRedoManager.cs" />
     <Compile Include="Features\WordExport\Services\WordEditor.cs" />
     <Compile Include="Revit\UI\DockablePaneManager.cs" />
     <Compile Include="Features\FamiliesPanel\Commands\FamiliesPaneButton.cs" />
