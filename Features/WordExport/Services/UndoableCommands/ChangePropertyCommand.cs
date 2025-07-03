@@ -21,7 +21,6 @@ namespace ProjetaARQ.Features.WordExport.Services.UndoableCommands
             _propertyChangedNotifier = propertyChangedNotifier;
             _oldValue = oldValue;
             _newValue = newValue;
-
         }
 
         // Executar = aplicar o novo valor
@@ -29,8 +28,6 @@ namespace ProjetaARQ.Features.WordExport.Services.UndoableCommands
         {
             _setter(_newValue);
             _propertyChangedNotifier?.Invoke(); // Notifica a UI após desfazer
-            Debug.WriteLine($"--- EXECUTE Completo. Notificação de propriedade disparada.");
-
         }
 
 
@@ -40,8 +37,6 @@ namespace ProjetaARQ.Features.WordExport.Services.UndoableCommands
         {
             _setter(_oldValue);
             _propertyChangedNotifier?.Invoke(); // Notifica a UI após desfazer
-            Debug.WriteLine($"--- UNEXECUTE Completo. Notificação de propriedade disparada.");
-
         }
     }
 }

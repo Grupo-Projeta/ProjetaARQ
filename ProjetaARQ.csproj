@@ -174,11 +174,11 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
+      <HintPath>D:\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
+      <HintPath>D:\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -230,10 +230,14 @@
       <DependentUpon>DevView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
-    <Compile Include="Features\WordExport\Services\DeleteDropHandler.cs" />
+    <Compile Include="Features\WordExport\Services\GongHandlers\DeleteDropHandler.cs" />
     <Compile Include="Features\WordExport\Services\FileHandler.cs" />
+    <Compile Include="Features\WordExport\Services\GongHandlers\RuleDragHandler.cs" />
+    <Compile Include="Features\WordExport\Services\GongHandlers\RuleDropHandler.cs" />
     <Compile Include="Features\WordExport\Services\UndoableCommands\AddRuleCommand .cs" />
     <Compile Include="Features\WordExport\Services\UndoableCommands\ChangePropertyCommand.cs" />
+    <Compile Include="Features\WordExport\Services\UndoableCommands\DeleteRuleCommand.cs" />
+    <Compile Include="Features\WordExport\Services\UndoableCommands\MoveRuleCommand.cs" />
     <Compile Include="Features\WordExport\Services\UndoRedoManager.cs" />
     <Compile Include="Features\WordExport\Services\WordEditor.cs" />
     <Compile Include="Revit\UI\DockablePaneManager.cs" />

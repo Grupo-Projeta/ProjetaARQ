@@ -2,6 +2,7 @@
 using ProjetaARQ.Core.UI;
 using ProjetaARQ.Features.FamiliesPanel.MVVM;
 using ProjetaARQ.Features.WordExport.Services;
+using ProjetaARQ.Features.WordExport.Services.GongHandlers;
 using ProjetaARQ.Features.WordExport.Services.UndoableCommands;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace ProjetaARQ.Features.WordExport.MVVM
     internal class RuleEditorViewModel : ObservableObject
     {
         public IDropTarget DeleteDropHandler { get; }
+        public IDragSource RuleDragHandler { get; }
+        public IDropTarget RuleDropHandler { get; }
+
+
 
         private readonly UndoRedoManager _undoRedoManager = new UndoRedoManager();
         public RelayCommand UndoCommand { get; }
@@ -25,7 +30,9 @@ namespace ProjetaARQ.Features.WordExport.MVVM
 
         public RuleEditorViewModel()
         {
-            DeleteDropHandler = new DeleteDropHandler(RulesList);
+            DeleteDropHandler = new DeleteDropHandler(RulesList, _undoRedoManager);
+            RuleDragHandler = new RuleDragHandler(this);
+            RuleDropHandler = new RuleDropHandler(_undoRedoManager);
 
             UndoCommand = new RelayCommand(p => _undoRedoManager.Undo());
             RedoCommand = new RelayCommand(p => _undoRedoManager.Redo());
