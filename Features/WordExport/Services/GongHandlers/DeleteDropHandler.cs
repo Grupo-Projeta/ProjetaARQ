@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using GongSolutions.Wpf.DragDrop;
 using System.Windows;
-using ProjetaARQ.Features.WordExport.MVVM;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels;
 using ProjetaARQ.Core.UI;
 using ProjetaARQ.Features.WordExport.Services.UndoableCommands;
 
@@ -11,10 +11,10 @@ namespace ProjetaARQ.Features.WordExport.Services.GongHandlers
     internal class DeleteDropHandler : ObservableObject, IDropTarget
     {
         // Uma referência à lista de regras principal
-        private readonly ObservableCollection<RuleCardModel> _collection;
+        private readonly ObservableCollection<RuleCardViewModel> _collection;
         private readonly UndoRedoManager _undoRedoManager;
 
-        internal DeleteDropHandler(ObservableCollection<RuleCardModel> collection, UndoRedoManager undoRedoManager)
+        internal DeleteDropHandler(ObservableCollection<RuleCardViewModel> collection, UndoRedoManager undoRedoManager)
         {
             _collection = collection;
             _undoRedoManager = undoRedoManager;
@@ -33,7 +33,7 @@ namespace ProjetaARQ.Features.WordExport.Services.GongHandlers
 
         public void DragOver(IDropInfo dropInfo)
         {
-            if (dropInfo.Data is RuleCardModel)
+            if (dropInfo.Data is RuleCardViewModel)
                 dropInfo.Effects = DragDropEffects.Move;
 
         }
@@ -41,7 +41,7 @@ namespace ProjetaARQ.Features.WordExport.Services.GongHandlers
         public void Drop(IDropInfo dropInfo)
         {
             // Quando o item é solto aqui, ele é removido da coleção.
-            RuleCardModel itemToRemove = dropInfo.Data as RuleCardModel;
+            RuleCardViewModel itemToRemove = dropInfo.Data as RuleCardViewModel;
 
             if (itemToRemove == null)
                 return;

@@ -1,14 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM"
-                    xmlns:view="clr-namespace:ProjetaARQ.Features.WordExport.MVVM">
+                    xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.ViewModels"
+                    xmlns:view="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.Views">
 
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Crimson.xaml" />
-        <ResourceDictionary Source="../Styles/AnimatedOverlayMenuStyle.xaml"/>
+        <ResourceDictionary Source="/ProjetaARQ;component/Features/WordExport/Styles/AnimatedOverlayMenuStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate DataType="{x:Type viewModel:RuleEditorViewModel}">

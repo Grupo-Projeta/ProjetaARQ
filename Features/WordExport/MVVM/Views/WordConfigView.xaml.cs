@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels;
 
-namespace ProjetaARQ.Features.WordExport.MVVM
+namespace ProjetaARQ.Features.WordExport.MVVM.Views
 {
     /// <summary>
     /// Interaction logic for DevView.xaml

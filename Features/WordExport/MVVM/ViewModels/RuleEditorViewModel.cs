@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetaARQ.Features.WordExport.MVVM
+namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
     internal class RuleEditorViewModel : ObservableObject
     {
@@ -25,7 +25,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM
         public RelayCommand UndoCommand { get; }
         public RelayCommand RedoCommand { get; }
 
-        public ObservableCollection<RuleCardModel> RulesList { get; set; } = new ObservableCollection<RuleCardModel>();
+        public ObservableCollection<RuleCardViewModel> RulesList { get; set; } = new ObservableCollection<RuleCardViewModel>();
         public RelayCommand AddRuleCommand { get; }
 
         public RuleEditorViewModel()
@@ -38,13 +38,13 @@ namespace ProjetaARQ.Features.WordExport.MVVM
             RedoCommand = new RelayCommand(p => _undoRedoManager.Redo());
 
             AddRuleCommand = new RelayCommand(x => AddRule());
-            RulesList.Add(new RuleCardModel(_undoRedoManager));
+            RulesList.Add(new RuleCardViewModel(_undoRedoManager));
             
         }
 
         private void AddRule()
         {
-            var ruleToAdd = new RuleCardModel(_undoRedoManager);
+            var ruleToAdd = new RuleCardViewModel(_undoRedoManager);
             var command = new AddRuleCommand(RulesList, ruleToAdd);
             _undoRedoManager.Do(command);
         }

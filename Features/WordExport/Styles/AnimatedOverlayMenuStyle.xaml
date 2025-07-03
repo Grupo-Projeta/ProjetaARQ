@@ -2,13 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
 
-
-    <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Cobalt.xaml" />
-    </ResourceDictionary.MergedDictionaries>-->
-
     <Style x:Key="AnimatedOverlayMenuStyle" TargetType="Border">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsMenuExpanded}" Value="True">

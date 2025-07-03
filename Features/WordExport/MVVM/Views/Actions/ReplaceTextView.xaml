@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="ProjetaARQ.Features.WordExport.MVVM.Views.Actions.ReplaceTextView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.Views.Actions"
+             xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance viewModel:RuleEditorViewModel}"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             Background="LightGray"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ProjetaARQ;component/Features/WordExport/MVVM/Resources/DataTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <Style TargetType="ComboBox" BasedOn="{StaticResource MahApps.Styles.ComboBox}">
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button}">
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Border>
+        <Grid Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Column="0"
+                    Grid.Row="0"
+                    Padding="20 10">
+
+                <ComboBox Height="Auto"
+                          FontSize="14"
+                          VerticalContentAlignment="Center"
+                          SelectedIndex="0">
+
+                    <ComboBoxItem Content="CONDIÇÃO: SIM OU NAO DO USUARIO"/>
+                </ComboBox>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Grid.Row="0"
+                    Padding="20 10">
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Height="Auto"
+                              Grid.ColumnSpan="2"
+                              mah:CheckBoxHelper.CheckSize="30">
+                        
+                        <TextBox Text="URBANISMO"
+                                 FontSize="14"
+                                 VerticalContentAlignment="Center"/>
+                    </CheckBox>
+                </Grid>
+                
+            </Border>
+            
+            
+            <Border Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Height="50">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="14"
+                           Background="White">
+                    <TextBlock.Text>
+                        ESPAÇO DE LOGICA DE CONDICAO POSSIVEL DE IMPLEMENTAR
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+
+            <Border Grid.Column="0"
+                    Grid.Row="2"
+                    Padding="20 10">
+                <StackPanel>
+                    <ComboBox Name="TargetSection"
+                              Margin="0 0 0 10"      
+                              SelectedIndex="0">
+
+                        <ComboBoxItem Content="NOME DA SEÇÃO: NOME EXEMPLO "/>
+                    </ComboBox>
+
+                    <Separator Grid.ColumnSpan="2"
+                               Grid.Row="2"
+                               Margin="0 0 0 10"
+                               Height="2"
+                               Background="Gray"/>
+                    
+                    <ComboBox Name="TargetText"
+                              Margin="0 0 0 20"      
+                              SelectedIndex="0">
+                        
+                        <ComboBoxItem Content="MODO: SUBSTITUIR TUDO / SOMENTE UMA PARTE"/>
+                    </ComboBox>
+
+                    <mah:ClipBorder CornerRadius="10"
+                                    MinHeight="100">
+                        <TextBox >
+                            <TextBox.Text>
+                                CASO SEJA ESCOLHIDO A OPCAO SUBSTITUIR UMA PARTE
+                            </TextBox.Text>
+                        </TextBox>
+                    </mah:ClipBorder>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Grid.Row="2"
+                    Padding="20 10">
+                <StackPanel>
+                    <ComboBox Name="xx"
+                              Margin="0 0 0 10"      
+                              SelectedIndex="0">
+
+                        <ComboBoxItem Content="MEIO: INSERIR TEXTO/PARAMETRO RVT/BLOCO TXT   "/>
+                    </ComboBox>
+                    <Separator Grid.ColumnSpan="2"
+                               Grid.Row="2"
+                               Margin="0 0 0 10"
+                               Height="2"
+                               Background="Gray"/>
+
+                    <ComboBox Name="xxxx"
+                              Margin="0 0 0 20"      
+                              SelectedIndex="0">
+
+                        <ComboBoxItem Content="DESCRICAO DE PISOS (EXEMPLO BLOCO DE TEXTO)"/>
+                    </ComboBox>
+
+                    <Border Background="White"
+                            Margin="0 0 0 20">
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox Name="x"    
+                                      SelectedIndex="0"
+                                      Margin="0 0 10 0">
+
+                                <ComboBoxItem Content="PARAMETRO: "/>
+                            </ComboBox>
+                            
+                            <TextBlock Text="VALOR DO PARAMETRO"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <mah:ClipBorder CornerRadius="10"
+                                    MinHeight="100">
+                        <TextBox >
+                            <TextBox.Text>
+                                CASO SEJA ESCOLHIDO A OPCAO INSERIR TEXTO
+                            </TextBox.Text>
+                        </TextBox>
+                    </mah:ClipBorder>
+                    
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
+</UserControl>

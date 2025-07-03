@@ -1,5 +1,5 @@
 ﻿using ProjetaARQ.Features.WordExport.Interfaces;
-using ProjetaARQ.Features.WordExport.MVVM;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,11 +11,11 @@ namespace ProjetaARQ.Features.WordExport.Services.UndoableCommands
 {
     internal class MoveRuleCommand : IUndoableCommand
     {
-        ObservableCollection<RuleCardModel> _rulesList;
+        ObservableCollection<RuleCardViewModel> _rulesList;
         int _oldIndex;
         int _newIndex;
 
-        public MoveRuleCommand(ObservableCollection<RuleCardModel> rulesList, int oldIndex, int newIndex)
+        public MoveRuleCommand(ObservableCollection<RuleCardViewModel> rulesList, int oldIndex, int newIndex)
         {
             _rulesList = rulesList;
             _oldIndex = oldIndex;

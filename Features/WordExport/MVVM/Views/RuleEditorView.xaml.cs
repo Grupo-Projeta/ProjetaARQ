@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjetaARQ.Features.WordExport.MVVM
+namespace ProjetaARQ.Features.WordExport.MVVM.Views
 {
     /// <summary>
     /// Interaction logic for RuleEditorView.xaml
     /// </summary>
     public partial class RuleEditorView : UserControl
     {
-        internal RuleEditorView(/*RuleEditorViewModel viewModel*/)
+        internal RuleEditorView()
         {
-            //DataContext = viewModel;
             InitializeComponent();
         }
     }

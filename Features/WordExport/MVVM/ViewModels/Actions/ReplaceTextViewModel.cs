@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetaARQ.Features.Test.MVVM
+namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
 {
-    internal class DevViewModel
+    internal class ReplaceTextViewModel : ActionViewModelBase
     {
+
+
     }
 }

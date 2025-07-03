@@ -1,5 +1,5 @@
 ﻿using ProjetaARQ.Features.WordExport.Interfaces;
-using ProjetaARQ.Features.WordExport.MVVM;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,10 +11,10 @@ namespace ProjetaARQ.Features.WordExport.Services.UndoableCommands
 {
     internal class AddRuleCommand : IUndoableCommand
     {
-        private readonly ObservableCollection<RuleCardModel> _rulesList;
-        private readonly RuleCardModel _newRule;
+        private readonly ObservableCollection<RuleCardViewModel> _rulesList;
+        private readonly RuleCardViewModel _newRule;
 
-        public AddRuleCommand(ObservableCollection<RuleCardModel> rulesList, RuleCardModel newRule)
+        public AddRuleCommand(ObservableCollection<RuleCardViewModel> rulesList, RuleCardViewModel newRule)
         {
             _rulesList = rulesList;
             _newRule = newRule;

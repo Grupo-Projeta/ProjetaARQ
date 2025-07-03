@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
-namespace ProjetaARQ.Features.Test.MVVM
+namespace ProjetaARQ.Features.WordExport.MVVM.Views.Actions
 {
     /// <summary>
-    /// Interaction logic for DevView.xaml
+    /// Interaction logic for ReplaceTextView.xaml
     /// </summary>
-    public partial class DevView : MetroWindow
+    public partial class ReplaceTextView : UserControl
     {
-        public DevView()
+        public ReplaceTextView()
         {
             InitializeComponent();
         }

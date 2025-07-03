@@ -1,6 +1,6 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using ProjetaARQ.Core.UI;
-using ProjetaARQ.Features.WordExport.MVVM;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels;
 using System;
 using System.Windows;
 

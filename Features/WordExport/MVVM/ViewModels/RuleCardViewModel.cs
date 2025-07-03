@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetaARQ.Features.WordExport.MVVM
+namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
-    internal class RuleCardModel : ObservableObject
+    internal class RuleCardViewModel : ObservableObject
     {
 
         private readonly UndoRedoManager _undoRedoManager;
@@ -52,7 +52,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM
             }
         }
 
-        public RuleCardModel(UndoRedoManager undoRedoManager)
+        public RuleCardViewModel(UndoRedoManager undoRedoManager)
         {
             _undoRedoManager = undoRedoManager;
         }

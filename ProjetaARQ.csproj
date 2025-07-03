@@ -212,24 +212,25 @@
     <Compile Include="Features\FamiliesPanel\MVVM\FolderItem.cs" />
     <Compile Include="Features\FamiliesPanel\Services\OverLoadOption.cs" />
     <Compile Include="Features\WordExport\Commands\WordExport.cs" />
+    <Compile Include="Features\WordExport\Enums\RuleActionType.cs" />
     <Compile Include="Features\WordExport\Interfaces\IUndoableCommand.cs" />
-    <Compile Include="Features\WordExport\MVVM\RuleCard.xaml.cs">
+    <Compile Include="Features\WordExport\MVVM\ViewModels\Actions\ActionViewModelBase.cs" />
+    <Compile Include="Features\WordExport\MVVM\ViewModels\Actions\ReplaceTextViewModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\Views\Actions\ReplaceTextView.xaml.cs">
+      <DependentUpon>ReplaceTextView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\WordExport\MVVM\Views\RuleCard.xaml.cs">
       <DependentUpon>RuleCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\WordExport\MVVM\RuleEditorView.xaml.cs">
+    <Compile Include="Features\WordExport\MVVM\Views\RuleEditorView.xaml.cs">
       <DependentUpon>RuleEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\WordExport\MVVM\RuleCardModel.cs" />
-    <Compile Include="Features\WordExport\MVVM\WordConfigView.xaml.cs">
+    <Compile Include="Features\WordExport\MVVM\ViewModels\RuleCardViewModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\Views\WordConfigView.xaml.cs">
       <DependentUpon>WordConfigView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\WordExport\MVVM\RuleEditorViewModel.cs" />
-    <Compile Include="Features\WordExport\MVVM\WordConfigViewModel.cs" />
-    <Compile Include="Features\Test\Commands\DevButton.cs" />
-    <Compile Include="Features\Test\MVVM\DevView.xaml.cs">
-      <DependentUpon>DevView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Features\Test\MVVM\DevViewModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\ViewModels\RuleEditorViewModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\ViewModels\WordConfigViewModel.cs" />
     <Compile Include="Features\WordExport\Services\GongHandlers\DeleteDropHandler.cs" />
     <Compile Include="Features\WordExport\Services\FileHandler.cs" />
     <Compile Include="Features\WordExport\Services\GongHandlers\RuleDragHandler.cs" />
@@ -257,7 +258,9 @@
     <None Include="packages.config" />
     <None Include="ProjetaARQ.addin" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Features\WordExport\MVVM\Models\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Core\UI\Styles\CommonStyles.xaml">
       <SubType>Designer</SubType>
@@ -275,23 +278,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\WordExport\MVVM\RuleCard.xaml">
+    <Page Include="Features\WordExport\MVVM\Views\Actions\ReplaceTextView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\WordExport\MVVM\RuleEditorView.xaml">
+    <Page Include="Features\WordExport\MVVM\Views\RuleCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\WordExport\MVVM\WordConfigView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Features\Test\MVVM\DevView.xaml">
+    <Page Include="Features\WordExport\MVVM\Views\RuleEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\WordExport\Resources\DataTemplates.xaml">
+    <Page Include="Features\WordExport\MVVM\Views\WordConfigView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Features\WordExport\MVVM\Resources\DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -332,13 +335,13 @@
     <EmbeddedResource Include="Common\Images\download-button.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Features\WordExport\Resources\diamante.png" />
-    <EmbeddedResource Include="Features\WordExport\Resources\metaverso.png" />
-    <EmbeddedResource Include="Features\WordExport\Resources\minas.png" />
-    <EmbeddedResource Include="Features\WordExport\Resources\objetiva.png" />
-    <EmbeddedResource Include="Features\WordExport\Resources\pitagoras.png" />
-    <EmbeddedResource Include="Features\WordExport\Resources\projeta.png" />
-    <EmbeddedResource Include="Features\WordExport\Resources\vitoria.png" />
+    <EmbeddedResource Include="Features\WordExport\Images\diamante.png" />
+    <EmbeddedResource Include="Features\WordExport\Images\metaverso.png" />
+    <EmbeddedResource Include="Features\WordExport\Images\minas.png" />
+    <EmbeddedResource Include="Features\WordExport\Images\objetiva.png" />
+    <EmbeddedResource Include="Features\WordExport\Images\pitagoras.png" />
+    <EmbeddedResource Include="Features\WordExport\Images\projeta.png" />
+    <EmbeddedResource Include="Features\WordExport\Images\vitoria.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\Icons\word.png" />

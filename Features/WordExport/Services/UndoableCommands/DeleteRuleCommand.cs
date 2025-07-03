@@ -1,5 +1,5 @@
 ﻿using ProjetaARQ.Features.WordExport.Interfaces;
-using ProjetaARQ.Features.WordExport.MVVM;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,11 +11,11 @@ namespace ProjetaARQ.Features.WordExport.Services.UndoableCommands
 {
     internal class DeleteRuleCommand : IUndoableCommand
     {
-        ObservableCollection<RuleCardModel> _rulesList;
-        RuleCardModel _ruleToDelete;
+        ObservableCollection<RuleCardViewModel> _rulesList;
+        RuleCardViewModel _ruleToDelete;
         int _oldIndex;
 
-        public DeleteRuleCommand(ObservableCollection<RuleCardModel> rulesList, RuleCardModel ruleToDelete)
+        public DeleteRuleCommand(ObservableCollection<RuleCardViewModel> rulesList, RuleCardViewModel ruleToDelete)
         {
             _rulesList = rulesList;
             _ruleToDelete = ruleToDelete;

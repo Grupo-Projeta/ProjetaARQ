@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ProjetaARQ.Core.UI;
 using ProjetaARQ.Features.FamiliesPanel.MVVM;
 
-namespace ProjetaARQ.Features.WordExport.MVVM
+namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
     internal class WordConfigViewModel : ObservableObject
     {

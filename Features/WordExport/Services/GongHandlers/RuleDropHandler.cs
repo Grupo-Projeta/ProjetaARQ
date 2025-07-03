@@ -1,6 +1,6 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using GongSolutions.Wpf.DragDrop.Utilities;
-using ProjetaARQ.Features.WordExport.MVVM;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels;
 using ProjetaARQ.Features.WordExport.Services.UndoableCommands;
 using System;
 using System.Collections.Generic;
@@ -26,8 +26,8 @@ namespace ProjetaARQ.Features.WordExport.Services.GongHandlers
         public void Drop(IDropInfo dropInfo)
         {
             // Pega o item que foi arrastado e sua coleção de origem
-            var sourceItem = dropInfo.Data as RuleCardModel;
-            var sourceCollection = dropInfo.DragInfo.SourceCollection.TryGetList() as ObservableCollection<RuleCardModel>;
+            var sourceItem = dropInfo.Data as RuleCardViewModel;
+            var sourceCollection = dropInfo.DragInfo.SourceCollection.TryGetList() as ObservableCollection<RuleCardViewModel>;
 
             if (sourceItem == null || sourceCollection == null)
                 return;
@@ -54,7 +54,7 @@ namespace ProjetaARQ.Features.WordExport.Services.GongHandlers
         public void DragOver(IDropInfo dropInfo)
         {
             // 1. Verifica se o que está sendo arrastado é do tipo correto
-            if (dropInfo.Data is RuleCardModel)
+            if (dropInfo.Data is RuleCardViewModel)
             {
                 // 2. Define o feedback visual como uma linha de inserção
                 dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
