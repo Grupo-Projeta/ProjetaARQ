@@ -8,9 +8,10 @@ namespace ProjetaARQ.Features.WordExport.Enums
 {
     public enum RuleActionType
     {
-        SubstituirTexto,
-        SubstituirImagem,
-        DeletarSecao
+        InitialText,
+        ReplaceText,
+        ReplaceImage,
+        DeleteSection,
         // Adicione aqui novas ações no futuro
     }
 }

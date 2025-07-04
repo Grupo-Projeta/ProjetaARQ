@@ -8,9 +8,9 @@
              d:DataContext="{d:DesignInstance viewModel:RuleEditorViewModel}"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             mc:Ignorable="d" 
-             Background="LightGray"
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="White">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -27,6 +27,10 @@
             </Style>
 
             <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button}">
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <Style TargetType="Label" BasedOn="{StaticResource MahApps.Styles.Label}">
                 <Setter Property="FontSize" Value="14"/>
             </Style>
         </ResourceDictionary>
@@ -48,7 +52,7 @@
                     Grid.Row="0"
                     Padding="20 10">
 
-                <ComboBox Height="Auto"
+                <ComboBox Height="30"
                           FontSize="14"
                           VerticalContentAlignment="Center"
                           SelectedIndex="0">
@@ -96,85 +100,136 @@
             <Border Grid.Column="0"
                     Grid.Row="2"
                     Padding="20 10">
+                
                 <StackPanel>
-                    <ComboBox Name="TargetSection"
-                              Margin="0 0 0 10"      
-                              SelectedIndex="0">
 
-                        <ComboBoxItem Content="NOME DA SEÇÃO: NOME EXEMPLO "/>
-                    </ComboBox>
-
-                    <Separator Grid.ColumnSpan="2"
-                               Grid.Row="2"
-                               Margin="0 0 0 10"
-                               Height="2"
-                               Background="Gray"/>
-                    
-                    <ComboBox Name="TargetText"
-                              Margin="0 0 0 20"      
-                              SelectedIndex="0">
+                    <Border Name="TargetSection"      
+                            Margin="0 0 0 20">
+                        <StackPanel Orientation="Horizontal">
                         
-                        <ComboBoxItem Content="MODO: SUBSTITUIR TUDO / SOMENTE UMA PARTE"/>
-                    </ComboBox>
+                            <Label Content="NOME DA SEÇÃO:"/>
+                        
+                            <ComboBox SelectedIndex="0"
+                                      Padding="5 0 0 0">
 
-                    <mah:ClipBorder CornerRadius="10"
-                                    MinHeight="100">
-                        <TextBox >
-                            <TextBox.Text>
-                                CASO SEJA ESCOLHIDO A OPCAO SUBSTITUIR UMA PARTE
-                            </TextBox.Text>
-                        </TextBox>
-                    </mah:ClipBorder>
+                                <ComboBoxItem Content="NOME EXEMPLO "/>
+                            </ComboBox>
+                        
+                        </StackPanel>
+                    </Border>
+
+                    <Border Margin="0 0 0 20"
+                            Name="EditMode">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <Label Content="MODO:"/>
+
+                            <ComboBox SelectedIndex="0"
+                                      Padding="5 0 0 0">
+
+                                <ComboBoxItem Content="SUBSTITUIR PARTE DO TEXTO"/>
+                            </ComboBox>
+
+                        </StackPanel>
+                    </Border>
+                    
+                    <Border>
+                        <StackPanel>
+                            <Label Content="TEXTO A SER SUBSTITUIDO:"/>
+                            <mah:ClipBorder BorderBrush="LightGray"
+                                            BorderThickness="1"
+                                            CornerRadius="5"
+                                            MinHeight="100">
+
+
+                                <TextBox BorderThickness="0">
+                                    <TextBox.Text>
+                                        CASO SEJA ESCOLHIDO A OPCAO SUBSTITUIR UMA PARTE
+                                    </TextBox.Text>
+                                </TextBox>
+
+                            </mah:ClipBorder>
+                        </StackPanel>
+                    </Border>
+
+                    
                 </StackPanel>
+                
+
             </Border>
 
             <Border Grid.Column="1"
                     Grid.Row="2"
                     Padding="20 10">
+                
                 <StackPanel>
-                    <ComboBox Name="xx"
-                              Margin="0 0 0 10"      
-                              SelectedIndex="0">
 
-                        <ComboBoxItem Content="MEIO: INSERIR TEXTO/PARAMETRO RVT/BLOCO TXT   "/>
-                    </ComboBox>
-                    <Separator Grid.ColumnSpan="2"
-                               Grid.Row="2"
-                               Margin="0 0 0 10"
-                               Height="2"
-                               Background="Gray"/>
-
-                    <ComboBox Name="xxxx"
-                              Margin="0 0 0 20"      
-                              SelectedIndex="0">
-
-                        <ComboBoxItem Content="DESCRICAO DE PISOS (EXEMPLO BLOCO DE TEXTO)"/>
-                    </ComboBox>
-
-                    <Border Background="White"
+                    <Border Name="InsertMode"      
                             Margin="0 0 0 20">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Name="x"    
-                                      SelectedIndex="0"
-                                      Margin="0 0 10 0">
 
-                                <ComboBoxItem Content="PARAMETRO: "/>
+                            <Label Content="MODO DE INSERÇÃO:"/>
+
+                            <ComboBox SelectedIndex="0"
+                                      Padding="5 0 0 0">
+
+                                <ComboBoxItem Content="PARÂMETRO REVIT"/>
                             </ComboBox>
-                            
-                            <TextBlock Text="VALOR DO PARAMETRO"
-                                       VerticalAlignment="Center"/>
+
                         </StackPanel>
                     </Border>
-                    
-                    <mah:ClipBorder CornerRadius="10"
-                                    MinHeight="100">
-                        <TextBox >
-                            <TextBox.Text>
-                                CASO SEJA ESCOLHIDO A OPCAO INSERIR TEXTO
-                            </TextBox.Text>
-                        </TextBox>
-                    </mah:ClipBorder>
-                    
+
+                    <Border Name="TextBlockOptions"      
+                            Margin="0 0 0 20">
+                        <StackPanel Orientation="Horizontal">
+
+                            <Label Content="BLOCO DE TEXTO:"/>
+
+                            <ComboBox SelectedIndex="0"
+                                      Padding="5 0 0 0">
+
+                                <ComboBoxItem Content="DESCRIÇÃO URBANISMO"/>
+                            </ComboBox>
+
+                        </StackPanel>
+                    </Border>
+
+                    <Border Name="ParameterName"      
+                            Margin="0 0 0 20">
+                        <StackPanel Orientation="Horizontal">
+
+                            <Label Content="PARÂMETRO:"/>
+
+                            <ComboBox SelectedIndex="0"
+                                      Padding="5 0 0 0">
+
+                                <ComboBoxItem Content="PARAMETRO NOME"/>
+                            </ComboBox>
+
+                        </StackPanel>
+                    </Border>
+
+
+                    <Border>
+                        <StackPanel>
+                            <Label Content="TEXTO A SER SUBSTITUIDO:"/>
+                            <mah:ClipBorder BorderBrush="LightGray"
+                                            BorderThickness="1"
+                                            CornerRadius="5"
+                                            MinHeight="100">
+
+
+                                <TextBox BorderThickness="0">
+                                    <TextBox.Text>
+                                        CASO SEJA NECESSARIO ESCREVER A MODIFICACAO
+                                    </TextBox.Text>
+                                </TextBox>
+
+                            </mah:ClipBorder>
+                        </StackPanel>
+                    </Border>
+
                 </StackPanel>
             </Border>
 

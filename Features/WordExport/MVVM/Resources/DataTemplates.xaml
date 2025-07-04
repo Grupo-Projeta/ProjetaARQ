@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.ViewModels"
+                    xmlns:actionViewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions"
+                    xmlns:actionView="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.Views.Actions"
                     xmlns:view="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.Views">
 
 
@@ -14,5 +16,9 @@
     <DataTemplate DataType="{x:Type viewModel:RuleEditorViewModel}">
         <view:RuleEditorView/>
     </DataTemplate>
-    
+
+    <DataTemplate DataType="{x:Type actionViewModel:ReplaceTextViewModel}">
+        <actionView:ReplaceTextView/>
+    </DataTemplate>
+
 </ResourceDictionary>

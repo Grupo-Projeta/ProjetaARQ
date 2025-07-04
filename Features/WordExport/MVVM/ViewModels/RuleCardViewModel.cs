@@ -1,5 +1,7 @@
 ﻿using ProjetaARQ.Core.UI;
 using ProjetaARQ.Features.FamiliesPanel.MVVM;
+using ProjetaARQ.Features.WordExport.Enums;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions;
 using ProjetaARQ.Features.WordExport.Services;
 using ProjetaARQ.Features.WordExport.Services.UndoableCommands;
 using System;
@@ -52,8 +54,57 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             }
         }
 
+        private ActionViewModelBase _currentActionViewModel;
+        public ActionViewModelBase CurrentActionViewModel
+        {
+            get => _currentActionViewModel;
+            set => SetProperty(ref _currentActionViewModel, value);
+        }
+
+        private readonly Dictionary<RuleActionType, Func<ActionViewModelBase>> _actionFactory;
+        public ObservableCollection<KeyValuePair<RuleActionType, string>> ActionOptions { get; }
+
+        private RuleActionType _selectedAction;
+        public RuleActionType SelectedAction
+        {
+            get => _selectedAction;
+            set
+            {
+                if (value == RuleActionType.InitialText)
+                    return;
+
+                if (SetProperty(ref _selectedAction, value))
+                {
+                    var placeHolder = ActionOptions.FirstOrDefault(x => x.Key == RuleActionType.InitialText);
+                    ActionOptions.Remove(placeHolder);
+                    OnPropertyChanged(nameof(ActionOptions));
+
+                    CurrentActionViewModel = _actionFactory[_selectedAction]();
+                    OnPropertyChanged(nameof(CurrentActionViewModel));
+
+                    IsExpanded = true;
+                }
+                
+            }
+        }
+
+
         public RuleCardViewModel(UndoRedoManager undoRedoManager)
         {
+            _actionFactory = new Dictionary<RuleActionType, Func<ActionViewModelBase>>
+        {
+            //{ RuleActionType.InitialText, () => new ReplaceTextViewModel() },
+            { RuleActionType.ReplaceText, () => new ReplaceTextViewModel() },
+            { RuleActionType.ReplaceImage, () => new ReplaceTextViewModel() },
+        };
+
+            ActionOptions = new ObservableCollection<KeyValuePair<RuleActionType, string>>
+            {
+                new KeyValuePair<RuleActionType, string>(RuleActionType.InitialText, "Selecione uma Ação..."),
+                new KeyValuePair<RuleActionType, string>(RuleActionType.ReplaceText, "Substituir Texto"),
+                new KeyValuePair<RuleActionType, string>(RuleActionType.ReplaceImage, "Substituir Imagem")
+            };
+
             _undoRedoManager = undoRedoManager;
         }
     }
