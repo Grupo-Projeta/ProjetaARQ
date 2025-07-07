@@ -16,6 +16,8 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
     internal class RuleCardViewModel : ObservableObject
     {
 
+
+
         private readonly UndoRedoManager _undoRedoManager;
 
         private string _ruleName;
@@ -94,8 +96,8 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             _actionFactory = new Dictionary<RuleActionType, Func<ActionViewModelBase>>
         {
             //{ RuleActionType.InitialText, () => new ReplaceTextViewModel() },
-            { RuleActionType.ReplaceText, () => new ReplaceTextViewModel() },
-            { RuleActionType.ReplaceImage, () => new ReplaceTextViewModel() },
+            { RuleActionType.ReplaceText, () => new ReplaceTextViewModel(_undoRedoManager) },
+            { RuleActionType.ReplaceImage, () => new ReplaceTextViewModel(_undoRedoManager) },
         };
 
             ActionOptions = new ObservableCollection<KeyValuePair<RuleActionType, string>>

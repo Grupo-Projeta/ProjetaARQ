@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProjetaARQ.Features.WordExport.Enums
+{
+    public enum DataSourceType
+    {
+        [Description("Bloco de Texto")]
+        TextBlock,
+
+        [Description("Escrever Texto")]
+        WriteText,
+
+        [Description("Parâmetro Revit")]
+        RevitParameter,
+
+    }
+}

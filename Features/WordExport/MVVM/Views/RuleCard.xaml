@@ -22,30 +22,37 @@
               Padding="0"
               BorderThickness="0 0 0 1"
               BorderBrush="Black"
-              mah:HeaderedControlHelper.HeaderBackground="Transparent"
+              mah:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.Accent}"
               >
         
         <Expander.Header>
-            <StackPanel Orientation="Horizontal" 
-                        Height="50">
-                <TextBox Text="{Binding RuleName, Mode=TwoWay}"
-                         IsUndoEnabled="False"
-                         HorizontalAlignment="Left"
-                         VerticalAlignment="Center"
-                         Height="26"
-                         Margin="10 0 0 0"
-                         MinWidth="200" MaxWidth="400"/>
+
+            <Border >
+                <StackPanel Orientation="Horizontal" 
+                            Height="50">
+                    
+                    <TextBox Text="{Binding RuleName, Mode=TwoWay}"
+                             IsUndoEnabled="False"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             Height="26"
+                             Margin="10 0 0 0"
+                             MinWidth="200" MaxWidth="400"/>
                 
-                <ComboBox ItemsSource="{Binding ActionOptions}"
-                          DisplayMemberPath="Value"
-                          SelectedValuePath="Key"
-                          SelectedValue="{Binding SelectedAction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          HorizontalAlignment="Left"
-                          Height="26"
-                          BorderBrush="Black"
-                          Margin="10 0 0 0"
-                          MinWidth="200" MaxWidth="400"/>
-            </StackPanel>
+                    <ComboBox ItemsSource="{Binding ActionOptions}"
+                              DisplayMemberPath="Value"
+                              SelectedValuePath="Key"
+                              SelectedValue="{Binding SelectedAction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              HorizontalAlignment="Left"
+                              Height="26"
+                              BorderBrush="Black"
+                              Margin="10 0 0 0"
+                              MinWidth="200" MaxWidth="400"/>
+                
+                    
+                </StackPanel>
+            </Border>
+            
         </Expander.Header>
 
         <ContentControl Content="{Binding CurrentActionViewModel}"/>

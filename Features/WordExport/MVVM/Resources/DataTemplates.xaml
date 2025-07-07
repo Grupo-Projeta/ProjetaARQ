@@ -3,7 +3,10 @@
                     xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.ViewModels"
                     xmlns:actionViewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions"
                     xmlns:actionView="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.Views.Actions"
-                    xmlns:view="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.Views">
+                    xmlns:view="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.Views"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:enums="clr-namespace:ProjetaARQ.Features.WordExport.Enums"
+                    xmlns:converters="clr-namespace:ProjetaARQ.Core.UI.Converters">
 
 
     <ResourceDictionary.MergedDictionaries>
@@ -12,6 +15,26 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Crimson.xaml" />
         <ResourceDictionary Source="/ProjetaARQ;component/Features/WordExport/Styles/AnimatedOverlayMenuStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+
+    <converters:EnumDescriptionConverter x:Key="EnumToDescriptionConverter" />
+
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="EditModeTypeProvider">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="enums:EditModeType"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="DataSourceTypeProvider">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="enums:DataSourceType"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="ConditionTypeProvider">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="enums:ConditionType"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
 
     <DataTemplate DataType="{x:Type viewModel:RuleEditorViewModel}">
         <view:RuleEditorView/>
