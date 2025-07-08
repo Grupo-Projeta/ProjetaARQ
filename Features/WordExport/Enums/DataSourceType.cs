@@ -9,6 +9,9 @@ namespace ProjetaARQ.Features.WordExport.Enums
 {
     public enum DataSourceType
     {
+        [Description("")]
+        Void,
+
         [Description("Bloco de Texto")]
         TextBlock,
 

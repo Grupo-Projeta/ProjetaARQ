@@ -12,7 +12,7 @@
              mc:Ignorable="d"
              d:DesignHeight="450" 
              d:DesignWidth="800"
-             Background="LightGray">
+             Background="#FFFEFEFE">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -95,9 +95,11 @@
                     <CheckBox Height="Auto"
                               Margin="0 15 0 0"
                               Grid.ColumnSpan="2"
-                              mah:CheckBoxHelper.CheckSize="30">
+                              mah:CheckBoxHelper.CheckSize="30"
+                              mah:VisibilityHelper.IsCollapsed="{Binding IsCheckBoxConditionCollapsed}">
                         
-                        <TextBox Text="URBANISMO"
+                        <TextBox Text=""
+                                 mah:TextBoxHelper.Watermark="Digite a condição para o usuário"
                                  FontSize="14"
                                  VerticalContentAlignment="Center"/>
                     </CheckBox>
@@ -157,6 +159,7 @@
                                       Padding="5 0 0 0"
                                       ItemsSource="{Binding Source={StaticResource EditModeTypeProvider}}"
                                       SelectedItem="{Binding SelectedEditMode, Mode=TwoWay}"
+                                      mah:ComboBoxHelper.CharacterCasing="Upper"
                                       PreviewMouseWheel="ComboBox_PreviewMouseWheel">
                                 
                                 <ComboBox.ItemTemplate>
@@ -172,7 +175,7 @@
                         </StackPanel>
                     </Border>
                     
-                    <Border>
+                    <Border mah:VisibilityHelper.IsCollapsed="{Binding IsTextToReplaceCollapsed}">
                         <StackPanel Orientation="Vertical">
                             <Label Content="TEXTO A SER SUBSTITUIDO:"/>
                             <mah:ClipBorder BorderBrush="LightGray"
@@ -219,11 +222,14 @@
                             <ComboBox SelectedIndex="0"
                                       Padding="5 0 0 0"          
                                       ItemsSource="{Binding Source={StaticResource DataSourceTypeProvider}}"
-                                      SelectedItem="{Binding SelectedDataSource, Mode=TwoWay}">
+                                      SelectedItem="{Binding SelectedDataSource, Mode=TwoWay}"
+                                      mah:TextBoxHelper.Watermark="TESTE"
+                                      IsEnabled="{Binding IsDataSourceEnabled}">
 
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Converter={StaticResource EnumToDescriptionConverter}}"/>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumToDescriptionConverter}}"
+                                                   />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
@@ -236,7 +242,7 @@
 
                     <Border Name="TextBlockOptions"      
                             Margin="0 0 0 10"
-                            Visibility="Collapsed">
+                            mah:VisibilityHelper.IsCollapsed="{Binding IsTextBlockOptionsCollapsed}">
                         <StackPanel Orientation="Vertical">
 
                             <Label Content="BLOCO DE TEXTO:"/>
@@ -255,7 +261,7 @@
 
                     <Border Name="ParameterName"      
                             Margin="0 0 0 10"
-                            Visibility="Visible">
+                            mah:VisibilityHelper.IsCollapsed="{Binding IsSetRevitPararameterCollapsed}">
                         <StackPanel Orientation="Vertical">
 
                             <Label Content="PARÂMETRO:"/>
@@ -265,8 +271,8 @@
                                       IsEditable="True"
                                       Text="{Binding RevitParameterName, Mode=TwoWay}"
                                       mah:TextBoxHelper.Watermark="Digite o nome do parâmetro"
-                                      PreviewMouseWheel="ComboBox_PreviewMouseWheel"
-                                      />
+                                      
+                                      PreviewMouseWheel="ComboBox_PreviewMouseWheel"/>
 
                             <Separator HorizontalAlignment="Stretch"
                                        Margin="0 20 0 0"
@@ -275,7 +281,9 @@
                     </Border>
 
 
-                    <Border>
+                    <Border x:Name="NewTextInputBox"
+                            mah:VisibilityHelper.IsCollapsed="{Binding IsNewTextCollapsed}">
+                        
                         <StackPanel Orientation="Vertical">
                             <Label Content="TEXTO NOVO:"/>
                             <mah:ClipBorder BorderBrush="LightGray"

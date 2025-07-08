@@ -15,9 +15,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
     internal class RuleCardViewModel : ObservableObject
     {
-
-
-
         private readonly UndoRedoManager _undoRedoManager;
 
         private string _ruleName;
@@ -50,8 +47,16 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             {
                 if (_isExpanded != value)
                 {
-                    _isExpanded = value;
-                    OnPropertyChanged();
+                    // Cria um comando para esta mudança específica
+                    var command = new ChangePropertyCommand<bool>(
+                        boolValue => _isExpanded = boolValue,    // A ação de como setar o valor
+                        () => OnPropertyChanged(nameof(IsExpanded)),
+                        _isExpanded,                                   // O valor antigo
+                        value                                                // O novo valor
+                    );
+
+                    // Executa e registra o comando no gerenciador de Undo/Redo
+                    _undoRedoManager.Do(command);
                 }
             }
         }
@@ -75,8 +80,18 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
                 if (value == RuleActionType.InitialText)
                     return;
 
-                if (SetProperty(ref _selectedAction, value))
+                if (_selectedAction != value)
                 {
+                    // Cria um comando para esta mudança específica
+                    var command = new ChangePropertyCommand<RuleActionType>(
+                        newSelection => _selectedAction = newSelection,    // A ação de como setar o valor
+                        () => OnPropertyChanged(nameof(SelectedAction)),
+                        _selectedAction,                                   // O valor antigo
+                        value                                                // O novo valor
+                    );
+                    // Executa e registra o comando no gerenciador de Undo/Redo
+                    _undoRedoManager.Do(command);
+
                     var placeHolder = ActionOptions.FirstOrDefault(x => x.Key == RuleActionType.InitialText);
                     ActionOptions.Remove(placeHolder);
                     OnPropertyChanged(nameof(ActionOptions));
@@ -86,7 +101,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
                     IsExpanded = true;
                 }
-                
             }
         }
 

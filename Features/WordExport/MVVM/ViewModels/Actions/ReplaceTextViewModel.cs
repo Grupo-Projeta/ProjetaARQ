@@ -1,11 +1,7 @@
-﻿using ProjetaARQ.Features.WordExport.Enums;
+﻿using System.ComponentModel;
+using ProjetaARQ.Features.WordExport.Enums;
 using ProjetaARQ.Features.WordExport.Services;
 using ProjetaARQ.Features.WordExport.Services.UndoableCommands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
 {
@@ -58,7 +54,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             }
         }
 
-        private ConditionType _selectedConditon;
+        private ConditionType _selectedConditon = ConditionType.None;
         public ConditionType SelectedCondition
         {
             get => _selectedConditon;
@@ -168,10 +164,127 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             }
         }
 
+        private bool _isTextToReplaceCollapsed = true;
+        public bool IsTextToReplaceCollapsed
+        {
+            get => _isTextToReplaceCollapsed;
+            set => SetProperty(ref _isTextToReplaceCollapsed, value);
+        }
+
+        private bool _isNewTextCollapsed = true;
+        public bool IsNewTextCollapsed
+        {
+            get => _isNewTextCollapsed;
+            set => SetProperty(ref _isNewTextCollapsed, value);
+        }
+
+        private bool _isCheckBoxConditionCollapsed = true;
+        public bool IsCheckBoxConditionCollapsed
+        {
+            get => _isCheckBoxConditionCollapsed;
+            set => SetProperty(ref _isCheckBoxConditionCollapsed, value);
+        }
+
+        private bool _isTextBlockOptionsCollapsed = true;
+        public bool IsTextBlockOptionsCollapsed
+        {
+            get => _isTextBlockOptionsCollapsed;
+            set => SetProperty(ref _isTextBlockOptionsCollapsed, value);
+        }
+
+        private bool _isSetRevitParameterCollapsed = true;
+        public bool IsSetRevitPararameterCollapsed
+        {
+            get => _isSetRevitParameterCollapsed;
+            set => SetProperty(ref _isSetRevitParameterCollapsed, value);
+        }
+
+        private bool _isDataSourceEnabled = false;
+        public bool IsDataSourceEnabled
+        {
+            get => _isDataSourceEnabled;
+            set => SetProperty(ref _isDataSourceEnabled, value);
+        }
+
 
         internal ReplaceTextViewModel(UndoRedoManager undoRedoManager)
         {
             _undoRedoManager = undoRedoManager;
+            PropertyChanged += OnViewModelPropertyChanged;
+        }
+
+
+
+        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // Verifica se a propriedade que mudou foi a que nos interessa
+            if (e.PropertyName == nameof(SelectedEditMode))
+            {
+                switch (SelectedEditMode)
+                {
+                    case EditModeType.ReplaceAll:
+                        IsTextToReplaceCollapsed = true;
+                        IsDataSourceEnabled = true;
+                        break;
+
+                    case EditModeType.DeleteSection:
+                        IsTextToReplaceCollapsed = true;
+                        IsDataSourceEnabled = false;
+                        IsTextBlockOptionsCollapsed = true;
+                        IsSetRevitPararameterCollapsed = true;
+                        IsNewTextCollapsed = true;
+                        break;
+
+                    case EditModeType.ReplaceIn:
+                        IsTextToReplaceCollapsed = false;
+                        IsDataSourceEnabled = true;
+                        break;
+                }
+
+                return;
+            }
+
+            if(e.PropertyName == nameof(SelectedDataSource))
+            {
+                switch (SelectedDataSource)
+                {
+                    case DataSourceType.RevitParameter:
+                        IsSetRevitPararameterCollapsed = false;
+                        IsTextBlockOptionsCollapsed = true;
+                        IsNewTextCollapsed = true;
+                        break;
+
+                    case DataSourceType.TextBlock:
+                        IsSetRevitPararameterCollapsed = true;
+                        IsTextBlockOptionsCollapsed = false;
+                        IsNewTextCollapsed = true;
+                        break;
+
+                    case DataSourceType.WriteText:
+                        IsSetRevitPararameterCollapsed = true;
+                        IsTextBlockOptionsCollapsed = true;
+                        IsNewTextCollapsed = false;
+                        break;
+                }
+
+                return;
+            }
+
+            if (e.PropertyName == nameof(SelectedCondition))
+            {
+                switch (SelectedCondition)
+                {
+                    case ConditionType.None:
+                        IsCheckBoxConditionCollapsed = true;
+                        break;
+
+                    case ConditionType.CheckBox:
+                        IsCheckBoxConditionCollapsed = false;
+                        break;
+                }
+
+                return;
+            }
         }
     }
 }

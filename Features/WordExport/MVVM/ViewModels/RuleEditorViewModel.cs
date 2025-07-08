@@ -1,15 +1,11 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using ProjetaARQ.Core.UI;
-using ProjetaARQ.Features.FamiliesPanel.MVVM;
+using ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions;
 using ProjetaARQ.Features.WordExport.Services;
 using ProjetaARQ.Features.WordExport.Services.GongHandlers;
 using ProjetaARQ.Features.WordExport.Services.UndoableCommands;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Linq;
 
 namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
@@ -27,6 +23,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
         public ObservableCollection<RuleCardViewModel> RulesList { get; set; } = new ObservableCollection<RuleCardViewModel>();
         public RelayCommand AddRuleCommand { get; }
+        public RelayCommand ExportCommand { get; }
 
         public RuleEditorViewModel()
         {
@@ -38,6 +35,8 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             RedoCommand = new RelayCommand(p => _undoRedoManager.Redo());
 
             AddRuleCommand = new RelayCommand(x => AddRule());
+            ExportCommand = new RelayCommand(x => ExportWord());
+
             RulesList.Add(new RuleCardViewModel(_undoRedoManager));
             
         }
@@ -47,6 +46,27 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             var ruleToAdd = new RuleCardViewModel(_undoRedoManager);
             var command = new AddRuleCommand(RulesList, ruleToAdd);
             _undoRedoManager.Do(command);
+        }
+
+        private void ExportWord()
+        {
+            FileHandler fileHandler = new FileHandler();
+
+            string savePath = fileHandler.GetSavePath();
+            fileHandler.CreateNewFile(savePath);
+
+            using (WordEditor editor = new WordEditor(savePath))
+            {
+                foreach (var ruleCard in RulesList)
+                {
+                    var ruleCardViewModel = ruleCard.CurrentActionViewModel as ReplaceTextViewModel;
+
+                    editor.ReplaceTextInContentControl("Nome Do Projeto", ruleCardViewModel.NewText);
+                }
+            }
+
+
+            fileHandler.OpenFile(savePath);
         }
     }
 }

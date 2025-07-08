@@ -9,6 +9,9 @@ namespace ProjetaARQ.Features.WordExport.Enums
 {
     public enum EditModeType
     {
+        [Description("")]
+        Void,
+
         [Description("Substituir tudo")]
         ReplaceAll,
 
@@ -16,6 +19,6 @@ namespace ProjetaARQ.Features.WordExport.Enums
         ReplaceIn,
 
         [Description("Deletar Seção")]
-        DeletarSecao
+        DeleteSection,
     }
 }

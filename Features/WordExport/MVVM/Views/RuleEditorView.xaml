@@ -65,16 +65,32 @@
                              Converter={StaticResource BoolToVisible}}">
 
             <StackPanel Orientation="Horizontal">
-            
-            <Button Command="{Binding AddRuleCommand}"
-                    Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                    Margin="0 0 10 0">
 
-                <iconPacks:PackIconMaterialDesign Kind="Add"/>
-            </Button>
-            
-            <TextBlock Text="ADICIONAR REGRA" VerticalAlignment="Center"/>
-        </StackPanel>
+                <Border>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding AddRuleCommand}"
+                                Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                                Margin="0 0 10 0">
+
+                            <iconPacks:PackIconMaterialDesign Kind="Add"/>
+                        </Button>
+                        <TextBlock Text="ADICIONAR REGRA" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <Border>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding ExportCommand}"
+                                Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                                Margin="0 0 10 0">
+
+                            <iconPacks:PackIconMaterial Kind="FileWord"/>
+                        </Button>
+                        <TextBlock Text="ADICIONAR REGRA" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
         </Border>
 
         <Border Grid.Row="1"
