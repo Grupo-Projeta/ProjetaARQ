@@ -67,27 +67,41 @@
             <StackPanel Orientation="Horizontal">
 
                 <Border>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Command="{Binding AddRuleCommand}"
-                                Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                                Margin="0 0 10 0">
+                    <Button Command="{Binding AddRuleCommand}"
+                            Style="{StaticResource MahApps.Styles.Button.Chromeless}">
 
-                            <iconPacks:PackIconMaterialDesign Kind="Add"/>
-                        </Button>
-                        <TextBlock Text="ADICIONAR REGRA" VerticalAlignment="Center"/>
-                    </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterialDesign Kind="Add"
+                                                              Margin="0 0 5 0"/>
+                            <TextBlock Text="ADICIONAR REGRA" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </Border>
 
-                <Border>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Command="{Binding ExportCommand}"
-                                Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                                Margin="0 0 10 0">
+                <Border Margin="15 0">
+                    <Button Command="{Binding ExportCommand}"
+                            Style="{StaticResource MahApps.Styles.Button.Chromeless}">
 
-                            <iconPacks:PackIconMaterial Kind="FileWord"/>
-                        </Button>
-                        <TextBlock Text="ADICIONAR REGRA" VerticalAlignment="Center"/>
-                    </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial 
+                                Kind="ContentSave"
+                                Margin="0 0 5 0"/>
+                            <TextBlock Text="SALVAR" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
+
+                <Border Margin="15 0">
+                    <Button Command="{Binding ExportCommand}"
+                            Style="{StaticResource MahApps.Styles.Button.Chromeless}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial 
+                                Kind="FileWord"
+                                Margin="0 0 5 0"/>
+                            <TextBlock Text="EXPORTAR TESTE" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </Border>
 
             </StackPanel>

@@ -1,16 +1,22 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using ProjetaARQ.Core.UI;
+using ProjetaARQ.Features.WordExport.Models;
 using ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions;
 using ProjetaARQ.Features.WordExport.Services;
 using ProjetaARQ.Features.WordExport.Services.GongHandlers;
 using ProjetaARQ.Features.WordExport.Services.UndoableCommands;
+using System;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
+using System.IO;
 
 namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
     internal class RuleEditorViewModel : ObservableObject
     {
+        private readonly PresetService _presetService = new PresetService();
+        string _templatePath;
+
         public IDropTarget DeleteDropHandler { get; }
         public IDragSource RuleDragHandler { get; }
         public IDropTarget RuleDropHandler { get; }
@@ -24,6 +30,9 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         public ObservableCollection<RuleCardViewModel> RulesList { get; set; } = new ObservableCollection<RuleCardViewModel>();
         public RelayCommand AddRuleCommand { get; }
         public RelayCommand ExportCommand { get; }
+        public RelayCommand SaveCommand { get; }
+
+
 
         public RuleEditorViewModel()
         {
@@ -36,6 +45,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
             AddRuleCommand = new RelayCommand(x => AddRule());
             ExportCommand = new RelayCommand(x => ExportWord());
+            SaveCommand = new RelayCommand(x => SaveCurrentPreset());
 
             RulesList.Add(new RuleCardViewModel(_undoRedoManager));
             
@@ -50,23 +60,68 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
         private void ExportWord()
         {
-            FileHandler fileHandler = new FileHandler();
+            //FileHandler fileHandler = new FileHandler();
 
-            string savePath = fileHandler.GetSavePath();
-            fileHandler.CreateNewFile(savePath);
+            //string savePath = fileHandler.GetSavePath();
+            //fileHandler.CreateNewFile(savePath);
 
-            using (WordEditor editor = new WordEditor(savePath))
+            //using (WordEditor editor = new WordEditor(savePath))
+            //{
+            //    foreach (var ruleCard in RulesList)
+            //    {
+            //        var ruleCardViewModel = ruleCard.CurrentActionViewModel as ReplaceTextViewModel;
+
+            //        editor.ReplaceTextInContentControl(ruleCardViewModel.ContentTag, ruleCardViewModel.NewText);
+            //    }
+            //}
+
+
+            //fileHandler.OpenFile(savePath);
+        }
+
+
+        private void SaveCurrentPreset()
+        {
+            FileServices fileHandler = new FileServices();
+            string filePath = fileHandler.GetSavePath("Salvar em", "{Name}", ".Json");
+            if (string.IsNullOrEmpty(filePath))
+                return; // O usuário cancelou
+            
+
+            var presetToSave = new PresetModel
             {
-                foreach (var ruleCard in RulesList)
-                {
-                    var ruleCardViewModel = ruleCard.CurrentActionViewModel as ReplaceTextViewModel;
+                PresetName = Path.GetFileNameWithoutExtension(filePath),
+                WordTemplatePath = _templatePath 
+            };
 
-                    editor.ReplaceTextInContentControl("Nome Do Projeto", ruleCardViewModel.NewText);
+            foreach (var ruleCardVM in RulesList)
+            {
+                var ruleModel = new RuleModel
+                {
+                    Name = ruleCardVM.RuleName,
+                    Action = ruleCardVM.SelectedAction,
+                };
+
+                if (ruleCardVM.CurrentActionViewModel is ReplaceTextViewModel replaceTextVM)
+                {
+                    ruleModel.Condition = replaceTextVM.SelectedCondition;
+                    ruleModel.Parameters["TargetTag"] = replaceTextVM.ContentTag;
+                    ruleModel.Parameters["ReplacementText"] = replaceTextVM.ReplacementTextBox;
                 }
+
+                presetToSave.Rules.Add(ruleModel);
             }
 
-
-            fileHandler.OpenFile(savePath);
+            // 5. Usa o PresetService para salvar o objeto completo no ficheiro JSON
+            try
+            {
+                _presetService.SavePreset(presetToSave, filePath);
+                // Opcional: Mostrar uma mensagem de sucesso ao usuário
+            }
+            catch (Exception ex)
+            {
+                // Opcional: Mostrar uma mensagem de erro ao usuário
+            }
         }
     }
 }

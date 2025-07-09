@@ -188,7 +188,7 @@
                                          AcceptsReturn="True"
                                          TextWrapping="Wrap"
                                          Width="Auto"
-                                         Text="{Binding TextToReplace}"
+                                         Text="{Binding TextBoxToReplace}"
                                          FontSize="14">
                                     <mah:TextBoxHelper.Watermark>
                                         Digite o texto a ser substituído
@@ -296,7 +296,7 @@
                                          AcceptsReturn="True"
                                          TextWrapping="Wrap"
                                          Width="Auto"
-                                         Text="{Binding NewText}"
+                                         Text="{Binding ReplacementTextBox}"
                                          FontSize="14">
                                     
                                     <mah:TextBoxHelper.Watermark>

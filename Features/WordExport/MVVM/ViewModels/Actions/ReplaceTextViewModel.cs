@@ -10,6 +10,8 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
 
         private readonly UndoRedoManager _undoRedoManager;
 
+        public string MyProperty { get; set; }
+
         private EditModeType _selectedEditMode;
         public EditModeType SelectedEditMode
         {
@@ -76,19 +78,19 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             }
         }
 
-        private string _textoToReplace;
-        public string TextToReplace
+        private string _textBoxToReplace;
+        public string TextBoxToReplace
         {
-            get => _textoToReplace;
+            get => _textBoxToReplace;
             set
             {
-                if (_textoToReplace != value)
+                if (_textBoxToReplace != value)
                 {
                     // Cria um comando para esta mudança específica
                     var command = new ChangePropertyCommand<string>(
-                        oldText => _textoToReplace = oldText,     // A ação de como setar o valor
-                        () => OnPropertyChanged(nameof(TextToReplace)),
-                        _textoToReplace,                                    // O valor antigo
+                        oldText => _textBoxToReplace = oldText,     // A ação de como setar o valor
+                        () => OnPropertyChanged(nameof(TextBoxToReplace)),
+                        _textBoxToReplace,                                    // O valor antigo
                         value                                               // O novo valor
                     );
 
@@ -98,19 +100,19 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             }
         }
 
-        private string _newText;
-        public string NewText
+        private string _replacementTextBox;
+        public string ReplacementTextBox
         {
-            get => _newText;
+            get => _replacementTextBox;
             set
             {
-                if (_newText != value)
+                if (_replacementTextBox != value)
                 {
                     // Cria um comando para esta mudança específica
                     var command = new ChangePropertyCommand<string>(
-                        newText => _newText = newText,     // A ação de como setar o valor
-                        () => OnPropertyChanged(nameof(NewText)),
-                        _newText,                                    // O valor antigo
+                        newText => _replacementTextBox = newText,     // A ação de como setar o valor
+                        () => OnPropertyChanged(nameof(ReplacementTextBox)),
+                        _replacementTextBox,                                    // O valor antigo
                         value                                               // O novo valor
                     );
 

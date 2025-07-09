@@ -10,17 +10,22 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ProjetaARQ.Features.WordExport.Services
 {
-    internal class FileHandler
+    internal class FileServices
     {
         private readonly string _rootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Docs", "mmd.docx");
         private string _newPath;
-        internal string GetSavePath()
+        internal string GetSavePath(string title, string defaultFileName, string defaultExtension)
         {
             var dialog = new CommonSaveFileDialog
             {
-                Title = "Exportar para",
-                DefaultFileName = "MMD-XXXXX-EXE-ARQ-0101-REV0X.docx",
-                DefaultExtension = ".docx",
+                //Title = "Exportar para",
+                //DefaultFileName = "MMD-XXXXX-EXE-ARQ-0101-REV0X.docx",
+                //DefaultExtension = ".docx",
+                //EnsurePathExists = true
+
+                Title = title,
+                DefaultFileName = defaultFileName,
+                DefaultExtension = defaultExtension,
                 EnsurePathExists = true
             };
 
@@ -30,7 +35,6 @@ namespace ProjetaARQ.Features.WordExport.Services
                 return dialog.FileName;
             }
                 
-
             else
                 return null;
             
