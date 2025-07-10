@@ -38,16 +38,24 @@
                              Height="26"
                              Margin="10 0 0 0"
                              MinWidth="200" MaxWidth="400"/>
-                
-                    <ComboBox ItemsSource="{Binding ActionOptions}"
-                              DisplayMemberPath="Value"
-                              SelectedValuePath="Key"
+
+                    <ComboBox ItemsSource="{Binding Source={StaticResource RuleActionTypeProvider}}"
                               SelectedValue="{Binding SelectedAction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedIndex="-1"
+                              mah:TextBoxHelper.Watermark="Selecione a ação"
                               HorizontalAlignment="Left"
                               Height="26"
                               BorderBrush="Black"
                               Margin="10 0 0 0"
-                              MinWidth="200" MaxWidth="400"/>
+                              MinWidth="200" MaxWidth="400">
+                        
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource EnumToDescriptionConverter}}"
+                                           mah:TextBoxHelper.Watermark="TESTE"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 
                     
                 </StackPanel>

@@ -69,7 +69,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         }
 
         private readonly Dictionary<RuleActionType, Func<ActionViewModelBase>> _actionFactory;
-        public ObservableCollection<KeyValuePair<RuleActionType, string>> ActionOptions { get; }
 
         private RuleActionType _selectedAction;
         public RuleActionType SelectedAction
@@ -77,7 +76,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             get => _selectedAction;
             set
             {
-                if (value == RuleActionType.InitialText)
+                if (value == RuleActionType.Void)
                     return;
 
                 if (_selectedAction != value)
@@ -91,10 +90,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
                     );
                     // Executa e registra o comando no gerenciador de Undo/Redo
                     _undoRedoManager.Do(command);
-
-                    var placeHolder = ActionOptions.FirstOrDefault(x => x.Key == RuleActionType.InitialText);
-                    ActionOptions.Remove(placeHolder);
-                    OnPropertyChanged(nameof(ActionOptions));
 
                     CurrentActionViewModel = _actionFactory[_selectedAction]();
                     OnPropertyChanged(nameof(CurrentActionViewModel));
@@ -113,13 +108,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             { RuleActionType.ReplaceText, () => new ReplaceTextViewModel(_undoRedoManager) },
             { RuleActionType.ReplaceImage, () => new ReplaceTextViewModel(_undoRedoManager) },
         };
-
-            ActionOptions = new ObservableCollection<KeyValuePair<RuleActionType, string>>
-            {
-                new KeyValuePair<RuleActionType, string>(RuleActionType.InitialText, "Selecione uma Ação..."),
-                new KeyValuePair<RuleActionType, string>(RuleActionType.ReplaceText, "Substituir Texto"),
-                new KeyValuePair<RuleActionType, string>(RuleActionType.ReplaceImage, "Substituir Imagem")
-            };
 
             _undoRedoManager = undoRedoManager;
         }

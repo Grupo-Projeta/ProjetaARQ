@@ -79,7 +79,7 @@
                 </Border>
 
                 <Border Margin="15 0">
-                    <Button Command="{Binding ExportCommand}"
+                    <Button Command="{Binding SaveCommand}"
                             Style="{StaticResource MahApps.Styles.Button.Chromeless}">
 
                         <StackPanel Orientation="Horizontal">

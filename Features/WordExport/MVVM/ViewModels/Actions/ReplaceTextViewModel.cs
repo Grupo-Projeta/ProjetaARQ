@@ -10,10 +10,31 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
 
         private readonly UndoRedoManager _undoRedoManager;
 
-        public string MyProperty { get; set; }
+        public string ReplacementText
+        {
+            get
+            {
+                switch (SelectedDataSource)
+                {
+                    case DataSourceType.WriteText:
+                        return ReplacementTextBox;
 
-        private EditModeType _selectedEditMode;
-        public EditModeType SelectedEditMode
+                    case DataSourceType.RevitParameter:
+                        return RevitParameterName;
+
+                    case DataSourceType.TextBlock:
+                        return string.Empty;
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+        public string ToReplaceText { get => TextBoxToReplace; }
+
+        private ReplaceTextModeType _selectedEditMode;
+        public ReplaceTextModeType SelectedEditMode
         {
             get => _selectedEditMode;
             set
@@ -21,7 +42,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
                 if (_selectedEditMode != value)
                 {
                     // Cria um comando para esta mudança específica
-                    var command = new ChangePropertyCommand<EditModeType>(
+                    var command = new ChangePropertyCommand<ReplaceTextModeType>(
                         newSelection => _selectedEditMode = newSelection,    // A ação de como setar o valor
                         () => OnPropertyChanged(nameof(SelectedEditMode)),
                         _selectedEditMode,                                   // O valor antigo
@@ -56,7 +77,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             }
         }
 
-        private ConditionType _selectedConditon = ConditionType.None;
+        private ConditionType _selectedConditon = ConditionType.AlwaysExecute;
         public ConditionType SelectedCondition
         {
             get => _selectedConditon;
@@ -224,20 +245,12 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             {
                 switch (SelectedEditMode)
                 {
-                    case EditModeType.ReplaceAll:
+                    case ReplaceTextModeType.ReplaceAll:
                         IsTextToReplaceCollapsed = true;
                         IsDataSourceEnabled = true;
                         break;
 
-                    case EditModeType.DeleteSection:
-                        IsTextToReplaceCollapsed = true;
-                        IsDataSourceEnabled = false;
-                        IsTextBlockOptionsCollapsed = true;
-                        IsSetRevitPararameterCollapsed = true;
-                        IsNewTextCollapsed = true;
-                        break;
-
-                    case EditModeType.ReplaceIn:
+                    case ReplaceTextModeType.ReplaceIn:
                         IsTextToReplaceCollapsed = false;
                         IsDataSourceEnabled = true;
                         break;
@@ -268,7 +281,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
                         IsNewTextCollapsed = false;
                         break;
                 }
-
                 return;
             }
 
@@ -276,7 +288,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             {
                 switch (SelectedCondition)
                 {
-                    case ConditionType.None:
+                    case ConditionType.AlwaysExecute:
                         IsCheckBoxConditionCollapsed = true;
                         break;
 
@@ -284,7 +296,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
                         IsCheckBoxConditionCollapsed = false;
                         break;
                 }
-
                 return;
             }
         }

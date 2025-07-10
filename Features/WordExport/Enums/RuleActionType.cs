@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,16 @@ namespace ProjetaARQ.Features.WordExport.Enums
 {
     public enum RuleActionType
     {
-        InitialText,
+        [Description("")]
+        Void,
+
+        [Description("Substituir Texto")]
         ReplaceText,
+
+        [Description("Substituir Imagem")]
         ReplaceImage,
+
+        [Description("Deletar Seção")]
         DeleteSection,
         // Adicione aqui novas ações no futuro
     }

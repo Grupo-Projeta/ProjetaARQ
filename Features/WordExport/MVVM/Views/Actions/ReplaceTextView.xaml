@@ -10,7 +10,6 @@
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             d:DesignHeight="450" 
              d:DesignWidth="800"
              Background="#FFFEFEFE">
 
@@ -66,10 +65,10 @@
                     <Label Content="CONDIÇÃO:"/>
                     <ComboBox Height="Auto"
                               FontSize="14"
-                              VerticalContentAlignment="Center"
-                              SelectedIndex="0"      
+                              VerticalContentAlignment="Center"  
                               ItemsSource="{Binding Source={StaticResource ConditionTypeProvider}}"
                               SelectedItem="{Binding SelectedCondition, Mode=TwoWay}"
+                              SelectedIndex="-1"
                               PreviewMouseWheel="ComboBox_PreviewMouseWheel">
 
                         <ComboBox.ItemTemplate>
@@ -157,7 +156,7 @@
 
                             <ComboBox SelectedIndex="0"
                                       Padding="5 0 0 0"
-                                      ItemsSource="{Binding Source={StaticResource EditModeTypeProvider}}"
+                                      ItemsSource="{Binding Source={StaticResource ReplaceTextModeTypeProvider}}"
                                       SelectedItem="{Binding SelectedEditMode, Mode=TwoWay}"
                                       mah:ComboBoxHelper.CharacterCasing="Upper"
                                       PreviewMouseWheel="ComboBox_PreviewMouseWheel">

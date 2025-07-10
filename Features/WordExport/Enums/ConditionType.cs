@@ -10,7 +10,7 @@ namespace ProjetaARQ.Features.WordExport.Enums
     public enum ConditionType
     {
         [Description("Executar Sempre")]
-        None,
+        AlwaysExecute,
         [Description("Sim/Não do Usuário")]
         CheckBox,
 

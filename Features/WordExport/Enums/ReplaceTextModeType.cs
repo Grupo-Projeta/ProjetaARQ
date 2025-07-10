@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjetaARQ.Features.WordExport.Enums
 {
-    public enum EditModeType
+    public enum ReplaceTextModeType
     {
         [Description("")]
         Void,
@@ -16,9 +16,6 @@ namespace ProjetaARQ.Features.WordExport.Enums
         ReplaceAll,
 
         [Description("Substituir parte")]
-        ReplaceIn,
-
-        [Description("Deletar Seção")]
-        DeleteSection,
+        ReplaceIn
     }
 }

@@ -106,21 +106,22 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
                 {
                     ruleModel.Condition = replaceTextVM.SelectedCondition;
                     ruleModel.Parameters["TargetTag"] = replaceTextVM.ContentTag;
-                    ruleModel.Parameters["ReplacementText"] = replaceTextVM.ReplacementTextBox;
+                    ruleModel.Parameters["ReplacementeText"] = replaceTextVM.ReplacementText;
+                    ruleModel.Parameters["EditMode"] = replaceTextVM.SelectedEditMode.ToString();
+
+                    if(replaceTextVM.SelectedEditMode == Enums.ReplaceTextModeType.ReplaceIn)
+                        ruleModel.Parameters["ToReplaceText"] = replaceTextVM.ToReplaceText;
                 }
 
                 presetToSave.Rules.Add(ruleModel);
             }
 
-            // 5. Usa o PresetService para salvar o objeto completo no ficheiro JSON
             try
             {
                 _presetService.SavePreset(presetToSave, filePath);
-                // Opcional: Mostrar uma mensagem de sucesso ao usuário
             }
             catch (Exception ex)
             {
-                // Opcional: Mostrar uma mensagem de erro ao usuário
             }
         }
     }

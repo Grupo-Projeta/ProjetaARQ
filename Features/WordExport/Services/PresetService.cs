@@ -3,7 +3,6 @@ using System.IO;
 using System.Text.Json;
 
 
-
 namespace ProjetaARQ.Features.WordExport.Services
 {
     internal class PresetService

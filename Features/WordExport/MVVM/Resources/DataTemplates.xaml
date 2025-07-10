@@ -18,9 +18,15 @@
 
     <converters:EnumDescriptionConverter x:Key="EnumToDescriptionConverter" />
 
-    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="EditModeTypeProvider">
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="RuleActionTypeProvider">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="enums:EditModeType"/>
+            <x:Type TypeName="enums:RuleActionType"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="ReplaceTextModeTypeProvider">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="enums:ReplaceTextModeType"/>
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 
