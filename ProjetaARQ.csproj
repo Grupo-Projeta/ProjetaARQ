@@ -253,8 +253,12 @@
     <Compile Include="Features\WordExport\Models\RuleModel.cs" />
     <Compile Include="Features\WordExport\MVVM\ViewModels\Actions\ActionViewModelBase.cs" />
     <Compile Include="Features\WordExport\MVVM\ViewModels\Actions\ReplaceTextViewModel.cs" />
+    <Compile Include="Features\WordExport\MVVM\ViewModels\PresetsListViewModel.cs" />
     <Compile Include="Features\WordExport\MVVM\Views\Actions\ReplaceTextView.xaml.cs">
       <DependentUpon>ReplaceTextView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\WordExport\MVVM\Views\PresetsListView.xaml.cs">
+      <DependentUpon>PresetsListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\WordExport\MVVM\Views\RuleCard.xaml.cs">
       <DependentUpon>RuleCard.xaml</DependentUpon>
@@ -316,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Features\WordExport\MVVM\Views\Actions\ReplaceTextView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\WordExport\MVVM\Views\PresetsListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

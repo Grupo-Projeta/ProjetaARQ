@@ -1,5 +1,7 @@
 ﻿using ProjetaARQ.Features.WordExport.Models;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 
@@ -7,6 +9,8 @@ namespace ProjetaARQ.Features.WordExport.Services
 {
     internal class PresetService
     {
+        private readonly string _presetsFolderPath;
+
         public void SavePreset(PresetModel preset, string filePath)
         {
             // Opções para que o JSON fique formatado e fácil de ler (indentado)
@@ -24,13 +28,19 @@ namespace ProjetaARQ.Features.WordExport.Services
             if (!File.Exists(filePath))
                 // Poderia lançar uma exceção ou retornar nulo, dependendo da sua lógica
                 return null;
-            
+
 
             // Lê todo o conteúdo do ficheiro
             string jsonString = File.ReadAllText(filePath);
 
             // Converte a string JSON de volta para um objeto C#
             return JsonSerializer.Deserialize<PresetModel>(jsonString);
+        }
+
+        public List<string> GetAllPresetPaths()
+        {
+            // Procura por todos os ficheiros que terminam em .json na nossa pasta de presets
+            return Directory.GetFiles(_presetsFolderPath, "*.json").ToList();
         }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
 using System.IO;
+using System.Linq;
 
 namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
@@ -16,6 +17,15 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
     {
         private readonly PresetService _presetService = new PresetService();
         string _templatePath;
+
+        public ObservableCollection<PresetModel> LoadedPresets { get; private set; }
+
+        private PresetModel _selectedPreset;
+        public PresetModel SelectedPreset
+        {
+            get => _selectedPreset;
+            set => SetProperty(ref _selectedPreset, value);
+        }
 
         public IDropTarget DeleteDropHandler { get; }
         public IDragSource RuleDragHandler { get; }
@@ -36,6 +46,8 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
         public RuleEditorViewModel()
         {
+            LoadedPresets = new ObservableCollection<PresetModel>();
+
             DeleteDropHandler = new DeleteDropHandler(RulesList, _undoRedoManager);
             RuleDragHandler = new RuleDragHandler(this);
             RuleDropHandler = new RuleDropHandler(_undoRedoManager);
@@ -121,8 +133,25 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
                 _presetService.SavePreset(presetToSave, filePath);
             }
             catch (Exception ex)
+            { }
+        }
+
+        private void LoadAllPresets()
+        {
+            LoadedPresets.Clear();
+
+            var presetPaths = _presetService.GetAllPresetPaths();
+
+            foreach (var path in presetPaths)
             {
+                // 3. Carrega cada preset e o adiciona à nossa coleção
+                var preset = _presetService.LoadPreset(path);
+                if (preset != null)
+                {
+                    LoadedPresets.Add(preset);
+                }
             }
+
         }
     }
 }
