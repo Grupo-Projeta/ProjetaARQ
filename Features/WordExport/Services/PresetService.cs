@@ -9,7 +9,7 @@ namespace ProjetaARQ.Features.WordExport.Services
 {
     internal class PresetService
     {
-        private readonly string _presetsFolderPath;
+        private readonly string _presetsFolderPath = "C:\\Users\\Usuario\\Desktop\\Ricardo - ED\\ProjetaARQ\\testes";
 
         public void SavePreset(PresetModel preset, string filePath)
         {
@@ -40,7 +40,7 @@ namespace ProjetaARQ.Features.WordExport.Services
         public List<string> GetAllPresetPaths()
         {
             // Procura por todos os ficheiros que terminam em .json na nossa pasta de presets
-            return Directory.GetFiles(_presetsFolderPath, "*.json").ToList();
+            return Directory.GetFiles(_presetsFolderPath, "*.Json").ToList();
         }
     }
 }

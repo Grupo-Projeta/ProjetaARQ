@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjetaARQ.Core.UI;
 using ProjetaARQ.Features.FamiliesPanel.MVVM;
+using ProjetaARQ.Features.WordExport.Models;
+using ProjetaARQ.Features.WordExport.Services;
 
 namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
@@ -51,7 +53,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
         public WordConfigViewModel()
         {
-            RuleEditorVM = new RuleEditorViewModel();
+            //RuleEditorVM = new RuleEditorViewModel();
             PresetsListVM = new PresetsListViewModel();
 
             RuleEditorViewCommand = new RelayCommand(o =>
@@ -65,11 +67,36 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             });
 
             ToggleMenuCommand = new RelayCommand(x => ToggleMenu());
+
+            ShowPresetListView();
         }
 
         private void ToggleMenu()
         {
             IsMenuExpanded = !IsMenuExpanded;
+        }
+
+        private void ShowPresetListView()
+        {
+            PresetsListVM.EditPresetRequested += OnPresetEditRequested;
+            PresetsListVM.CreateNewPresetRequested += OnPresetCreateRequested;
+
+            //CurrentView = presetListVM;
+        }
+
+        // Este método é o "ouvinte" do evento de edição
+        private void OnPresetEditRequested(object sender, PresetModel presetToEdit)
+        {
+            if (presetToEdit == null) return;
+
+            CurrentView = new RuleEditorViewModel(presetToEdit);
+            OnPropertyChanged(nameof(CurrentView));
+        }
+
+        private void OnPresetCreateRequested(object sender, EventArgs e)
+        {
+            var newPreset = new PresetModel { PresetName = "Novo Preset" };
+            OnPresetEditRequested(this, newPreset);
         }
     }
 }

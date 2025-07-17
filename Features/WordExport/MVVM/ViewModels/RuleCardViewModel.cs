@@ -17,19 +17,19 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
     {
         private readonly UndoRedoManager _undoRedoManager;
 
-        private string _ruleName;
-        public string RuleName
+        private string _ruleCardName;
+        public string RuleCardName
         {
-            get => _ruleName;
+            get => _ruleCardName;
             set
             {
-                if (_ruleName != value)
+                if (_ruleCardName != value)
                 {
                     // Cria um comando para esta mudança específica
                     var command = new ChangePropertyCommand<string>(
-                        newText => _ruleName = newText, // A ação de como setar o valor
-                        () => OnPropertyChanged(nameof(RuleName)),
-                        _ruleName,                        // O valor antigo
+                        newText => _ruleCardName = newText, // A ação de como setar o valor
+                        () => OnPropertyChanged(nameof(RuleCardName)),
+                        _ruleCardName,                        // O valor antigo
                         value                             // O novo valor
                     );
 
@@ -103,11 +103,11 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         public RuleCardViewModel(UndoRedoManager undoRedoManager)
         {
             _actionFactory = new Dictionary<RuleActionType, Func<ActionViewModelBase>>
-        {
-            //{ RuleActionType.InitialText, () => new ReplaceTextViewModel() },
-            { RuleActionType.ReplaceText, () => new ReplaceTextViewModel(_undoRedoManager) },
-            { RuleActionType.ReplaceImage, () => new ReplaceTextViewModel(_undoRedoManager) },
-        };
+            {
+                //{ RuleActionType.InitialText, () => new ReplaceTextViewModel() },
+                { RuleActionType.ReplaceText, () => new ReplaceTextViewModel(_undoRedoManager) },
+                { RuleActionType.ReplaceImage, () => new ReplaceTextViewModel(_undoRedoManager) },
+            };
 
             _undoRedoManager = undoRedoManager;
         }

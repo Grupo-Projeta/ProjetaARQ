@@ -15,17 +15,9 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
     internal class RuleEditorViewModel : ObservableObject
     {
+        public string _templatePath;
         private readonly PresetService _presetService = new PresetService();
-        string _templatePath;
-
-        public ObservableCollection<PresetModel> LoadedPresets { get; private set; }
-
-        private PresetModel _selectedPreset;
-        public PresetModel SelectedPreset
-        {
-            get => _selectedPreset;
-            set => SetProperty(ref _selectedPreset, value);
-        }
+        private readonly PresetModel _presetModel;
 
         public IDropTarget DeleteDropHandler { get; }
         public IDragSource RuleDragHandler { get; }
@@ -44,9 +36,43 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
 
 
-        public RuleEditorViewModel()
+        public RuleEditorViewModel(PresetModel presetToEdit)
         {
-            LoadedPresets = new ObservableCollection<PresetModel>();
+            _presetModel = presetToEdit;
+
+            foreach (RuleCardModel ruleModel in presetToEdit.RuleCards)
+            {
+                var ruleCard = new RuleCardViewModel(_undoRedoManager)
+                {
+                    RuleCardName = ruleModel.CardName,
+                    SelectedAction = ruleModel.Action
+                };
+
+                OnPropertyChanged(nameof(ruleCard.SelectedAction));
+
+                if (ruleCard.SelectedAction == Enums.RuleActionType.ReplaceText)
+                {
+                    ruleCard.CurrentActionViewModel = new ReplaceTextViewModel(_undoRedoManager)
+                    {
+                        SelectedCondition = ruleModel.Condition,
+                        ContentTag = ruleModel.Parameters.ContainsKey("TargetTag") ? ruleModel.Parameters["TargetTag"] : string.Empty,
+                        TextBoxToReplace = ruleModel.Parameters.ContainsKey("ToReplaceText") ? ruleModel.Parameters["ToReplaceText"] : string.Empty,
+                        SelectedDataSource = Enum.TryParse(ruleModel.Parameters["DataSource"], out Enums.DataSourceType dataSource) ? dataSource : Enums.DataSourceType.Void,
+
+                    };
+
+                    ReplaceTextViewModel replaceTextViewModel = ruleCard.CurrentActionViewModel as ReplaceTextViewModel;
+
+                    //if (replaceTextViewModel.SelectedDataSource == Enums.DataSourceType.WriteText)
+                        replaceTextViewModel.TextBoxToReplace = ruleModel.Parameters.ContainsKey("ReplacementeText") ? ruleModel.Parameters["ReplacementeText"] : string.Empty;
+
+                    replaceTextViewModel.SelectedEditMode = Enum.TryParse(ruleModel.Parameters["EditMode"], out Enums.ReplaceTextModeType editMode) ? editMode : Enums.ReplaceTextModeType.ReplaceAll;
+                    
+                    
+                }
+
+                RulesList.Add(ruleCard);
+            }
 
             DeleteDropHandler = new DeleteDropHandler(RulesList, _undoRedoManager);
             RuleDragHandler = new RuleDragHandler(this);
@@ -58,8 +84,6 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             AddRuleCommand = new RelayCommand(x => AddRule());
             ExportCommand = new RelayCommand(x => ExportWord());
             SaveCommand = new RelayCommand(x => SaveCurrentPreset());
-
-            RulesList.Add(new RuleCardViewModel(_undoRedoManager));
             
         }
 
@@ -95,7 +119,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         private void SaveCurrentPreset()
         {
             FileServices fileHandler = new FileServices();
-            string filePath = fileHandler.GetSavePath("Salvar em", "{Name}", ".Json");
+            string filePath = fileHandler.GetSavePath("Salvar em", "{Name}", ".json");
             if (string.IsNullOrEmpty(filePath))
                 return; // O usuário cancelou
             
@@ -108,50 +132,31 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
             foreach (var ruleCardVM in RulesList)
             {
-                var ruleModel = new RuleModel
+                // Cria um novo RuleModel para ser salvo
+                var ruleModel = new RuleCardModel
                 {
-                    Name = ruleCardVM.RuleName,
-                    Action = ruleCardVM.SelectedAction,
+                    // Mapeia as propriedades universais
+                    CardName = ruleCardVM.RuleCardName,
+                    CardAction = ruleCardVM.SelectedAction,
                 };
-
-                if (ruleCardVM.CurrentActionViewModel is ReplaceTextViewModel replaceTextVM)
+                switch (ruleCardVM.CurrentActionViewModel)
                 {
-                    ruleModel.Condition = replaceTextVM.SelectedCondition;
-                    ruleModel.Parameters["TargetTag"] = replaceTextVM.ContentTag;
-                    ruleModel.Parameters["ReplacementeText"] = replaceTextVM.ReplacementText;
-                    ruleModel.Parameters["EditMode"] = replaceTextVM.SelectedEditMode.ToString();
+                    // Se for um ViewModel de "Substituir Texto"...
+                    case ReplaceTextViewModel replaceVm:
 
-                    if(replaceTextVM.SelectedEditMode == Enums.ReplaceTextModeType.ReplaceIn)
-                        ruleModel.Parameters["ToReplaceText"] = replaceTextVM.ToReplaceText;
+                        ruleModel.RuleCardValues = new ReplaceTextActionModel
+                        {
+                            TargetTag = replaceVm.ContentTag,
+                            EditMode = replaceVm.SelectedEditMode,
+                            TextToReplace = replaceVm.TextBoxToReplace,
+                            ReplacementValue = replaceVm.ReplacementText
+                        };
+                        break;
                 }
 
-                presetToSave.Rules.Add(ruleModel);
+                // Adiciona a regra completa (com a sua ação específica) à lista do preset
+                presetToSave.RuleCards.Add(ruleModel);
             }
-
-            try
-            {
-                _presetService.SavePreset(presetToSave, filePath);
-            }
-            catch (Exception ex)
-            { }
-        }
-
-        private void LoadAllPresets()
-        {
-            LoadedPresets.Clear();
-
-            var presetPaths = _presetService.GetAllPresetPaths();
-
-            foreach (var path in presetPaths)
-            {
-                // 3. Carrega cada preset e o adiciona à nossa coleção
-                var preset = _presetService.LoadPreset(path);
-                if (preset != null)
-                {
-                    LoadedPresets.Add(preset);
-                }
-            }
-
         }
     }
 }

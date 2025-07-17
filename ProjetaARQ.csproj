@@ -177,11 +177,11 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
-      <HintPath>D:\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>D:\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -249,8 +249,10 @@
     <Compile Include="Features\WordExport\Enums\ReplaceTextModeType.cs" />
     <Compile Include="Features\WordExport\Enums\RuleActionType.cs" />
     <Compile Include="Features\WordExport\Interfaces\IUndoableCommand.cs" />
+    <Compile Include="Features\WordExport\Models\ActionModelBase.cs" />
     <Compile Include="Features\WordExport\Models\PresetModel.cs" />
-    <Compile Include="Features\WordExport\Models\RuleModel.cs" />
+    <Compile Include="Features\WordExport\Models\ReplaceTextActionModel.cs" />
+    <Compile Include="Features\WordExport\Models\RuleCardModel.cs" />
     <Compile Include="Features\WordExport\MVVM\ViewModels\Actions\ActionViewModelBase.cs" />
     <Compile Include="Features\WordExport\MVVM\ViewModels\Actions\ReplaceTextViewModel.cs" />
     <Compile Include="Features\WordExport\MVVM\ViewModels\PresetsListViewModel.cs" />

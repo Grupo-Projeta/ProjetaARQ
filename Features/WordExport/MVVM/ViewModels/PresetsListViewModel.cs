@@ -13,6 +13,12 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 {
     internal class PresetsListViewModel : ObservableObject
     {
+        public event EventHandler<PresetModel> EditPresetRequested;
+        public event EventHandler CreateNewPresetRequested;
+
+        private readonly PresetService _presetService;
+        public ObservableCollection<PresetModel> Presets { get; }
+
 
         private PresetModel _selectedPreset;
         public PresetModel SelectedPreset
@@ -21,36 +27,28 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             set => SetProperty(ref _selectedPreset, value);
         }
 
-        // O serviço que sabe como encontrar e ler os ficheiros .json
-        private readonly PresetService _presetService;
-
-        // A coleção que será ligada à ListBox ou DataGrid na View
-        public ObservableCollection<PresetModel> Presets { get; }
+        public RelayCommand EditPresetCommand { get; }
+        public RelayCommand CreateNewPresetCommand { get; }
 
         public PresetsListViewModel()
         {
             _presetService = new PresetService();
             Presets = new ObservableCollection<PresetModel>();
 
-            
+            EditPresetCommand = new RelayCommand(p => OnEditPresetRequested(SelectedPreset), p => true);
 
-            // Carrega todos os presets do disco ao iniciar
+            CreateNewPresetCommand = new RelayCommand(p => OnCreateNewPresetRequested());
+
             LoadAllPresets();
         }
 
 
-        /// <summary>
-        /// Usa o PresetService para encontrar, carregar e exibir todos os presets.
-        /// </summary>
         public void LoadAllPresets()
         {
-            // Limpa a lista atual para garantir que não haja duplicatas
             Presets.Clear();
 
-            // Pede ao serviço a lista de todos os caminhos de ficheiro .json
             var presetPaths = _presetService.GetAllPresetPaths();
 
-            // Para cada caminho, carrega o preset e o adiciona à nossa coleção
             foreach (var path in presetPaths)
             {
                 var preset = _presetService.LoadPreset(path);
@@ -60,22 +58,17 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
                 }
             }
 
-            // Opcional: seleciona o primeiro item da lista por padrão
             SelectedPreset = Presets.FirstOrDefault();
         }
 
-        private void CreateNew()
+        protected virtual void OnEditPresetRequested(PresetModel preset)
         {
-            // AQUI, no futuro, você irá comunicar-se com o ViewModel principal
-            // para navegar para a tela do RuleEditorView com um preset em branco.
-            // Ex: MainViewModel.NavigateToEditor(new PresetModel());
+            EditPresetRequested?.Invoke(this, preset);
         }
 
-        private void EditSelected()
+        protected virtual void OnCreateNewPresetRequested()
         {
-            // AQUI, você irá comunicar-se com o ViewModel principal
-            // para navegar para a tela do RuleEditorView, passando o preset selecionado.
-            // Ex: MainViewModel.NavigateToEditor(SelectedPreset);
+            CreateNewPresetRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void DeleteSelected()

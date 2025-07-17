@@ -10,6 +10,6 @@ namespace ProjetaARQ.Features.WordExport.Models
     {
         public string PresetName { get; set; }
         public string WordTemplatePath { get; set; }
-        public List<RuleModel> Rules { get; set; } = new List<RuleModel>();
+        public List<RuleCardModel> RuleCards { get; set; } = new List<RuleCardModel>();
     }
 }
