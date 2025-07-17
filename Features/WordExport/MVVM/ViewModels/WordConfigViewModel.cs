@@ -38,20 +38,32 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         }
 
         public RuleEditorViewModel RuleEditorVM { get; set; }
+        public PresetsListViewModel PresetsListVM { get; set; }
+
+
 
 
         public RelayCommand RuleEditorViewCommand { get; }
+        public RelayCommand PresetsListViewCommand { get; }
+
         public RelayCommand ToggleMenuCommand { get; }
         #endregion
 
         public WordConfigViewModel()
         {
             RuleEditorVM = new RuleEditorViewModel();
+            PresetsListVM = new PresetsListViewModel();
 
             RuleEditorViewCommand = new RelayCommand(o =>
             {
                 CurrentView = RuleEditorVM;
             });
+
+            PresetsListViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = PresetsListVM;
+            });
+
             ToggleMenuCommand = new RelayCommand(x => ToggleMenu());
         }
 

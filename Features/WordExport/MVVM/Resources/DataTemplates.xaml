@@ -50,4 +50,8 @@
         <actionView:ReplaceTextView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type viewModel:PresetsListViewModel}">
+        <view:PresetsListView/>
+    </DataTemplate>
+
 </ResourceDictionary>
