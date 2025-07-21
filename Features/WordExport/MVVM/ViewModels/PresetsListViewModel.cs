@@ -35,7 +35,14 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             _presetService = new PresetService();
             PresetsList = new ObservableCollection<PresetModel>();
 
-            EditPresetCommand = new RelayCommand(p => OnEditPresetRequested(SelectedPreset), p => true);
+            //PresetsList = new ObservableCollection<PresetModel>
+            //{
+            //    new PresetModel { PresetName = "Preset de Exemplo 1" },
+            //    new PresetModel { PresetName = "Memorial Padrão (Exemplo)" },
+            //    new PresetModel { PresetName = "Preset de Teste 3" }
+            //};
+
+            EditPresetCommand = new RelayCommand(commandParameter => OnEditPresetRequested(commandParameter as PresetModel), p => true);
 
             CreateNewPresetCommand = new RelayCommand(p => OnCreateNewPresetRequested());
 
