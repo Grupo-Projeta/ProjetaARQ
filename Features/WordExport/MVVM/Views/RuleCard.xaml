@@ -31,7 +31,7 @@
                 <StackPanel Orientation="Horizontal" 
                             Height="50">
                     
-                    <TextBox Text="{Binding RuleName, Mode=TwoWay}"
+                    <TextBox Text="{Binding RuleCardName, Mode=TwoWay}"
                              IsUndoEnabled="False"
                              HorizontalAlignment="Left"
                              VerticalAlignment="Center"

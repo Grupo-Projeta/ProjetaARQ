@@ -31,6 +31,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             get => _isMenuExpanded;
             set
             {
+
                 if (_isMenuExpanded != value)
                 {
                     _isMenuExpanded = value;
@@ -53,7 +54,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
         public WordConfigViewModel()
         {
-            //RuleEditorVM = new RuleEditorViewModel();
+            RuleEditorVM = new RuleEditorViewModel();
             PresetsListVM = new PresetsListViewModel();
 
             RuleEditorViewCommand = new RelayCommand(o =>
@@ -89,7 +90,10 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         {
             if (presetToEdit == null) return;
 
-            CurrentView = new RuleEditorViewModel(presetToEdit);
+            var ruleCardEditorVM = new RuleEditorViewModel();
+            ruleCardEditorVM.LoadPreset(presetToEdit);
+            CurrentView = ruleCardEditorVM;
+
             OnPropertyChanged(nameof(CurrentView));
         }
 

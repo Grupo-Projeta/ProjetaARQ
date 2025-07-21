@@ -50,7 +50,19 @@ namespace ProjetaARQ.Features.WordExport.Services.GongHandlers
         }
 
         #region DragSourceInterface
-        public bool CanStartDrag(IDragInfo dragInfo) => true;
+        public bool CanStartDrag(IDragInfo dragInfo)
+        {
+
+            if (dragInfo.SourceItem is RuleCardViewModel ruleCardVM)
+            {
+                if (ruleCardVM.IsExpanded)
+                    return false;
+                else
+                    return true;
+            }
+
+            return true;
+        }
 
         public void DragCancelled()
         {

@@ -17,7 +17,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         public event EventHandler CreateNewPresetRequested;
 
         private readonly PresetService _presetService;
-        public ObservableCollection<PresetModel> Presets { get; }
+        public ObservableCollection<PresetModel> PresetsList { get; }
 
 
         private PresetModel _selectedPreset;
@@ -33,7 +33,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         public PresetsListViewModel()
         {
             _presetService = new PresetService();
-            Presets = new ObservableCollection<PresetModel>();
+            PresetsList = new ObservableCollection<PresetModel>();
 
             EditPresetCommand = new RelayCommand(p => OnEditPresetRequested(SelectedPreset), p => true);
 
@@ -45,20 +45,19 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
 
         public void LoadAllPresets()
         {
-            Presets.Clear();
+            PresetsList.Clear();
 
             var presetPaths = _presetService.GetAllPresetPaths();
 
             foreach (var path in presetPaths)
             {
                 var preset = _presetService.LoadPreset(path);
+
                 if (preset != null)
-                {
-                    Presets.Add(preset);
-                }
+                    PresetsList.Add(preset);
             }
 
-            SelectedPreset = Presets.FirstOrDefault();
+            //SelectedPreset = PresetsList.FirstOrDefault();
         }
 
         protected virtual void OnEditPresetRequested(PresetModel preset)

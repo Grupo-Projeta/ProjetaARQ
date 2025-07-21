@@ -97,7 +97,7 @@
                               mah:CheckBoxHelper.CheckSize="30"
                               mah:VisibilityHelper.IsCollapsed="{Binding IsCheckBoxConditionCollapsed}">
                         
-                        <TextBox Text=""
+                        <TextBox Text="{Binding CheckBoxConditionText}"
                                  mah:TextBoxHelper.Watermark="Digite a condição para o usuário"
                                  FontSize="14"
                                  VerticalContentAlignment="Center"/>

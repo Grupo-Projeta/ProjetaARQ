@@ -30,7 +30,7 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
         
-            <ListBox ItemsSource="{Binding Presets}"
+            <ListBox ItemsSource="{Binding PresetsList}"
                      SelectedItem="{Binding SelectedPreset, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

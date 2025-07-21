@@ -19,18 +19,17 @@ namespace ProjetaARQ.Features.WordExport.Services
             // Converte o objeto C# para uma string JSON
             string jsonString = JsonSerializer.Serialize(preset, options);
 
-            // Salva a string no ficheiro
+            // Salva a string no arquivo
             File.WriteAllText(filePath, jsonString);
         }
 
         public PresetModel LoadPreset(string filePath)
         {
             if (!File.Exists(filePath))
-                // Poderia lançar uma exceção ou retornar nulo, dependendo da sua lógica
                 return null;
 
 
-            // Lê todo o conteúdo do ficheiro
+            // Lê todo o conteúdo do arquivo
             string jsonString = File.ReadAllText(filePath);
 
             // Converte a string JSON de volta para um objeto C#
@@ -39,7 +38,7 @@ namespace ProjetaARQ.Features.WordExport.Services
 
         public List<string> GetAllPresetPaths()
         {
-            // Procura por todos os ficheiros que terminam em .json na nossa pasta de presets
+            // Procura por todos os arquivos que terminam em .json na nossa pasta de presets
             return Directory.GetFiles(_presetsFolderPath, "*.Json").ToList();
         }
     }

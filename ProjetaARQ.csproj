@@ -245,7 +245,7 @@
     <Compile Include="Features\FamiliesPanel\Services\OverLoadOption.cs" />
     <Compile Include="Features\WordExport\Commands\WordExport.cs" />
     <Compile Include="Features\WordExport\Enums\DataSourceType.cs" />
-    <Compile Include="Features\WordExport\Enums\ConditionType.cs" />
+    <Compile Include="Features\WordExport\Enums\ExecuteConditionType.cs" />
     <Compile Include="Features\WordExport\Enums\ReplaceTextModeType.cs" />
     <Compile Include="Features\WordExport\Enums\RuleActionType.cs" />
     <Compile Include="Features\WordExport\Interfaces\IUndoableCommand.cs" />

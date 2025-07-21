@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ProjetaARQ.Features.WordExport.Enums
 {
-    public enum ConditionType
+    public enum ExecuteConditionType
     {
-        [Description("Executar Sempre")]
-        None,
         [Description("Executar Sempre")]
         AlwaysExecute,
         [Description("Sim/Não do Usuário")]

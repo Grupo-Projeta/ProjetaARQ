@@ -29,52 +29,16 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
         public RelayCommand UndoCommand { get; }
         public RelayCommand RedoCommand { get; }
 
-        public ObservableCollection<RuleCardViewModel> RulesList { get; set; } = new ObservableCollection<RuleCardViewModel>();
+        public ObservableCollection<RuleCardViewModel> RuleCardList { get; set; } = new ObservableCollection<RuleCardViewModel>();
         public RelayCommand AddRuleCommand { get; }
         public RelayCommand ExportCommand { get; }
         public RelayCommand SaveCommand { get; }
 
 
 
-        public RuleEditorViewModel(PresetModel presetToEdit)
+        public RuleEditorViewModel()
         {
-            _presetModel = presetToEdit;
-
-            foreach (RuleCardModel ruleModel in presetToEdit.RuleCards)
-            {
-                var ruleCard = new RuleCardViewModel(_undoRedoManager)
-                {
-                    RuleCardName = ruleModel.CardName,
-                    SelectedAction = ruleModel.Action
-                };
-
-                OnPropertyChanged(nameof(ruleCard.SelectedAction));
-
-                if (ruleCard.SelectedAction == Enums.RuleActionType.ReplaceText)
-                {
-                    ruleCard.CurrentActionViewModel = new ReplaceTextViewModel(_undoRedoManager)
-                    {
-                        SelectedCondition = ruleModel.Condition,
-                        ContentTag = ruleModel.Parameters.ContainsKey("TargetTag") ? ruleModel.Parameters["TargetTag"] : string.Empty,
-                        TextBoxToReplace = ruleModel.Parameters.ContainsKey("ToReplaceText") ? ruleModel.Parameters["ToReplaceText"] : string.Empty,
-                        SelectedDataSource = Enum.TryParse(ruleModel.Parameters["DataSource"], out Enums.DataSourceType dataSource) ? dataSource : Enums.DataSourceType.Void,
-
-                    };
-
-                    ReplaceTextViewModel replaceTextViewModel = ruleCard.CurrentActionViewModel as ReplaceTextViewModel;
-
-                    //if (replaceTextViewModel.SelectedDataSource == Enums.DataSourceType.WriteText)
-                        replaceTextViewModel.TextBoxToReplace = ruleModel.Parameters.ContainsKey("ReplacementeText") ? ruleModel.Parameters["ReplacementeText"] : string.Empty;
-
-                    replaceTextViewModel.SelectedEditMode = Enum.TryParse(ruleModel.Parameters["EditMode"], out Enums.ReplaceTextModeType editMode) ? editMode : Enums.ReplaceTextModeType.ReplaceAll;
-                    
-                    
-                }
-
-                RulesList.Add(ruleCard);
-            }
-
-            DeleteDropHandler = new DeleteDropHandler(RulesList, _undoRedoManager);
+            DeleteDropHandler = new DeleteDropHandler(RuleCardList, _undoRedoManager);
             RuleDragHandler = new RuleDragHandler(this);
             RuleDropHandler = new RuleDropHandler(_undoRedoManager);
 
@@ -84,13 +48,14 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
             AddRuleCommand = new RelayCommand(x => AddRule());
             ExportCommand = new RelayCommand(x => ExportWord());
             SaveCommand = new RelayCommand(x => SaveCurrentPreset());
-            
+
+            RuleCardList.Add(new RuleCardViewModel(_undoRedoManager));
         }
 
         private void AddRule()
         {
             var ruleToAdd = new RuleCardViewModel(_undoRedoManager);
-            var command = new AddRuleCommand(RulesList, ruleToAdd);
+            var command = new AddRuleCommand(RuleCardList, ruleToAdd);
             _undoRedoManager.Do(command);
         }
 
@@ -130,7 +95,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
                 WordTemplatePath = _templatePath 
             };
 
-            foreach (var ruleCardVM in RulesList)
+            foreach (var ruleCardVM in RuleCardList)
             {
                 // Cria um novo RuleModel para ser salvo
                 var ruleModel = new RuleCardModel
@@ -142,20 +107,62 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels
                 switch (ruleCardVM.CurrentActionViewModel)
                 {
                     // Se for um ViewModel de "Substituir Texto"...
-                    case ReplaceTextViewModel replaceVm:
+                    case ReplaceTextViewModel replaceVM:
 
                         ruleModel.RuleCardValues = new ReplaceTextActionModel
                         {
-                            TargetTag = replaceVm.ContentTag,
-                            EditMode = replaceVm.SelectedEditMode,
-                            TextToReplace = replaceVm.TextBoxToReplace,
-                            ReplacementValue = replaceVm.ReplacementText
+                            ExecuteCondition = replaceVM.SelectedCondition,
+                            CheckBoxConditionText = replaceVM.CheckBoxConditionText,
+                            TargetTag = replaceVM.ContentTag,
+                            EditMode = replaceVM.SelectedEditMode,
+                            TextToReplace = replaceVM.TextBoxToReplace,
+                            DataSource = replaceVM.SelectedDataSource,
+                            ReplacementValue = replaceVM.ReplacementText,
                         };
                         break;
                 }
 
                 // Adiciona a regra completa (com a sua ação específica) à lista do preset
                 presetToSave.RuleCards.Add(ruleModel);
+            }
+
+            _presetService.SavePreset(presetToSave, filePath);
+        }
+
+        public void LoadPreset(PresetModel presetToEdit)
+        {
+            foreach (var ruleCardModel in presetToEdit.RuleCards)
+            {
+                var ruleCardVM = new RuleCardViewModel(_undoRedoManager)
+                {
+                    RuleCardName = ruleCardModel.CardName,
+                    SelectedAction = ruleCardModel.CardAction
+                };
+
+                OnPropertyChanged(nameof(ruleCardVM.RuleCardName));
+                OnPropertyChanged(nameof(ruleCardVM.SelectedAction));
+
+                switch (ruleCardVM.SelectedAction)
+                {
+                    case Enums.RuleActionType.ReplaceText:
+                        var replaceTextModel = ruleCardModel.RuleCardValues as ReplaceTextActionModel;
+                        var replaceTextVM = new ReplaceTextViewModel(_undoRedoManager)
+                        {
+                            SelectedCondition = replaceTextModel.ExecuteCondition,
+                            CheckBoxConditionText = replaceTextModel.CheckBoxConditionText,
+                            ContentTag = replaceTextModel.TargetTag,
+                            SelectedEditMode = replaceTextModel.EditMode,
+                            TextBoxToReplace = replaceTextModel.TextToReplace,
+                            SelectedDataSource = replaceTextModel.DataSource,
+                            ReplacementText = replaceTextModel.ReplacementValue
+                        };
+
+                        ruleCardVM.CurrentActionViewModel = replaceTextVM;
+
+                        break;
+
+                }
+                RuleCardList.Add(ruleCardVM);
             }
         }
     }

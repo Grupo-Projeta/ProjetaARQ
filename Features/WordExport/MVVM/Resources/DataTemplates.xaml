@@ -38,7 +38,7 @@
 
     <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="ConditionTypeProvider">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="enums:ConditionType"/>
+            <x:Type TypeName="enums:ExecuteConditionType"/>
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 

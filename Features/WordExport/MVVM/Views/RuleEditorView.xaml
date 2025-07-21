@@ -18,7 +18,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ProjetaARQ;component/Core/UI/Styles/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/ProjetaARQ;component/Features/WordExport/MVVM/Resources/DataTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BoolToVisibleConverter x:Key="BoolToVisible"/>
@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
         
         <ScrollViewer Grid.Row="0">
-            <ItemsControl ItemsSource="{Binding RulesList}"
+            <ItemsControl ItemsSource="{Binding RuleCardList}"
                           dd:DragDrop.IsDropTarget="True"
                           dd:DragDrop.IsDragSource="True"
                           dd:DragDrop.DragHandler="{Binding RuleDragHandler}"

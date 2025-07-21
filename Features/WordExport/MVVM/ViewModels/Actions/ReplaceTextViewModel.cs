@@ -10,6 +10,7 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
 
         private readonly UndoRedoManager _undoRedoManager;
 
+        private string _replacementText;
         public string ReplacementText
         {
             get
@@ -27,6 +28,23 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
 
                     default:
                         return string.Empty;
+                }
+            }
+            set 
+            {
+                switch (SelectedDataSource)
+                {
+                    case DataSourceType.WriteText:
+                        ReplacementTextBox = value; break;
+
+                    case DataSourceType.RevitParameter:
+                        RevitParameterName = value; break;
+
+                    case DataSourceType.TextBlock:
+                        /*TextBlock = value; */ break;
+
+                    default:
+                        break;
                 }
             }
         }
@@ -77,8 +95,8 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             }
         }
 
-        private ConditionType _selectedConditon = ConditionType.AlwaysExecute;
-        public ConditionType SelectedCondition
+        private ExecuteConditionType _selectedConditon = ExecuteConditionType.AlwaysExecute;
+        public ExecuteConditionType SelectedCondition
         {
             get => _selectedConditon;
             set
@@ -86,11 +104,33 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
                 if (_selectedConditon != value)
                 {
                     // Cria um comando para esta mudança específica
-                    var command = new ChangePropertyCommand<ConditionType>(
+                    var command = new ChangePropertyCommand<ExecuteConditionType>(
                         newSelection => _selectedConditon = newSelection,       // A ação de como setar o valor
                         () => OnPropertyChanged(nameof(SelectedCondition)),
                         _selectedConditon,                                      // O valor antigo
                         value                                                   // O novo valor
+                    );
+
+                    // Executa e registra o comando no gerenciador de Undo/Redo
+                    _undoRedoManager.Do(command);
+                }
+            }
+        }
+
+        private string _checkBoxConditionText;
+        public string CheckBoxConditionText
+        {
+            get => _checkBoxConditionText;
+            set
+            {
+                if (_checkBoxConditionText != value)
+                {
+                    // Cria um comando para esta mudança específica
+                    var command = new ChangePropertyCommand<string>(
+                        newText => _checkBoxConditionText = newText,    // A ação de como setar o valor
+                        () => OnPropertyChanged(nameof(CheckBoxConditionText)),
+                        _checkBoxConditionText,                                   // O valor antigo
+                        value                                                // O novo valor
                     );
 
                     // Executa e registra o comando no gerenciador de Undo/Redo
@@ -288,11 +328,11 @@ namespace ProjetaARQ.Features.WordExport.MVVM.ViewModels.Actions
             {
                 switch (SelectedCondition)
                 {
-                    case ConditionType.AlwaysExecute:
+                    case ExecuteConditionType.AlwaysExecute:
                         IsCheckBoxConditionCollapsed = true;
                         break;
 
-                    case ConditionType.CheckBox:
+                    case ExecuteConditionType.CheckBox:
                         IsCheckBoxConditionCollapsed = false;
                         break;
                 }
