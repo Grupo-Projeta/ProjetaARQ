@@ -18,7 +18,11 @@
             <Button Command="{Binding CurrentView.UndoCommand}">
                 <iconPacks:PackIconMaterialDesign Kind="Save"/>
             </Button>
-            
+
+            <Button Command="{Binding CurrentView.UndoCommand}">
+                <iconPacks:PackIconMaterialDesign Kind="SaveAs"/>
+            </Button>
+
             <Button Command="{Binding CurrentView.UndoCommand}">
                 <iconPacks:PackIconMaterialDesign Kind="UndoRound"/>
             </Button>
@@ -56,38 +60,38 @@
         <Border Grid.Column="1">
             <mah:TransitioningContentControl Content="{Binding CurrentView}"/>
         </Border>
-        
-        <!--MENU DESLIZANTE-->
-        <Border Grid.Column="1"
-                x:Name="MenuOverlay"
-                Style="{StaticResource AnimatedOverlayMenuStyle}"
-                Width="220"
+
+        <Border x:Name="MenuFixo"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
                 HorizontalAlignment="Left"
                 Background="{DynamicResource MahApps.Brushes.Gray8}"
-                BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
-                BorderThickness="0,0,1,0">
+                BorderBrush="DarkGray"
+                BorderThickness="0 0 0 0"
+                Style="{StaticResource AnimatedOverlayMenuStyle}">
 
-            <Border.RenderTransform>
-                <TranslateTransform X="-220" />
-            </Border.RenderTransform>
-
+            <Border.Effect>
+                <DropShadowEffect Color="DarkGray"
+                                  ShadowDepth="1"
+                                  Direction="0"
+                                  BlurRadius="8"/>
+            </Border.Effect>
             <StackPanel>
-                <TextBlock Text="Menu de Presets" Foreground="White" FontSize="18" Margin="10"/>
-            </StackPanel>
-        </Border>
-        <!-- FIM MENU DESLIZANTE-->
 
-        <Border Grid.Column="0"
-                Background="{DynamicResource MahApps.Brushes.Gray8}">
-            <StackPanel>
-                <Button Command="{Binding ToggleMenuCommand}"
-                       Content="☰"
-                       Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                       Cursor="Hand"
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top"
-                       Width="50" Height="40" Margin="5" 
-                       Foreground="Black" FontSize="20"/>
+                <StackPanel Orientation="Horizontal">
+                    
+                
+                    <Button Command="{Binding ToggleMenuCommand}"
+                           Content="☰"
+                           Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                           Cursor="Hand"
+                           Width="50" Height="40" Margin="5" 
+                           Foreground="Black" FontSize="20"/>
+
+                    <TextBlock Text="Menu de Presets" Foreground="White" FontSize="18"
+                               VerticalAlignment="Center"/>
+
+                </StackPanel>
 
                 <Button Command="{Binding RuleEditorViewCommand}"
                         Style="{StaticResource MahApps.Styles.Button.Chromeless}"

@@ -17,6 +17,9 @@
     </ResourceDictionary.MergedDictionaries>
 
     <converters:EnumDescriptionConverter x:Key="EnumToDescriptionConverter" />
+    <converters:PercentageConverter x:Key="PercentageConverter" />
+    <converters:BitmapImageConverter x:Key="BitmapImageConverter" />
+
 
     <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="RuleActionTypeProvider">
         <ObjectDataProvider.MethodParameters>

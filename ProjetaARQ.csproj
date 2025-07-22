@@ -177,11 +177,11 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
-      <HintPath>D:\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>D:\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -237,6 +237,7 @@
     <Compile Include="Core\UI\Converters\BoolToVisibleConverter.cs" />
     <Compile Include="Core\UI\Converters\BitmapImageConverter.cs" />
     <Compile Include="Core\UI\Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Core\UI\Converters\PercentageConverter.cs" />
     <Compile Include="Core\UI\ObservableObject.cs" />
     <Compile Include="Core\UI\RelayCommand.cs" />
     <Compile Include="Features\FamiliesPanel\Events\DownloadFamilyEvent.cs" />
@@ -303,7 +304,9 @@
     <None Include="packages.config" />
     <None Include="ProjetaARQ.addin" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Images\word-doc.png" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Core\UI\Styles\CommonStyles.xaml">
       <SubType>Designer</SubType>

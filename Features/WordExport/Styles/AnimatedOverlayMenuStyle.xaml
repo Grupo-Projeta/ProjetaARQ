@@ -3,33 +3,46 @@
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
 
     <Style x:Key="AnimatedOverlayMenuStyle" TargetType="Border">
+
+        <Setter Property="Width" Value="60"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsMenuExpanded}" Value="True">
-                <DataTrigger.EnterActions>
+            <Trigger Property="IsMouseOver" Value="True">
+                
+                <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                         To="0" Duration="0:0:0.3">
+                            
+                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                             To="250" 
+                                             Duration="0:0:0.3">
+
                                 <DoubleAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>
                     </BeginStoryboard>
-                </DataTrigger.EnterActions>
-                <DataTrigger.ExitActions>
+                </Trigger.EnterActions>
+                
+                
+                <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                         To="-220" Duration="0:0:0.3">
+                            
+                            <DoubleAnimation Storyboard.TargetProperty="Width"
+                                             To="60" 
+                                             Duration="0:0:0.3">
+                                
                                 <DoubleAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>
                     </BeginStoryboard>
-                </DataTrigger.ExitActions>
-            </DataTrigger>
+                </Trigger.ExitActions>
+                
+                
+            </Trigger>
         </Style.Triggers>
     </Style>
 
