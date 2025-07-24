@@ -9,7 +9,7 @@
              xmlns:viewModel="clr-namespace:ProjetaARQ.Features.WordExport.MVVM.ViewModels"
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:converters="clr-namespace:ProjetaARQ.Core.UI.Converters"
-             d:DataContext="{d:DesignInstance viewModel:RuleEditorViewModel}"
+             d:DataContext="{d:DesignInstance viewModel:RuleEditorViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" 
              d:DesignHeight="780" d:DesignWidth="740"
              Background="Transparent">
@@ -27,11 +27,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         
-        <ScrollViewer Grid.Row="0">
+        <ScrollViewer Grid.Row="1">
             <ItemsControl ItemsSource="{Binding RuleCardList}"
                           dd:DragDrop.IsDropTarget="True"
                           dd:DragDrop.IsDragSource="True"
@@ -54,7 +55,7 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <Border Grid.Row="1"
+        <Border Grid.Row="0"
                 Padding="10"
                 Background="Transparent"
                 AllowDrop="True"

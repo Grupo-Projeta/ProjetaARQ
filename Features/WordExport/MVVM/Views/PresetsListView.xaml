@@ -21,33 +21,20 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <Border Background="Transparent"
+            Padding="32 16 0 32">
 
-    <Border Background="Transparent">
-        
         <ListView x:Name="PresetsList_ListView"
                   ItemsSource="{Binding PresetsList}"
                   AlternationCount="2"
-                  HorizontalAlignment="Stretch">
-
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Focusable" Value="False"/>
-                    <Style.Triggers>
-                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                            <Setter Property="Background" Value="#FAFAFA"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{Binding Background, RelativeSource= {RelativeSource Mode=Self}}"/>
-                            <Setter Property="BorderBrush" Value="Transparent"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
+                  HorizontalAlignment="Stretch"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ItemContainerStyle="{StaticResource PresetsListViewItemStyle}"
+                  Padding="0 0 32 0">
 
             <ListView.View>
-                <GridView>
-                    
+                <GridView ColumnHeaderContainerStyle="{StaticResource PresetListViewHeaderStyle}">
+
                     <GridViewColumn Header="Nome" 
                                     Width="{Binding ActualWidth,
                                             ElementName=PresetsList_ListView,
@@ -57,60 +44,83 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,15">
 
-                                    <Image Source="/ProjetaARQ;component/Common/Images/word-doc.png" 
-                                           Height="24" Width="24"
-                                           Margin="0 0 5 0"/>
 
-                                    
-                                    <Image Source="{Binding word-doc, 
-                                                    Converter={StaticResource BitmapImageConverter}}"
+                                    <Image Source="{Binding Converter={StaticResource BitmapImageConverter},
+                                                    ConverterParameter='word-doc.png'}"
                                            Height="24" Width="24"
                                            Margin="0 0 5 0"
                                            RenderOptions.BitmapScalingMode="HighQuality"/>
 
                                     <TextBlock Text="{Binding PresetName}" 
                                                VerticalAlignment="Center"
-                                               TextWrapping="NoWrap"
                                                Padding="0 0 50 0"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Data de Modificação" Width="100">
+                    <GridViewColumn Header="Data de Modificação" 
+                                    Width="{Binding ActualWidth,
+                                            ElementName=PresetsList_ListView,
+                                            Converter={StaticResource PercentageConverter},
+                                            ConverterParameter=20}">
+
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <!--<TextBlock Text="{Binding LastModified, StringFormat='dd/MM/yyyy'}" VerticalAlignment="Center"/>-->
-                                <TextBlock Text="Agora"/>
+                                <TextBlock Text="22/05/2001"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Opções" Width="100">
+                    <GridViewColumn Header="Opções"
+                                    Width="{Binding ActualWidth,
+                                            ElementName=PresetsList_ListView,
+                                            Converter={StaticResource PercentageConverter},
+                                            ConverterParameter=20}">
+
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel x:Name="ListItemOption"
                                             Orientation="Horizontal"
-                                            DockPanel.Dock="Right" >
-                                    <Button Grid.Row="1"
-                                            Command="{Binding DataContext.EditPresetCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            DockPanel.Dock="Right">
+
+                                    <Button Command="{Binding DataContext.EditPresetCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                             CommandParameter="{Binding .}"
+                                            ToolTip="Editar Preset"
                                             Style="{StaticResource MahApps.Styles.Button.Chromeless}"
                                             Cursor="Hand"
+                                            Margin="0 0 16 0"
                                             Foreground="Black" FontSize="20">
 
                                         <iconPacks:PackIconMaterialDesign Kind="ModeEditOutlineOutline"/>
                                     </Button>
+                                    
+                                    <Button Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                            ToolTip="Duplicar Preset"
+                                            Cursor="Hand"
+                                            Margin="0 0 16 0">
+                                        <iconPacks:PackIconMaterial Kind="ContentCopy"/>
+                                    </Button>
 
-                                    <Button Width="50"
-                                            Style="{DynamicResource MahApps.Styles.Button.Chromeless}">
+                                    <Button Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                            ToolTip="Renomear Preset"
+                                            Cursor="Hand"
+                                            Margin="0 0 16 0">
+                                        <iconPacks:PackIconMaterial Kind="FormTextBox"/>
+                                    </Button>
+
+                                    <Button Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                            ToolTip="Deletar Preset"
+                                            Cursor="Hand"
+                                            Margin="0 0 0 0">
                                         <iconPacks:PackIconMaterialDesign Kind="DeleteOutlineOutline"/>
                                     </Button>
+                                    
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
                 </GridView>
             </ListView.View>
         </ListView>

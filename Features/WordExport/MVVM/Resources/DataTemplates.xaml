@@ -18,7 +18,7 @@
 
     <converters:EnumDescriptionConverter x:Key="EnumToDescriptionConverter" />
     <converters:PercentageConverter x:Key="PercentageConverter" />
-    <converters:BitmapImageConverter x:Key="BitmapImageConverter" />
+    <converters:BitmapImageConverter x:Key="BitmapImageConverter"/>
 
 
     <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="RuleActionTypeProvider">
@@ -56,5 +56,61 @@
     <DataTemplate DataType="{x:Type viewModel:PresetsListViewModel}">
         <view:PresetsListView/>
     </DataTemplate>
+
+
+    <Style x:Key="PresetsListViewItemStyle" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border x:Name="ListItemBorder"
+                            MinWidth="120"
+                            CornerRadius="5"
+                            BorderBrush="LightGray"
+                            Margin="0 8"
+                            BorderThickness="1"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        
+                        <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter TargetName="ListItemBorder" Property="Background" Value="#FAFAFA"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ListItemBorder" Property="Background" Value="Transparent"/>
+                            <Setter TargetName="ListItemBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PresetListViewHeaderStyle" TargetType="GridViewColumnHeader">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewColumnHeader">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="Transparent"
+                            Padding="{TemplateBinding Padding}">
+                        
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

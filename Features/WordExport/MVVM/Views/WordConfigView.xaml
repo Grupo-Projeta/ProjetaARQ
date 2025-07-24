@@ -76,43 +76,145 @@
                                   Direction="0"
                                   BlurRadius="8"/>
             </Border.Effect>
-            <StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 
-                    <Button Command="{Binding ToggleMenuCommand}"
-                           Content="☰"
-                           Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                           Cursor="Hand"
-                           Width="50" Height="40" Margin="5" 
-                           Foreground="Black" FontSize="20"/>
+                <StackPanel>
+                    <Button Command="{Binding RuleEditorViewCommand}"
+                            Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                            Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Height="50" 
+                            Margin="5 5 5 0"   
+                            Foreground="Black" FontSize="20">
+                    
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Menu de Presets" Foreground="White" FontSize="18"
-                               VerticalAlignment="Center"/>
+                            <iconPacks:PackIconMaterial Kind="FilePlusOutline"
+                                                              Grid.Column="0"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
 
+                            <TextBlock Text="Novo" 
+                                       Foreground="Black" 
+                                       FontSize="18"
+                                       Grid.Column="1"
+                                       Margin="5 0"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Command="{Binding PresetsListViewCommand}"
+                            Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                            Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Height="50" 
+                            Margin="5 0 5 5"      
+                            Foreground="Black" FontSize="20">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <iconPacks:PackIconMaterialDesign Kind="Menu"
+                                                              Grid.Column="0"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
+
+                            <TextBlock Text="Menu de Presets" 
+                                       Foreground="Black" 
+                                       FontSize="18"
+                                       Grid.Column="1"
+                                       Margin="5 0"
+                                       VerticalAlignment="Center"/>
+
+
+                        </Grid>
+                    </Button>
+
+                    <Button Command="{Binding PresetsListViewCommand}"
+                            Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                            Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Height="50" 
+                            Margin="5 0 5 5"      
+                            Foreground="Black" FontSize="20">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <iconPacks:PackIconMaterial Kind="ImageOutline"
+                                                        Grid.Column="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"/>
+
+                            <TextBlock Text="Imagens" 
+                                       Foreground="Black" 
+                                       FontSize="18"
+                                       Grid.Column="1"
+                                       Margin="5 0"
+                                       VerticalAlignment="Center"/>
+
+
+                        </Grid>
+                    </Button>
+
+                    <Button Command="{Binding PresetsListViewCommand}"
+                            Style="{StaticResource MahApps.Styles.Button.Chromeless}"
+                            Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Height="50" 
+                            Margin="5 0 5 5"      
+                            Foreground="Black" FontSize="20">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <iconPacks:PackIconMaterial Kind="FormatText"
+                                                        Grid.Column="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"/>
+
+                            <TextBlock Text="Blocos de Texto" 
+                                       Foreground="Black" 
+                                       FontSize="18"
+                                       Grid.Column="1"
+                                       Margin="5 0"
+                                       VerticalAlignment="Center"/>
+
+
+                        </Grid>
+                    </Button>
                 </StackPanel>
-
-                <Button Command="{Binding RuleEditorViewCommand}"
-                        Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                        Cursor="Hand"
-                        HorizontalAlignment="Left" 
-                        VerticalAlignment="Top"
-                        Width="50" Height="40" Margin="5" 
-                        Foreground="Black" FontSize="20">
-                    <iconPacks:PackIconMaterialDesign Kind="ModeEditOutlineOutline"/>
-                </Button>
-
-                <Button Command="{Binding PresetsListViewCommand}"
-                        Style="{StaticResource MahApps.Styles.Button.Chromeless}"
-                        Cursor="Hand"
-                        HorizontalAlignment="Left" 
-                        VerticalAlignment="Top"
-                        Width="50" Height="40" Margin="5" 
-                        Foreground="Black" FontSize="20">
-                    <iconPacks:PackIconMaterialDesign Kind="LiveHelpOutline"/>
-                </Button>
-            </StackPanel>
+                <StackPanel Grid.Row="1"
+                            Margin="5">
+                    
+                    <mah:ToggleSwitch>
+                        
+                    </mah:ToggleSwitch>
+                </StackPanel>
+            </Grid>
+            
         </Border>
 
     </Grid>
